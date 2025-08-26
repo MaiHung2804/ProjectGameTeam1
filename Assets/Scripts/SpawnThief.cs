@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class SpawnThief : MonoBehaviour
 {
-    public ThiefConfig thiefConfig; // Thông tin cấu hình của kẻ trộm
-
+    public UnitConfig unitConfig;
+    public ItemConfig itemConfig;
     void Start()
     {
-        GameObject gameObject = Instantiate(thiefConfig.ThiefConfigPrefab, transform.position, Quaternion.identity);
+        Instantiate(itemConfig.ItemPrefabs, transform.position, Quaternion.identity);
+        Instantiate(unitConfig.UnitPrefabs, transform.position + new Vector3(2, 0, 0), Quaternion.identity);
     }
 
     // Update is called once per frame
@@ -16,4 +17,6 @@ public class SpawnThief : MonoBehaviour
     {
         
     }
+
+
 }

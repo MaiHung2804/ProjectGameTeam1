@@ -20,5 +20,5 @@ public class UnitConfig : ScriptableObject
     public float AttackRangeBase; // Tầm đánh
     public float MoveSpeedBase; // Tốc độ di chuyển
     public float CooldownBase; // Thời gian hồi chiêu
-
+    public GameObject UnitPrefabs; // Prefab của đơn vị
 }
