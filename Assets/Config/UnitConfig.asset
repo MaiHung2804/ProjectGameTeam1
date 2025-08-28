@@ -22,4 +22,4 @@ MonoBehaviour:
   AttackRangeBase: 0
   MoveSpeedBase: 0
   CooldownBase: 0
-  UnitPrefabs: {fileID: 8793761065595177373, guid: 3125ae6098270cc4e8124939a0e4e811, type: 3}
+  UnitPrefabs: {fileID: 7099856442197571496, guid: db9a4d940d341bf4cb940e5aa9397eb5, type: 3}
