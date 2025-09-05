@@ -5,6 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
@@ -12,4 +13,7 @@ EditorBuildSettings:
 =======
   m_Scenes: []
 >>>>>>> origin/NguyenTuanAnh
+=======
+  m_Scenes: []
+>>>>>>> origin/TrieuVy
   m_configObjects: {}

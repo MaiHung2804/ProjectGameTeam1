@@ -13,17 +13,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_EnablePreviewPackages: 0
   m_EnablePackageDependencies: 0
   m_AdvancedSettingsExpanded: 1
   m_ScopedRegistriesSettingsExpanded: 1
 =======
+=======
+>>>>>>> origin/TrieuVy
   m_EnablePreReleasePackages: 0
   m_EnablePackageDependencies: 0
   m_AdvancedSettingsExpanded: 1
   m_ScopedRegistriesSettingsExpanded: 1
   m_SeeAllPackageVersions: 0
+<<<<<<< HEAD
 >>>>>>> origin/NguyenTuanAnh
+=======
+>>>>>>> origin/TrieuVy
   oneTimeWarningShown: 0
   m_Registries:
   - m_Id: main
@@ -35,6 +41,7 @@ MonoBehaviour:
   m_UserSelectedRegistryName: 
   m_UserAddingNewScopedRegistry: 0
   m_RegistryInfoDraft:
+<<<<<<< HEAD
 <<<<<<< HEAD
     m_ErrorMessage: 
     m_Original:
@@ -51,9 +58,14 @@ MonoBehaviour:
     - 
     m_SelectedScopeIndex: 0
 =======
+=======
+>>>>>>> origin/TrieuVy
     m_Modified: 0
     m_ErrorMessage: 
     m_UserModificationsInstanceId: -830
     m_OriginalInstanceId: -832
   m_LoadAssets: 0
+<<<<<<< HEAD
 >>>>>>> origin/NguyenTuanAnh
+=======
+>>>>>>> origin/TrieuVy

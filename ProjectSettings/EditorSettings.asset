@@ -4,16 +4,22 @@
 EditorSettings:
   m_ObjectHideFlags: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   serializedVersion: 9
   m_ExternalVersionControlSupport: Visible Meta Files
   m_SerializationMode: 2
   m_LineEndingsForNewScripts: 2
 =======
+=======
+>>>>>>> origin/TrieuVy
   serializedVersion: 11
   m_ExternalVersionControlSupport: Visible Meta Files
   m_SerializationMode: 2
   m_LineEndingsForNewScripts: 0
+<<<<<<< HEAD
 >>>>>>> origin/NguyenTuanAnh
+=======
+>>>>>>> origin/TrieuVy
   m_DefaultBehaviorMode: 0
   m_PrefabRegularEnvironment: {fileID: 0}
   m_PrefabUIEnvironment: {fileID: 0}
@@ -24,10 +30,14 @@ EditorSettings:
   m_EtcTextureNormalCompressor: 2
   m_EtcTextureBestCompressor: 4
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_ProjectGenerationIncludedExtensions: txt;xml;fnt;cd;asmdef;asmref;rsp
 =======
   m_ProjectGenerationIncludedExtensions: txt;xml;fnt;cd;asmdef;rsp;asmref
 >>>>>>> origin/NguyenTuanAnh
+=======
+  m_ProjectGenerationIncludedExtensions: txt;xml;fnt;cd;asmdef;rsp;asmref
+>>>>>>> origin/TrieuVy
   m_ProjectGenerationRootNamespace: 
   m_CollabEditorSettings:
     inProgressEnabled: 1
@@ -39,6 +49,7 @@ EditorSettings:
   m_ShowLightmapResolutionOverlay: 1
   m_UseLegacyProbeSampleCount: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_AssetPipelineMode: 1
   m_CacheServerMode: 0
   m_CacheServerEndpoint: 
@@ -48,3 +59,6 @@ EditorSettings:
 =======
   m_SerializeInlineMappingsOnOneLine: 1
 >>>>>>> origin/NguyenTuanAnh
+=======
+  m_SerializeInlineMappingsOnOneLine: 1
+>>>>>>> origin/TrieuVy

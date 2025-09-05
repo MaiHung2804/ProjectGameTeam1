@@ -294,6 +294,7 @@ InputManager:
     axis: 0
     joyNum: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   - serializedVersion: 3
     m_Name: Enable Debug Button 1
     descriptiveName: 
@@ -488,3 +489,5 @@ InputManager:
     joyNum: 0
 =======
 >>>>>>> origin/NguyenTuanAnh
+=======
+>>>>>>> origin/TrieuVy
