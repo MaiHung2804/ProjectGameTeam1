@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestSaveSystem : MonoBehaviour
+public class DataManager: MonoBehaviour
 {
     public Player player;
     void Start()
