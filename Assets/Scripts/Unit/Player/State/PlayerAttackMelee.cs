@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttackMelee : MonoBehaviour
+public class PlayerAttackMelee : IPlayerAttackState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public void Enter(PlayerAttackComponent player)
+    { }
+    public void Update(PlayerAttackComponent player)
+    { }
+    public void Exit(PlayerAttackComponent player)
+    { }
 }

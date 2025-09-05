@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IPlayerAttackState
 {
-    void Enter(AttackComponent player);
-    void Update(AttackComponent player);
-    void Exit(AttackComponent player);
+    void Enter(PlayerAttackComponent player);
+    void Update(PlayerAttackComponent player);
+    void Exit(PlayerAttackComponent player);
 }
