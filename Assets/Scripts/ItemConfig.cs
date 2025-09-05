@@ -15,9 +15,10 @@ public class ItemConfig : ScriptableObject
     public string ID; // Id của vật phẩm
     public string ItemName; // Tên vật phẩm
     public string Description; // Mô tả nếu có
-    public GameObject ItemPrefabs; // Prefab của vật phẩm
     public float AttackDamage; // Sát thương của vũ khí 
     public float AttackSpeed; // Tốc độ đánh của vũ khí
     public float AttackRange; // Tầm đánh của vũ khí
-                              
+    public int CurrentConsume; // Số lần sử dụng trang bị
+
+
 }
