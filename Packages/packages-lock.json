@@ -1,6 +1,5 @@
 {
   "dependencies": {
-<<<<<<< HEAD
     "com.unity.burst": {
       "version": "1.8.12",
       "depth": 1,
@@ -12,10 +11,6 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collab-proxy": {
-      "version": "2.9.1",
-      "depth": 0,
-=======
-    "com.unity.collab-proxy": {
       "version": "2.9.2",
       "depth": 0,
       "source": "registry",
@@ -25,27 +20,17 @@
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
       "depth": 1,
->>>>>>> origin/NguyenTuanAnh
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
-<<<<<<< HEAD
       "depth": 1,
-=======
-      "depth": 2,
->>>>>>> origin/NguyenTuanAnh
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-<<<<<<< HEAD
-    "com.unity.ide.rider": {
-      "version": "3.0.27",
-      "depth": 0,
-=======
     "com.unity.feature.development": {
       "version": "1.0.1",
       "depth": 0,
@@ -62,8 +47,7 @@
     },
     "com.unity.ide.rider": {
       "version": "3.0.27",
-      "depth": 1,
->>>>>>> origin/NguyenTuanAnh
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.ext.nunit": "1.0.6"
@@ -72,11 +56,7 @@
     },
     "com.unity.ide.visualstudio": {
       "version": "2.0.22",
-<<<<<<< HEAD
       "depth": 0,
-=======
-      "depth": 1,
->>>>>>> origin/NguyenTuanAnh
       "source": "registry",
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
@@ -85,7 +65,6 @@
     },
     "com.unity.ide.vscode": {
       "version": "1.2.5",
-<<<<<<< HEAD
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -93,14 +72,18 @@
     },
     "com.unity.mathematics": {
       "version": "1.2.6",
-=======
->>>>>>> origin/NguyenTuanAnh
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-<<<<<<< HEAD
+    "com.unity.performance.profile-analyzer": {
+      "version": "1.2.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.render-pipelines.core": {
       "version": "14.0.10",
       "depth": 1,
@@ -134,23 +117,18 @@
     },
     "com.unity.searcher": {
       "version": "4.9.2",
-=======
-    "com.unity.performance.profile-analyzer": {
-      "version": "1.2.2",
-      "depth": 1,
+      "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.settings-manager": {
       "version": "2.0.1",
->>>>>>> origin/NguyenTuanAnh
       "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-<<<<<<< HEAD
     "com.unity.shadergraph": {
       "version": "14.0.10",
       "depth": 1,
@@ -163,11 +141,6 @@
     "com.unity.test-framework": {
       "version": "1.1.33",
       "depth": 0,
-=======
-    "com.unity.test-framework": {
-      "version": "1.1.33",
-      "depth": 1,
->>>>>>> origin/NguyenTuanAnh
       "source": "registry",
       "dependencies": {
         "com.unity.ext.nunit": "1.0.6",
@@ -176,8 +149,6 @@
       },
       "url": "https://packages.unity.com"
     },
-<<<<<<< HEAD
-=======
     "com.unity.testtools.codecoverage": {
       "version": "1.2.5",
       "depth": 1,
@@ -188,7 +159,6 @@
       },
       "url": "https://packages.unity.com"
     },
->>>>>>> origin/NguyenTuanAnh
     "com.unity.textmeshpro": {
       "version": "3.0.6",
       "depth": 0,

@@ -41,7 +41,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ---- HÀM PUBLIC CƠ BẢN ----
     public void StartGame()
     {
         Score = 0;
