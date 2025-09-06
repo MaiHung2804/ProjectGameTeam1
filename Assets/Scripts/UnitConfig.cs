@@ -10,7 +10,7 @@ public enum EnemyType
 [CreateAssetMenu(fileName = "UnitConfig", menuName = "ScriptableObjects/UnitConfig", order = 1)]
 public class UnitConfig : ScriptableObject
 {
-    public EnemyType Type; // Phân loại đánh xa hay cận chiến
+    public EnemyType Type; // Phân loại đánh xa hay cận chiến //
     public string ID; // Id của đơn vị
     public string EnemyName; // Tên đơn vị
     public string Description; // Mô tả nếu có

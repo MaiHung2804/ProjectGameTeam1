@@ -19,11 +19,11 @@ public class DataManager: MonoBehaviour
     {
      
     }
+
     private void OnApplicationQuit()
     {
         SaveData();
     }
-
     public void SaveData()
     {
         PlayerPrefs.SetInt("HighScore", player.HighScore);
