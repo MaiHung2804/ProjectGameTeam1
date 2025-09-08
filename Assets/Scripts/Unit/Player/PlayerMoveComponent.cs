@@ -124,7 +124,6 @@ public class PlayerMoveComponent : MoveComponent
 
     private void UpdateAnimatorMove(float moveAmount)
     {
-        Debug.Log("UpdateAnimatorMove called with moveAmount: " + moveAmount);
         animator.SetFloat("Move", moveAmount);
     }
 
