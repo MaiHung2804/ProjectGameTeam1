@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 /// <summary>      
@@ -13,6 +15,8 @@ public abstract class UnitBase : MonoBehaviour
     protected HealthComponent healthComponent;
     protected AttackComponent attackComponent;
     protected MoveComponent moveComponent;
+
+    public event Action <UnitBase> EventOnDeath;
 
     public int TeamID => teamID;
 
@@ -46,6 +50,7 @@ public abstract class UnitBase : MonoBehaviour
     // Logic khi unit chet
     protected virtual void OnDeath()
     {
+        EventOnDeath?.Invoke(this);
         gameObject.SetActive(false);
     }
 
