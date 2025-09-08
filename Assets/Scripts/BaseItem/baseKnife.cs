@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class baseKnife : MeleeWeapon
 {
-    public override void Use(GameObject user)
-    {
-        ///logic chém
-    }
+   
 }

@@ -7,7 +7,7 @@ public enum EnemyType
     Melee,
     Ranged
 }
-[CreateAssetMenu(fileName = "UnitConfig", menuName = "ScriptableObjects/UnitConfig", order = 1)]
+[CreateAssetMenu(fileName = "UnitConfig", menuName = "ScriptableObjects/UnitConfig")]
 public class UnitConfig : ScriptableObject
 {
     public EnemyType Type; // Phân loại đánh xa hay cận chiến //
