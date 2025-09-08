@@ -6,10 +6,13 @@ public class PlayerMoveComponent : MoveComponent
     [SerializeField] private Joystick joystick;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private Animator animator;
+    
     private float verticalVelocity = 0f;
     private CharacterController characterController;
 
-
+    [SerializeField] private float moveSmoothTime = 0.1f;
+    private float currentMoveAmount = 0f;
+    private float moveAmountVelocity = 0f; // Toc do thay doi cua moveAmount
 
     protected override void Awake()
     {
@@ -60,7 +63,10 @@ public class PlayerMoveComponent : MoveComponent
         Vector3 joystickInput = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
         Vector3 input = keyboardInput + joystickInput;
 
-        float moveAmount = Mathf.Clamp01(input.magnitude);
+        float moveAmount =   Mathf.Clamp01(input.magnitude);
+        currentMoveAmount = Mathf.SmoothDamp(currentMoveAmount, moveAmount, ref moveAmountVelocity, moveSmoothTime);
+
+
 
         if (input.sqrMagnitude < 0.01f)
         {
@@ -69,7 +75,7 @@ public class PlayerMoveComponent : MoveComponent
         else
         {
             MoveDirection(input);
-            UpdateAnimatorMove(moveAmount);
+            UpdateAnimatorMove(currentMoveAmount);
 
         }
     }    
