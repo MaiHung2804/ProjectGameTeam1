@@ -11021,6 +11021,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Maria WProp J J Ong
       objectReference: {fileID: 0}
+    - target: {fileID: 332547309770519870, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.58
@@ -11073,7 +11077,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2496195944653353178, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -13842,7 +13847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7247751513fbeeb44b70ef6e250f1786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1621323121}
+  target: {fileID: 5804173827795139773}
 --- !u!81 &1040853778
 AudioListener:
   m_ObjectHideFlags: 0
@@ -21892,11 +21897,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 287711fb95cdc004b814e53a055b4b1e, type: 3}
---- !u!4 &1621323121 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
-  m_PrefabInstance: {fileID: 850628301}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1621689457
 GameObject:
   m_ObjectHideFlags: 0
@@ -29112,7 +29112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8359376588544237728, guid: 835cd369a7e50ef4ea23bb3643ee40cf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9172046951063304730, guid: 835cd369a7e50ef4ea23bb3643ee40cf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29161,6 +29161,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8359376588544237728, guid: 835cd369a7e50ef4ea23bb3643ee40cf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5804173827795139771}
+    - targetCorrespondingSourceObject: {fileID: 8359376588544237728, guid: 835cd369a7e50ef4ea23bb3643ee40cf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5804173827795139774}
   m_SourcePrefab: {fileID: 100100000, guid: 835cd369a7e50ef4ea23bb3643ee40cf, type: 3}
 --- !u!1 &5804173827795139770 stripped
 GameObject:
@@ -29193,6 +29196,29 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!4 &5804173827795139773 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9172046951063304730, guid: 835cd369a7e50ef4ea23bb3643ee40cf, type: 3}
+  m_PrefabInstance: {fileID: 5804173827795139769}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5804173827795139774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5804173827795139770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fc76134c3e2b745bb0e178bacc2d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  stopDistance: 0.1
+  joystick: {fileID: 780644241}
+  gravity: -9.81
+  animator: {fileID: 0}
+  moveSmoothTime: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
