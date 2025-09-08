@@ -1,0 +1,351 @@
+{
+    "templatePinStates": [],
+    "dependencyTypeInfos": [
+        {
+            "userAdded": false,
+            "type": "UnityEngine.AnimationClip",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEditor.Animations.AnimatorController",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.AnimatorOverrideController",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEditor.Audio.AudioMixerController",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.ComputeShader",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": true,
+            "defaultInstantiationMode": 1,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.Cubemap",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.GameObject",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEditor.LightingDataAsset",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": false
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.LightingSettings",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.Material",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEditor.MonoScript",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": true,
+            "defaultInstantiationMode": 1,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.PhysicMaterial",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.PhysicsMaterial2D",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.Rendering.PostProcessing.PostProcessProfile",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.Rendering.PostProcessing.PostProcessResources",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.Rendering.VolumeProfile",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEditor.SceneAsset",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": false
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.Shader",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": true,
+            "defaultInstantiationMode": 1,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.ShaderVariantCollection",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": true,
+            "defaultInstantiationMode": 1,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 1
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.Texture",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.Texture2D",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        },
+        {
+            "userAdded": false,
+            "type": "UnityEngine.Timeline.TimelineAsset",
+<<<<<<< HEAD
+<<<<<<< HEAD
+            "ignore": false,
+            "defaultInstantiationMode": 0,
+            "supportsModification": true
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/NguyenTuanAnh
+=======
+            "defaultInstantiationMode": 0
+>>>>>>> origin/TrieuVy
+        }
+    ],
+    "defaultDependencyTypeInfo": {
+        "userAdded": false,
+        "type": "<default_scene_template_dependencies>",
+<<<<<<< HEAD
+<<<<<<< HEAD
+        "ignore": false,
+        "defaultInstantiationMode": 1,
+        "supportsModification": true
+=======
+        "defaultInstantiationMode": 1
+>>>>>>> origin/NguyenTuanAnh
+=======
+        "defaultInstantiationMode": 1
+>>>>>>> origin/TrieuVy
+    },
+    "newSceneOverride": 0
+}

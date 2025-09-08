@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: c69dc78611403ae4cad56ab7418ec014
+<<<<<<< HEAD
+guid: 61e2b26eb4e30d74e9cb9d0072c4e684
+=======
+guid: a753aac6bbfdf2a4dbc747be3d308e1b
+>>>>>>> origin/NguyenTuanAnh
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
