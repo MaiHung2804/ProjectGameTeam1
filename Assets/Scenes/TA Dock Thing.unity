@@ -11031,7 +11031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.06
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13832,7 +13832,7 @@ GameObject:
   - component: {fileID: 1040853777}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20212,8 +20212,7 @@ MonoBehaviour:
   moveSpeed: 5
   stopDistance: 0.1
   joystick: {fileID: 780644241}
-  gravity: -9.81
-  moveSmoothTime: 0.1
+  mainCamera: {fileID: 1040853779}
 --- !u!4 &1493065724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 449564, guid: c8b19df230669df4eb91d90849f0c80a, type: 3}

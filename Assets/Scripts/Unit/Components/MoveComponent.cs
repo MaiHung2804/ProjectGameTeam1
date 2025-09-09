@@ -5,17 +5,14 @@ using UnityEngine.Rendering;
 /// <summary>
 /// Quan ly di chuyen cua don vi.
 /// </summary>
-public class MoveComponent : MonoBehaviour
+public abstract class MoveComponent : MonoBehaviour
 {
     [Header("Move Settings")]
     [SerializeField] private float moveSpeed = 5f;  // Bien dang input
     [SerializeField] private float stopDistance = 0.1f;
-
     protected Vector3? targetPosition; // Them ? de cho phep null
     protected bool isMoving;    // Bien noi bo nen de protected
-
     public bool IsMoving => isMoving;
-
     public float MoveSpeed
     {
         get => moveSpeed;
@@ -27,22 +24,7 @@ public class MoveComponent : MonoBehaviour
         set => stopDistance = Mathf.Max(0f, value);
     }
 
-    /// <summary>
-    /// Dat vi tri dich va bat dau di chuyen den do.
-    /// </summary>
-    /// <param name="target"></param>
-    public virtual void MoveTo(Vector3 target)
-    {
-        targetPosition = target;
-        isMoving = true;
-    }
-
-
-    public virtual void Stop()
-    {
-        isMoving = false;
-        targetPosition = null;
-    }
+    
 
     protected virtual void Awake()
     {
@@ -50,15 +32,21 @@ public class MoveComponent : MonoBehaviour
         targetPosition = null;
     }
 
-    
+    protected virtual void Update()
+    {
+        HandleMoving();
+    }
 
-    //public virtual void HandleMoving()
-    //{
-      
-    //}
+    /// <summary>
+    /// Dat vi tri dich va bat dau di chuyen den do.
+    /// Dung abstract de bat buoc cac lop con phai override.
+    /// Dung virtual thi lop con co the override hoac khong. Lop con co the goi base.MoveTo(target) de su dung logic mac dinh.
+    /// </summary>
+    /// <param name="target"></param>
+    public abstract void MoveTo(Vector3 target);
+    public abstract void MoveByDirection(Vector3 direction);
+    public abstract void Stop();
 
-    //public virtual void MoveTo(Vector3 target)
-    //{ 
-    //}
+    protected abstract void HandleMoving();
 
 }
