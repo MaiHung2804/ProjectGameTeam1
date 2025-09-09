@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class health : Consumable
 {
-    public override void Use(GameObject user)
-    {
-        ///UpdateHealth
-    }
+   
 }

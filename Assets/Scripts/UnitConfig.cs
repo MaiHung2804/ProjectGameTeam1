@@ -7,10 +7,10 @@ public enum EnemyType
     Melee,
     Ranged
 }
-[CreateAssetMenu(fileName = "UnitConfig", menuName = "ScriptableObjects/UnitConfig", order = 1)]
+[CreateAssetMenu(fileName = "UnitConfig", menuName = "ScriptableObjects/UnitConfig")]
 public class UnitConfig : ScriptableObject
 {
-    public EnemyType Type; // Phân loại đánh xa hay cận chiến
+    public EnemyType Type; // Phân loại đánh xa hay cận chiến //
     public string ID; // Id của đơn vị
     public string EnemyName; // Tên đơn vị
     public string Description; // Mô tả nếu có
@@ -20,5 +20,5 @@ public class UnitConfig : ScriptableObject
     public float AttackRangeBase; // Tầm đánh
     public float MoveSpeedBase; // Tốc độ di chuyển
     public float CooldownBase; // Thời gian hồi chiêu
-    public GameObject UnitPrefabs; // Prefab của đơn vị
+    
 }

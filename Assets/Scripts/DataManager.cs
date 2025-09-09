@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestSaveSystem : MonoBehaviour
+public class DataManager: MonoBehaviour
 {
     public Player player;
     void Start()
@@ -17,13 +17,13 @@ public class TestSaveSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+     
     }
+
     private void OnApplicationQuit()
     {
         SaveData();
     }
-
     public void SaveData()
     {
         PlayerPrefs.SetInt("HighScore", player.HighScore);
