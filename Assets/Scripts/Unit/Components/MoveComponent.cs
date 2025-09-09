@@ -38,20 +38,6 @@ public class MoveComponent : MonoBehaviour
     }
 
 
-
-
-    public virtual void MoveDirection(Vector3 direction)
-    {
-        if (direction.sqrMagnitude < 0.01f)
-        {
-            isMoving = false;
-            return;
-        }
-        transform.position += direction.normalized * moveSpeed * Time.deltaTime;
-        isMoving = true;
-        targetPosition = null; // Huy vi tri dich khi di chuyen theo huong
-    }
-
     public virtual void Stop()
     {
         isMoving = false;
@@ -64,27 +50,15 @@ public class MoveComponent : MonoBehaviour
         targetPosition = null;
     }
 
-    protected virtual void Update()
-    {
-        HandleMoving();
+    
 
-    }
+    //public virtual void HandleMoving()
+    //{
+      
+    //}
 
-    private void HandleMoving()
-    {
-        if (targetPosition.HasValue && isMoving)
-        {
-            Vector3 direction = targetPosition.Value - transform.position;
-            float distance = direction.magnitude;
-            if (distance <= stopDistance)
-            {
-                Stop();
-            }
-            else
-            {
-                MoveDirection(direction);
-            }
-        }
-    }    
+    //public virtual void MoveTo(Vector3 target)
+    //{ 
+    //}
 
 }

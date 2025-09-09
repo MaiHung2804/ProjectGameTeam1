@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class PlayerMoveComponent : MoveComponent
 {
     [Header("Player Move Settings")]
     [SerializeField] private Joystick joystick;
     [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private Animator animator;
+    private Animator animator;
     
     private float verticalVelocity = 0f;
     private CharacterController characterController;
@@ -13,6 +14,9 @@ public class PlayerMoveComponent : MoveComponent
     [SerializeField] private float moveSmoothTime = 0.1f;
     private float currentMoveAmount = 0f;
     private float moveAmountVelocity = 0f; // Toc do thay doi cua moveAmount
+
+    private float lastAnimatorMove = 0f;
+    private const float animatorMoveThreshold = 0.1f;
 
     protected override void Awake()
     {
@@ -27,7 +31,7 @@ public class PlayerMoveComponent : MoveComponent
 
 
 
-    protected override void Update()
+    protected void Update()
     {
         // Khong goi base.Update() de tranh viec di chuyen den targetPosition
         // Player se di chuyen theo joystick
@@ -58,41 +62,32 @@ public class PlayerMoveComponent : MoveComponent
             Stop();
             return;
         }
-        
         Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         Vector3 joystickInput = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
         Vector3 input = keyboardInput + joystickInput;
 
-        float moveAmount =   Mathf.Clamp01(input.magnitude);
-        currentMoveAmount = Mathf.SmoothDamp(currentMoveAmount, moveAmount, ref moveAmountVelocity, moveSmoothTime);
+        float inputMagnitude = Mathf.Clamp01(input.magnitude);
+        float targetSpeed = inputMagnitude * MoveSpeed;
 
+        Vector3 moveDir = input.sqrMagnitude > 0.01f ? input.normalized : Vector3.zero;
+        Vector3 move = moveDir * targetSpeed;
+        move.y = 0;
+        characterController.Move(move * Time.deltaTime);
 
+        //currentMoveAmount = inputMagnitude;
 
-        if (input.sqrMagnitude < 0.01f)
+        // Muot gia tri speed
+        currentMoveAmount = Mathf.Lerp(currentMoveAmount, inputMagnitude, Time.deltaTime * 10f);
+
+        // Xoay ra hien tuong nhay giat khi di chuyen cham
+        if (currentMoveAmount > 0.1f)
         {
-            Stop();
+            Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
         }
-        else
-        {
-            MoveDirection(input);
-            UpdateAnimatorMove(currentMoveAmount);
 
-        }
-    }    
+        UpdateAnimatorMove(currentMoveAmount);
 
-    public override void MoveDirection(Vector3 direction)
-    {
-        if (direction.sqrMagnitude < 0.01f)
-        {
-            isMoving = false;
-            return;
-        }
-        Vector3 move = direction.normalized * MoveSpeed * Time.deltaTime;
-        move.y = 0; // Khong di chuyen theo truc y, tranh anh huong boi yeu to khac
-        characterController.Move(move);
-        
-        isMoving = true;
-        //targetPosition = null; // TAM THOI chua co di chuyen toi target nao
 
     }
 
@@ -124,7 +119,8 @@ public class PlayerMoveComponent : MoveComponent
 
     private void UpdateAnimatorMove(float moveAmount)
     {
-        animator.SetFloat("Move", moveAmount);
+        // Cap nhat Animation Speed: 0 Idle , 0.2 Walk, 1 Run
+        animator.SetFloat("Speed", moveAmount);
     }
 
 }
