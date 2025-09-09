@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType
-{
-    Weapon,
-    Consumable,
+//public enum ItemType
+//{
+//    Weapon,
+//    Consumable,
     
-}
+//}
 [CreateAssetMenu(fileName = "ItemConfig", menuName = "ScriptableObjects/ItemConfig", order = 1)]
 public class ItemConfig : ScriptableObject
 {
