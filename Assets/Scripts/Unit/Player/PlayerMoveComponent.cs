@@ -14,6 +14,8 @@ public class PlayerMoveComponent : MoveComponent
     private float gravity = -9.81f;
     private float verticalVelocity = 0f;
     private float currentSpeed = 0f;
+    private float airborneThreshold = 0.2f; // Thoi gian cho phep nhan vat nhay sau khi roi khoi mat dat
+    private float lastGroundedTime = 0f;
 
 
     protected override void Awake()
@@ -68,8 +70,13 @@ public class PlayerMoveComponent : MoveComponent
     {
         UpdateVerticalVelocity();
 
+        // Cap nhat thoi diem cuoi cung nhan vat tiep dat
+        if (characterController.isGrounded)
+            lastGroundedTime = Time.time;
+
         Vector3 input = GetInputFromDevices();
-        if (input.sqrMagnitude < 0.01f) 
+        //if (input.sqrMagnitude < 0.01f)
+        if (IsFalling() || input.sqrMagnitude < 0.01f) 
         {
             Vector3 gravityMove = new Vector3(0, verticalVelocity, 0);
             characterController.Move(gravityMove * Time.deltaTime);
@@ -104,6 +111,27 @@ public class PlayerMoveComponent : MoveComponent
         }
 
     }
+
+    private bool IsFalling()
+    {
+        if (characterController.isGrounded)
+        {
+            lastGroundedTime = Time.time;
+            return false;
+        }
+        else
+        {
+            if (Time.time - lastGroundedTime > airborneThreshold)
+            {
+                return true; 
+            }
+            else
+            {
+                return false; 
+            }
+        }
+    }
+
 
     private Vector3 GetInputFromDevices()
     {
