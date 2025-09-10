@@ -31,7 +31,7 @@ public abstract class MoveComponent : MonoBehaviour
         isMoving = false;
         targetPosition = null;
     }
-
+    
     protected virtual void Update()
     {
         HandleMoving();

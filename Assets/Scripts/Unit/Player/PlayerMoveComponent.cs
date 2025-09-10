@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 public class PlayerMoveComponent : MoveComponent
@@ -13,7 +14,6 @@ public class PlayerMoveComponent : MoveComponent
     private float gravity = -9.81f;
     private float verticalVelocity = 0f;
     private float currentSpeed = 0f;
-    private float moveSmoothTime = 0.1f;
 
 
     protected override void Awake()
@@ -26,7 +26,6 @@ public class PlayerMoveComponent : MoveComponent
         {
             enabled = false; // Vo hieu hoa component PlayerMoveComponent luc nay
         }
-        
     }
 
 
@@ -35,6 +34,9 @@ public class PlayerMoveComponent : MoveComponent
         targetPosition = target;
         isMoving = true;
     }
+
+
+
 
     public override void MoveByDirection(Vector3 direction)
     {
@@ -49,14 +51,6 @@ public class PlayerMoveComponent : MoveComponent
         Vector3 move = direction.normalized * currentSpeed;
 
         // Ap dung gravity
-        if (characterController.isGrounded)
-        {
-            verticalVelocity = 0f; // Reset vertical velocity when grounded
-        }
-        else
-        {
-            verticalVelocity += gravity * Time.deltaTime;
-        }
         move.y = verticalVelocity;
         characterController.Move(move * Time.deltaTime);
         UpdateAnimatorMove(currentSpeed);
@@ -70,33 +64,24 @@ public class PlayerMoveComponent : MoveComponent
         UpdateAnimatorMove(0f);
     }
 
-
     protected override void HandleMoving()
     {
-        // Xu ly Input tu ban phim va joystick
-        Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        Vector3 joystickInput = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
-        Vector3 input = keyboardInput + joystickInput;
+        UpdateVerticalVelocity();
 
-        if (input.sqrMagnitude < 0.01f)
+        Vector3 input = GetInputFromDevices();
+        if (input.sqrMagnitude < 0.01f) 
         {
+            Vector3 gravityMove = new Vector3(0, verticalVelocity, 0);
+            characterController.Move(gravityMove * Time.deltaTime);
             Stop();
             return;
         }
+        
+        
 
-        // Chuyen doi input theo huong camera
-        Vector3 camForward = mainCamera.transform.forward;
-        camForward.y = 0;
-        camForward.Normalize();
-        Vector3 camRight = mainCamera.transform.right;
-        camRight.y = 0;
-        camRight.Normalize();
 
         // Tinh huong di chuyen theo camera
-        Vector3 moveDir = (camForward * input.z + camRight * input.x).normalized;
-
-        // Lay theo toa do dia phuong cua nhan vat. Nay khong dung nua
-        //Vector3 moveDir = input.sqrMagnitude > 0.01f ? input.normalized : Vector3.zero;
+        Vector3 moveDir = ConvertInputToDirectionByCamera(input);
 
         // Tinh currentSpeed
         float inputMagnitude = Mathf.Clamp01(input.magnitude);
@@ -106,6 +91,47 @@ public class PlayerMoveComponent : MoveComponent
 
 
     }
+
+    private void UpdateVerticalVelocity()
+    {
+        if (characterController.isGrounded)
+        {
+            verticalVelocity = 0f;
+        }
+        else
+        {
+            verticalVelocity += gravity * Time.deltaTime;
+        }
+
+    }
+
+    private Vector3 GetInputFromDevices()
+    {
+        Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 joystickInput = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+        return keyboardInput + joystickInput;
+    }    
+
+    private Vector3 ConvertInputToDirectionByCamera(Vector3 input)
+    {
+
+        // Chuyen doi input theo huong nhin trai phai tu Camera. Rat quan trong
+        Vector3 camForward = mainCamera.transform.forward;
+        camForward.y = 0;
+        camForward.Normalize();
+        Vector3 camRight = mainCamera.transform.right;
+        camRight.y = 0;
+        camRight.Normalize();
+
+        // Tinh huong di chuyen theo camera
+        return (camForward * input.z + camRight * input.x).normalized;
+
+
+        // Lay theo toa do dia phuong cua nhan vat. Nay khong dung nua
+        // Vector3 moveDir = input.sqrMagnitude > 0.01f ? input.normalized : Vector3.zero;
+        // Return moveDir;
+    }
+
 
     private bool CheckNessessaryComponent()
     {
