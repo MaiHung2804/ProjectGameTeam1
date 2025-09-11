@@ -11085,6 +11085,14 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.85
       objectReference: {fileID: 0}
+    - target: {fileID: 4384717468944221313, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
+      propertyPath: m_SkinWidth
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384717468944221313, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20236,7 +20244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cfa3313b456024aae05d86cf850f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
 --- !u!4 &1493065724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 449564, guid: c8b19df230669df4eb91d90849f0c80a, type: 3}

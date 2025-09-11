@@ -6,6 +6,7 @@ using UnityEngine;
 public class AnimationComponent : MonoBehaviour
 {
     private Animator animator;
+    private bool isLandingEnd = false;
 
     protected virtual void Awake()
     {
@@ -22,23 +23,40 @@ public class AnimationComponent : MonoBehaviour
 
     public void MoveSpeed(float speed)
     {
+        // MoveSpeed = 0 -> Idle
+        // MoveSpeed = 2 -> Walk
+        // MoveSpeed = 5 -> Run
         animator.SetFloat("MoveSpeed", speed);
     }
 
-    public void IsJump(bool isJumping)
+    public void Jumping(bool jumping)
     {
-        animator.SetBool("IsJumping", isJumping);
+        animator.SetBool("Jumping", jumping);
     }
 
-    public void IsFalling(bool isFalling)
+    public void Falling(bool falling)
     {
-        animator.SetBool("IsFalling", isFalling);
+        animator.SetBool("Falling", falling);
     }
 
-    public void IsLanding(bool isLanding, float landSpeed)
+    public void Landing(bool landing, float landSpeed)
     {
-        animator.SetBool("IsLanding", isLanding);
+        animator.SetBool("Landing", landing);
         animator.SetFloat("LandSpeed", landSpeed);
+        if (landing)
+        {
+            isLandingEnd = false;
+        }
+    }
+
+    public bool IsLandingEnd
+    { get => isLandingEnd; }
+
+    // Animation Event
+    public void TurnOnLandingEnd()
+    {
+        isLandingEnd = true;
+        // Debug.Log("Landing End");
     }
 
 }
