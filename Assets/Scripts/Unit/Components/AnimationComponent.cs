@@ -50,13 +50,16 @@ public class AnimationComponent : MonoBehaviour
     }
 
     public bool IsLandingEnd
-    { get => isLandingEnd; }
+    { get => isLandingEnd;
+      set => isLandingEnd = value;
+    }
+
 
     // Animation Event
     public void TurnOnLandingEnd()
     {
         isLandingEnd = true;
-        // Debug.Log("Landing End");
+        Debug.Log("Landing End Animation Event");
     }
 
 }

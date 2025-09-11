@@ -7,17 +7,22 @@ public class PlayerMoveComponent : MoveComponent
     [Header("Player Move Settings")]
     [SerializeField] private Joystick joystick;
     [SerializeField] private Camera mainCamera;
+    
+
 
     private Animator animator;
     private AnimationComponent animationComponent;
     private CharacterController characterController;
-
+    
+    private KeyCode jumpKey = KeyCode.Space;
     private float gravity = -9.81f;
+    private float jumpForce = 6f;
     private float verticalVelocity = 0f;
     private float currentSpeed = 0f;
     private float airborneThreshold = 0.4f; // Thoi gian cho phep nhan vat nhay sau khi roi khoi mat dat
     private float lastGroundedTime = 0f;
     private Vector3 lastMoveDirection = Vector3.zero;
+    private float landingSpeed = 0f; 
 
 
 
@@ -47,7 +52,9 @@ public class PlayerMoveComponent : MoveComponent
         {
             lastGroundedTime = -Mathf.Infinity;
         }
-            
+        
+        // Dat nhan vat luc dau o tren cao
+
     }
 
     public override void MoveTo(Vector3 target)
@@ -80,14 +87,29 @@ public class PlayerMoveComponent : MoveComponent
     {
         moveState = MoveState.Idle;
         targetPosition = null;
-        animationComponent.MoveSpeed(0f);
+
+        // Lam the nay animation tut ve 0 qua nhanh
+        //animationComponent.MoveSpeed(0f);
     }
 
     protected override void HandleMoving()
     {
+        
         UpdateVerticalVelocity();
 
-        if (  CheckRealFalling() )
+        if (moveState == MoveState.Jumping)
+        {
+            HandleMovingInJumping();
+            return;
+        }
+
+        if (moveState == MoveState.Idle)         
+        {
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, MoveSpeed * 1.5f * Time.deltaTime);
+            animationComponent.MoveSpeed(currentSpeed);
+        }
+
+        if ( CheckRealFalling() )
         {
             HanldeFalling();
             return;
@@ -99,15 +121,32 @@ public class PlayerMoveComponent : MoveComponent
             return;
         }
 
-        if ( ( moveState == MoveState.Landing) && animationComponent.IsLandingEnd )
+        // Chua chay chuan lam. DANG CO VAN DE CAN XEM LAI
+        if ((moveState == MoveState.Landing) && animationComponent.IsLandingEnd)
         {
-            // Debug.Log("Landing End");
             moveState = MoveState.Idle;
+            Debug.Log("Landing End");
             animationComponent.Landing(false, currentSpeed);
+            animationComponent.IsLandingEnd = false;
         }
 
+        if ( JumpInputFromDevices() )
+        {
+            StartJumping();
+            return;
+        }
 
-        Vector3 input = GetInputFromDevices();
+        Vector3 input = MoveInputFromDevices();
+
+
+
+        if (!((moveState == MoveState.Moving) || (moveState == MoveState.Idle)))
+        {
+            Debug.Log ("Move State: " + moveState.ToString()); 
+        } // Chi nhan input khi dang o trang thai Moving hoac Idle
+
+
+
         if (input.sqrMagnitude < 0.05f) // Khong de qua nho de tranh rung
         {
             Stop();
@@ -122,11 +161,19 @@ public class PlayerMoveComponent : MoveComponent
 
     private void HanldeFalling()
     {
+        if (moveState == MoveState.Moving)
+        {
+            landingSpeed = currentSpeed;
+        }
+
+        // Giu nguyen van toc khi roi
+        //landingSpeed = Mathf.MoveTowards(landingSpeed, 0f, MoveSpeed * 0.5f * Time.deltaTime); // 0.5f la he so giam toc khi roi, cang nho cang cham
+
         // Ap dung van toc ngang
         Vector3 horizontalMove = Vector3.zero;
         if (currentSpeed > 0.1f)
         {
-            horizontalMove = lastMoveDirection * currentSpeed;
+            horizontalMove = lastMoveDirection * landingSpeed;
         }
         // Ap dung gravity
         Vector3 gravityMove = new Vector3(horizontalMove.x, verticalVelocity, horizontalMove.y);
@@ -134,7 +181,7 @@ public class PlayerMoveComponent : MoveComponent
         characterController.Move(gravityMove * Time.deltaTime);
 
         // Bat dau roi
-        if ( (moveState == MoveState.Idle) || (moveState == MoveState.Moving) )
+        if ( (moveState == MoveState.Idle) || (moveState == MoveState.Moving)  )
         {
             // Debug.Log("Start Falling");  
             moveState = MoveState.Falling;
@@ -146,8 +193,49 @@ public class PlayerMoveComponent : MoveComponent
     private void HandleLanding()
     {
         animationComponent.Falling(false);
-        animationComponent.Landing(true, currentSpeed);
+        animationComponent.Landing(true, landingSpeed);
         moveState = MoveState.Landing;
+    }
+
+    private void StartJumping()
+    {
+        float jumpHorizontalSpeed = 0;
+        Vector3 jumpDirection = Vector3.zero;
+        if (currentSpeed > 0.1f)
+        {
+            jumpHorizontalSpeed = currentSpeed * 1.5f;
+            jumpDirection = lastMoveDirection;
+        }
+        verticalVelocity = jumpForce;
+        moveState = MoveState.Jumping;
+        animationComponent.Jumping(true);
+
+        landingSpeed = jumpHorizontalSpeed;
+    }
+
+    private void HandleMovingInJumping()
+    {
+
+        Vector3 move = lastMoveDirection * landingSpeed;
+        move.y = verticalVelocity;
+        characterController.Move(move * Time.deltaTime);
+
+        // Ap dung giam toc khi bay
+        verticalVelocity += gravity * Time.deltaTime;
+
+        Debug.Log("Jumping Moving");
+
+        // Nhay cuc diem, bat dau roi
+        if (verticalVelocity <= 0f)
+        {
+            Debug.Log("Start Falling from Jumping");
+
+            moveState = MoveState.Falling;
+
+            animationComponent.Jumping(false);
+            animationComponent.Falling(true);
+        }
+
     }
 
     private void UpdateVerticalVelocity()
@@ -165,6 +253,11 @@ public class PlayerMoveComponent : MoveComponent
 
     private bool CheckRealFalling()
     {
+        if (moveState == MoveState.Idle)
+        {
+            lastGroundedTime = Time.time;
+            return false;
+        }
         if (characterController.isGrounded)
         {
             lastGroundedTime = Time.time;
@@ -185,12 +278,18 @@ public class PlayerMoveComponent : MoveComponent
     }
 
 
-    private Vector3 GetInputFromDevices()
+    private Vector3 MoveInputFromDevices()
     {
         Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         Vector3 joystickInput = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
         return keyboardInput + joystickInput;
     }    
+
+    private bool JumpInputFromDevices()
+    {
+        bool keyboardJump = Input.GetKeyDown(jumpKey);
+        return keyboardJump;
+    }
 
     private Vector3 ConvertInputToDirectionByCamera(Vector3 input)
     {
