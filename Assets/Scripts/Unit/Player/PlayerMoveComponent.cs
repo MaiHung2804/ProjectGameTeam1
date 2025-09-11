@@ -9,6 +9,7 @@ public class PlayerMoveComponent : MoveComponent
     [SerializeField] private Camera mainCamera;
 
     private Animator animator;
+    private AnimationComponent animationComponent;
     private CharacterController characterController;
 
     private float gravity = -9.81f;
@@ -16,20 +17,33 @@ public class PlayerMoveComponent : MoveComponent
     private float currentSpeed = 0f;
     private float airborneThreshold = 0.2f; // Thoi gian cho phep nhan vat nhay sau khi roi khoi mat dat
     private float lastGroundedTime = 0f;
+    private bool isFalling = false;
+    private bool isLanding = false;
 
 
     protected override void Awake()
     {
         base.Awake();
+        currentSpeed = 0f;
+
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        currentSpeed = 0f;
+        animationComponent = GetComponent<AnimationComponent>();
+        
         if (!CheckNessessaryComponent())
         {
             enabled = false; // Vo hieu hoa component PlayerMoveComponent luc nay
         }
     }
 
+    private void Start()
+    {
+        // Cap nhat thoi diem cuoi cung nhan vat tiep dat
+        if (characterController.isGrounded)
+            lastGroundedTime = Time.time;
+        else 
+            lastGroundedTime = -Mathf.Infinity; 
+    }
 
     public override void MoveTo(Vector3 target)
     {
@@ -55,48 +69,73 @@ public class PlayerMoveComponent : MoveComponent
         // Ap dung gravity
         move.y = verticalVelocity;
         characterController.Move(move * Time.deltaTime);
-        UpdateAnimatorMove(currentSpeed);
-
     }
 
     public override void Stop()
     {
         isMoving = false;
         targetPosition = null;
-        UpdateAnimatorMove(0f);
+
+        // Cap nhat animation
+        animationComponent.MoveSpeed(0f);
     }
 
     protected override void HandleMoving()
     {
         UpdateVerticalVelocity();
+              
+        if (CheckRealFalling())
+        {
+            HanldeFalling();
+            return;
+        }
 
-        // Cap nhat thoi diem cuoi cung nhan vat tiep dat
-        if (characterController.isGrounded)
-            lastGroundedTime = Time.time;
+        if (isFalling && characterController.isGrounded)
+        {
+            HandleLanding();
+            return;
+        }
+
+
 
         Vector3 input = GetInputFromDevices();
-        //if (input.sqrMagnitude < 0.01f)
-        if (IsFalling() || input.sqrMagnitude < 0.01f) 
+        if (input.sqrMagnitude < 0.01f)
         {
-            Vector3 gravityMove = new Vector3(0, verticalVelocity, 0);
-            characterController.Move(gravityMove * Time.deltaTime);
             Stop();
             return;
         }
-        
-        
+        else
+        {
+             HandleMovingByInput(input);
+        }
 
+    }
 
-        // Tinh huong di chuyen theo camera
-        Vector3 moveDir = ConvertInputToDirectionByCamera(input);
+    private void HanldeFalling()
+    {
+        Vector3 gravityMove = new Vector3(0, verticalVelocity, 0);
+        characterController.Move(gravityMove * Time.deltaTime);
 
-        // Tinh currentSpeed
-        float inputMagnitude = Mathf.Clamp01(input.magnitude);
-        currentSpeed = inputMagnitude * MoveSpeed;
+        // Bat dau roi
+        if (!isFalling)
+        {
+            Debug.Log("Start Falling");
+            isMoving = false; 
+            isFalling = true;
+            isLanding = false; 
+            animationComponent.IsFalling(isFalling);
+        }
+    }
 
-        MoveByDirection(moveDir);
+    private void HandleLanding()
+    {
+        Debug.Log("Landing");
 
+        isFalling = false;
+        isLanding = true;
 
+        animationComponent.IsFalling(isFalling);
+        animationComponent.IsLanding(isLanding, currentSpeed);
     }
 
     private void UpdateVerticalVelocity()
@@ -112,7 +151,7 @@ public class PlayerMoveComponent : MoveComponent
 
     }
 
-    private bool IsFalling()
+    private bool CheckRealFalling()
     {
         if (characterController.isGrounded)
         {
@@ -160,6 +199,20 @@ public class PlayerMoveComponent : MoveComponent
         // Return moveDir;
     }
 
+    private void HandleMovingByInput(Vector3 input)
+    {
+        // Tinh huong di chuyen theo camera
+        Vector3 moveDir = ConvertInputToDirectionByCamera(input);
+
+        // Tinh currentSpeed
+        float inputMagnitude = Mathf.Clamp01(input.magnitude);
+        currentSpeed = inputMagnitude * MoveSpeed;
+        MoveByDirection(moveDir);
+
+        // Cap nhat animation
+        animationComponent.MoveSpeed(currentSpeed);
+
+    }
 
     private bool CheckNessessaryComponent()
     {
@@ -183,14 +236,15 @@ public class PlayerMoveComponent : MoveComponent
             Debug.LogError("Main Camera is not assigned and no Camera tagged as MainCamera found.");
             return false;
         }
+        if (animationComponent == null)
+            {
+                Debug.LogError("AnimationComponent is missing.");
+                return false;
+        }
 
         return true;
     }
 
-    private void UpdateAnimatorMove(float moveAmount)
-    {
-        // Cap nhat Animation Speed: 0 Idle , 2 Walk, 5 Run
-        animator.SetFloat("Speed", moveAmount);
-    }
+   
 
 }

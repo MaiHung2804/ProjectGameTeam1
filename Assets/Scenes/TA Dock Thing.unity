@@ -11031,7 +11031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.88
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11092,6 +11092,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 332547309770519870, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1492103474}
+    - targetCorrespondingSourceObject: {fileID: 332547309770519870, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1492103477}
   m_SourcePrefab: {fileID: 100100000, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
 --- !u!4 &855910236 stripped
 Transform:
@@ -20221,6 +20224,19 @@ MonoBehaviour:
   stopDistance: 0.1
   joystick: {fileID: 780644241}
   mainCamera: {fileID: 1040853779}
+--- !u!114 &1492103477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492103470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6cfa3313b456024aae05d86cf850f1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!4 &1493065724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 449564, guid: c8b19df230669df4eb91d90849f0c80a, type: 3}
