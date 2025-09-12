@@ -2,7 +2,14 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+<<<<<<< Updated upstream
 .utmp/
+=======
+
+.utmp/
+
+
+>>>>>>> Stashed changes
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -10,11 +17,17 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+<<<<<<< Updated upstream
 *.log
 
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
+=======
+
+*.log
+
+>>>>>>> Stashed changes
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -70,7 +83,13 @@ mono_crash.*
 *.apk
 *.aab
 *.unitypackage
+<<<<<<< Updated upstream
 *.unitypackage.meta
+=======
+
+*.unitypackage.meta
+
+>>>>>>> Stashed changes
 *.app
 
 # Crashlytics generated file
