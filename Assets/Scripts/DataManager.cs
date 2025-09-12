@@ -5,20 +5,29 @@ using UnityEngine.UI;
 
 public class DataManager: MonoBehaviour
 {
+    public static DataManager Instance {  get; private set; }
     public PlayerData player;
-    void Start()
+
+    private void Awake()
     {
-        LoadPlayerName();
-        //LoadData();
-        //LoadPlayerName();
-        //LoadScore();
-        //LoadGold();
-        //LoadPosition();
-        //Debug.Log("Data Load Path: " + Application.persistentDataPath);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            if (player == null)
+            {
+                player = new PlayerData();
+            }
+            LoadData();           
+
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-
-
+    
     private void OnApplicationQuit()
     {
         SaveData();
@@ -26,14 +35,23 @@ public class DataManager: MonoBehaviour
 
     public void SaveData()
     {
+        player = new PlayerData
+        {
+            userHp =player.highScore,
+            userLevel = player.userLevel,
+            userGold = player.userGold,
+            highScore = player.highScore,
+            userName = player.userName,
+            userPositions = player.userPositions
+        };
         PlayerPrefs.SetInt("HighScore", player.highScore);
         PlayerPrefs.SetString("UserName", player.userName);
         PlayerPrefs.SetFloat("UserPositionX", player.userPositions[0]);
         PlayerPrefs.SetFloat("UserPositionY", player.userPositions[1]);
         PlayerPrefs.SetFloat("UserPositionZ", player.userPositions[2]);
-        PlayerPrefs.SetInt("CurrentHp", player.currentHp);
-        PlayerPrefs.SetInt("CurrentLevel", player.currentLevel);
-        PlayerPrefs.SetInt("CurrentGold", player.currentGold);
+        PlayerPrefs.SetInt("CurrentHp", player.userHp);
+        PlayerPrefs.SetInt("CurrentLevel", player.userLevel);
+        PlayerPrefs.SetInt("CurrentGold", player.userGold);
         PlayerPrefs.Save();
         Debug.Log("Data Saved");
     }
@@ -43,36 +61,29 @@ public class DataManager: MonoBehaviour
         Debug.Log("Data Deleted");
     }
 
-    public int LoadData()
+    public void LoadData()
     {
-        player.currentHp = PlayerPrefs.GetInt("CurrentHp");
-        player.currentLevel = PlayerPrefs.GetInt("CurrentLevel");
-        Debug.Log("CurrentHp: " + player.currentHp);
-        Debug.Log("CurrentLevel: " + player.currentLevel);
-        Debug.Log("Data Load Pathh: " + Application.persistentDataPath);
-        return player.currentHp + player.currentLevel;
+        player = new PlayerData
+        {
+            userHp = PlayerPrefs.GetInt("CurrentHp", player.userHp),
+            userLevel = PlayerPrefs.GetInt("CurrentLevel", player.userLevel),
+            userGold = PlayerPrefs.GetInt("CurrentGold", player.userGold),
+            highScore = PlayerPrefs.GetInt("HighScore", player.highScore),
+            userName = PlayerPrefs.GetString("UserName", player.userName),
+            userPositions = new Vector3(
+                PlayerPrefs.GetFloat("UserPositionX", player.userPositions[0]),
+                PlayerPrefs.GetFloat("UserPositionY", player.userPositions[1]),
+                PlayerPrefs.GetFloat("UserPositionZ", player.userPositions[2])
+            )
+        };
+       
+        
     }
-    public string LoadPlayerName()
+ 
+    public void ClearData()
     {
-        return player.userName = PlayerPrefs.GetString("UserName");    
-    }
-    public int LoadScore()
-    {
-        player.highScore = PlayerPrefs.GetInt("HighScore");
-        return player.highScore;
-        Debug.Log("HighScore: " + player.highScore);
-    }
-    public int LoadGold() 
-    {
-        player.currentGold = PlayerPrefs.GetInt("CurrentGold");
-        return player.currentGold;
-        Debug.Log("CurrentGold: " + player.currentGold);
-    }
-    public float LoadPosition()
-    {
-        player.userPositions[0] = PlayerPrefs.GetFloat("UserPositionX");
-        player.userPositions[1] = PlayerPrefs.GetFloat("UserPositionY");
-        player.userPositions[2] = PlayerPrefs.GetFloat("UserPositionZ");
-        return player.userPositions[0] + player.userPositions[1] + player.userPositions[2];
+        PlayerPrefs.DeleteAll();
+        player = new PlayerData();
+        Debug.Log("All player data cleared.");
     }
 }
