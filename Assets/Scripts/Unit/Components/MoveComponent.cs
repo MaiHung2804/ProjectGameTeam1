@@ -7,12 +7,23 @@ using UnityEngine.Rendering;
 /// </summary>
 public abstract class MoveComponent : MonoBehaviour
 {
+    public enum MoveState
+    {
+        Idle,
+        Moving,
+        Falling,
+        Jumping,
+        Landing
+    }
+
+
     [Header("Move Settings")]
     [SerializeField] private float moveSpeed = 5f;  // Bien dang input
     [SerializeField] private float stopDistance = 0.1f;
+
     protected Vector3? targetPosition; // Them ? de cho phep null
-    protected bool isMoving;    // Bien noi bo nen de protected
-    public bool IsMoving => isMoving;
+    protected MoveState moveState; 
+
     public float MoveSpeed
     {
         get => moveSpeed;
@@ -28,8 +39,8 @@ public abstract class MoveComponent : MonoBehaviour
 
     protected virtual void Awake()
     {
-        isMoving = false;
         targetPosition = null;
+        moveState = MoveState.Idle;
     }
     
     protected virtual void Update()
