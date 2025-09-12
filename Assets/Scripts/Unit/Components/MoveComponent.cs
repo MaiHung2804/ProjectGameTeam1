@@ -45,7 +45,7 @@ public abstract class MoveComponent : MonoBehaviour
     
     protected virtual void Update()
     {
-        HandleMoving();
+        HandleActivites();
     }
 
     /// <summary>
@@ -54,10 +54,20 @@ public abstract class MoveComponent : MonoBehaviour
     /// Dung virtual thi lop con co the override hoac khong. Lop con co the goi base.MoveTo(target) de su dung logic mac dinh.
     /// </summary>
     /// <param name="target"></param>
-    public abstract void MoveTo(Vector3 target);
-    public abstract void MoveByDirection(Vector3 direction);
-    public abstract void Stop();
-
-    protected abstract void HandleMoving();
+    public virtual void MoveTo(Vector3 target)
+    {   
+        targetPosition = target;
+        moveState = MoveState.Moving;
+    }
+    public virtual void MoveByDirection(Vector3 direction)
+    {
+        moveState = MoveState.Moving;
+    }
+    public virtual void Stop()
+    {
+        targetPosition = null;
+        moveState = MoveState.Idle;
+    }
+    protected abstract void HandleActivites();
 
 }
