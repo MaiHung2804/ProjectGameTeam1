@@ -295,13 +295,16 @@ public class PlayerMoveComponent : MoveComponent
 
     private bool CheckRealFalling()
     {
-        if (verticalVelocity < verticalVelocityMax)
+
+        //return  characterController.velocity.y  <  -Mathf.Epsilon && !characterController.isGrounded;
+        if (verticalVelocity < verticalVelocityMax) 
         {
             if ( IsGroundedByRaycast() )
                 return false;
             return true;
         }
         return false;
+        
     }
 
 
