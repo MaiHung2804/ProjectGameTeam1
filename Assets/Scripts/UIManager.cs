@@ -12,9 +12,6 @@ public class UIManager : MonoBehaviour
     public GameObject CanvasInput;
     public TMP_InputField playername;
     public PlayerData playerData;
-
-
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab)) // Nhấn Tab hiện UI Menu
@@ -28,7 +25,6 @@ public class UIManager : MonoBehaviour
             CanvasMenu.SetActive(isUIVisible);
         }
     }
-
     public void NewGameButton() // Khi ấn vào nút Newgame, đặt các giá trị về ban đầu
     {
         dataManager.DeleteData();
@@ -46,31 +42,24 @@ public class UIManager : MonoBehaviour
         Application.Quit();
         Debug.Log("Game is exiting");
     }
-
     public void SaveData() // Ấn vào Save để lưu dữ liệu
     {
         DataManager.Instance.SaveData();        
         Debug.Log("Data is saved");
     }
-
-
     public void ShowCanvasInput() // Hiện CanvasInput để nhập tên
     {
         CanvasMenu.SetActive(false);
         CanvasInput.SetActive(true);
     }
-
     public void BackToMenu(string sceneName) // Quay về Menu chính
     {
         SceneManager.LoadScene(sceneName);
         Debug.Log("Back to Menu");
     }
-
-    public void LoadGame() // Load dữ liệu khi ấn SaveGame
+    public void LoadGame(string sceneName) // Load dữ liệu khi ấn SaveGame
     {
         DataManager.Instance.LoadData();
-        SceneManager.LoadScene("Level1");
-        Debug.Log("Data is loaded");
     }
 
 }

@@ -1,57 +1,71 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DataManager: MonoBehaviour
 {
-    public static DataManager Instance {  get; private set; }
+    public static DataManager Instance;
     public PlayerData player;
+    public Transform playerTransform;
 
-    private void Awake()
+    private void Awake() 
     {
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            if (player == null)
-            {
-                player = new PlayerData();
-            }
-            LoadData();           
-
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            LoadData();
         }
         else
         {
             Destroy(gameObject);
         }
     }
+    private void OnDestroy() // Hủy đăng ký sự kiện khi đối tượng bị hủy
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            playerTransform = player.transform;
+        }
+        if (PlayerPrefs.HasKey("PosX"))
+        {
+            float x = PlayerPrefs.GetFloat("PosX");
+            float y = PlayerPrefs.GetFloat("PosY");
+            float z = PlayerPrefs.GetFloat("PosZ");
+            Vector3 newPos = new Vector3(x, y, z);
 
-    
-    private void OnApplicationQuit()
+            if (playerTransform != null)
+            {
+                playerTransform.position = newPos;
+                Debug.Log("Đã load vị trí Player: " + newPos);
+            }
+        } 
+    }
+    private void OnApplicationQuit() // Khi thoát game tự động lưu dữ liệu
     {
         SaveData();
     }
-
-    public void SaveData()
+    public void SaveData() // Lưu dữ liệu
     {
-        player = new PlayerData
-        {
-            userHp =player.highScore,
-            userLevel = player.userLevel,
-            userGold = player.userGold,
-            highScore = player.highScore,
-            userName = player.userName,
-            userPositions = player.userPositions
-        };
-        PlayerPrefs.SetInt("HighScore", player.highScore);
         PlayerPrefs.SetString("UserName", player.userName);
-        PlayerPrefs.SetFloat("UserPositionX", player.userPositions[0]);
-        PlayerPrefs.SetFloat("UserPositionY", player.userPositions[1]);
-        PlayerPrefs.SetFloat("UserPositionZ", player.userPositions[2]);
-        PlayerPrefs.SetInt("CurrentHp", player.userHp);
-        PlayerPrefs.SetInt("CurrentLevel", player.userLevel);
-        PlayerPrefs.SetInt("CurrentGold", player.userGold);
+        PlayerPrefs.SetInt("Level", player.userLevel);
+        PlayerPrefs.SetInt("Health", player.userHp);
+        PlayerPrefs.SetInt("Gold", player.userGold);
+        PlayerPrefs.SetInt("HighScore", player.highScore);
+        PlayerPrefs.SetInt("Experience", player.currentExperience);
+        PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
+        PlayerPrefs.SetFloat("PosX", playerTransform.position.x);
+        PlayerPrefs.SetFloat("PosY", playerTransform.position.y);
+        PlayerPrefs.SetFloat("PosZ", playerTransform.position.z);
+        PlayerPrefs.SetInt("Damage", player.userDamage);
         PlayerPrefs.Save();
         Debug.Log("Data Saved");
     }
@@ -60,30 +74,29 @@ public class DataManager: MonoBehaviour
         PlayerPrefs.DeleteAll();
         Debug.Log("Data Deleted");
     }
-
-    public void LoadData()
+    public void LoadData() // Load dữ liệu
     {
-        player = new PlayerData
-        {
-            userHp = PlayerPrefs.GetInt("CurrentHp", player.userHp),
-            userLevel = PlayerPrefs.GetInt("CurrentLevel", player.userLevel),
-            userGold = PlayerPrefs.GetInt("CurrentGold", player.userGold),
-            highScore = PlayerPrefs.GetInt("HighScore", player.highScore),
-            userName = PlayerPrefs.GetString("UserName", player.userName),
-            userPositions = new Vector3(
-                PlayerPrefs.GetFloat("UserPositionX", player.userPositions[0]),
-                PlayerPrefs.GetFloat("UserPositionY", player.userPositions[1]),
-                PlayerPrefs.GetFloat("UserPositionZ", player.userPositions[2])
-            )
-        };
-       
+        string name = PlayerPrefs.GetString("UserName", "Player");
+        int level = PlayerPrefs.GetInt("Level", 1);
+        int health = PlayerPrefs.GetInt("Health", 100);
+        int gold = PlayerPrefs.GetInt("Gold", 0);
+        int score = PlayerPrefs.GetInt("HighScore", 0);
+        string sceneName = PlayerPrefs.GetString("SceneName");
+        float posX = PlayerPrefs.GetFloat("PosX", 0);
+        float posY = PlayerPrefs.GetFloat("PosY", 0);
+        float posZ = PlayerPrefs.GetFloat("PosZ", 0);
+        int experience = PlayerPrefs.GetInt("Experience", 0);
+        int damage = PlayerPrefs.GetInt("Damage", 10);
+        Vector3 position = new Vector3(posX, posY, posZ);
+        player = new PlayerData(name, level, gold, health, score, position, experience, damage);
         
+        playerTransform.position = player.GetPosition();
+        SceneManager.LoadScene(sceneName);
+
     }
- 
-    public void ClearData()
+public void ClearData() // Xóa tất cả dữ liệu
     {
         PlayerPrefs.DeleteAll();
-        player = new PlayerData();
         Debug.Log("All player data cleared.");
     }
 }
