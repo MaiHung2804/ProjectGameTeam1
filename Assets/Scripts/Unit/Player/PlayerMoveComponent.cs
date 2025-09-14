@@ -17,7 +17,7 @@ public class PlayerMoveComponent : MoveComponent
 
 
     private bool enterThisState = true;
-    private KeyCode jumKey = KeyCode.Space;
+    private KeyCode jumpKey = KeyCode.Space;
     private Vector3 inputVector = Vector3.zero;
     private float inputVectorSqrMin = 0.05f; 
 
@@ -26,7 +26,6 @@ public class PlayerMoveComponent : MoveComponent
     private float verticalVelocity = 0f;
     private float verticalVelocityMax = -2f;
     private float currentSpeed = 0f;
-    private float lastGroundedTime = 0f;
     private Vector3 lastMoveDirection = Vector3.zero;
     private float landingSpeed = 0f; 
 
@@ -49,16 +48,6 @@ public class PlayerMoveComponent : MoveComponent
 
     private void Start()
     {
-        // Cap nhat thoi diem cuoi cung nhan vat tiep dat
-        if (characterController.isGrounded)
-        {
-            lastGroundedTime = Time.time;
-        }
-        else
-        {
-            lastGroundedTime = -Mathf.Infinity;
-        }
-        
         // Dat nhan vat luc dau o tren cao
         moveState = MoveState.Falling;
         
@@ -72,23 +61,18 @@ public class PlayerMoveComponent : MoveComponent
         {
             case MoveState.Falling:
                 HanldeFalling();
-                //Debug.Log("Falling");
                 break;
             case MoveState.Landing:
                 HandleLanding();
-                //Debug.Log("Landing");
                 break;
             case MoveState.Moving:
                 HandleMoving();
-                //Debug.Log("Moving");
                 break;
             case MoveState.Jumping:
                 HandleJumping();
-                //Debug.Log("Jumping");
                 break;
             default: // Idle
                 HandleIdle();
-                //Debug.Log("Idle");
                 break;
         }
 
@@ -98,12 +82,13 @@ public class PlayerMoveComponent : MoveComponent
         currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, MoveSpeed * 1.5f * Time.deltaTime);
         animationComponent.MoveSpeed(currentSpeed);
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(jumpKey))
         {
             moveState = MoveState.Jumping;
             enterThisState = true;
             lastMoveDirection = Vector3.zero;
             landingSpeed = 0f;
+            Debug.Log("Idle -> Jumping");
             return;
         }
 
@@ -116,6 +101,7 @@ public class PlayerMoveComponent : MoveComponent
         {
             moveState = MoveState.Moving;
             enterThisState = true;
+            Debug.Log("Idle -> Moving");
         }
         // Mac dinh dang Idle thì khong tu dung Falling duoc
     }
@@ -136,12 +122,13 @@ public class PlayerMoveComponent : MoveComponent
 
         //Exit condition
 
-        if (CheckRealFalling())
+        if (IsRealFalling())
         {
             moveState = MoveState.Falling;
             landingSpeed = currentSpeed;
             lastMoveDirection = moveDir;
             enterThisState = true;
+            Debug.Log("Moving -> Falling");
             return;
         }
 
@@ -151,6 +138,7 @@ public class PlayerMoveComponent : MoveComponent
             lastMoveDirection = moveDir;     
             landingSpeed = currentSpeed;
             enterThisState = true;
+            Debug.Log("Moving -> Jumping");
             return;
         }
 
@@ -159,6 +147,7 @@ public class PlayerMoveComponent : MoveComponent
         {
             moveState = MoveState.Idle;
             enterThisState = true;
+            Debug.Log("Moving -> Idle");
         }
 
     }
@@ -171,7 +160,7 @@ public class PlayerMoveComponent : MoveComponent
             enterThisState = false;
         }
         // landingSpeed: Can phai duoc Cap nhat khi bat dau roi hoac nhay. Giu nguyen van toc khi roi
-        //landingSpeed = Mathf.MoveTowards(landingSpeed, 0f, MoveSpeed * 0.5f * Time.deltaTime); // 0.5f la he so giam toc khi roi, cang nho cang cham
+        // landingSpeed = Mathf.MoveTowards(landingSpeed, 0f, MoveSpeed * 0.5f * Time.deltaTime); // 0.5f la he so giam toc khi roi, cang nho cang cham
 
         // Ap dung van toc ngang
         Vector3 horizontalMove = Vector3.zero;
@@ -180,6 +169,7 @@ public class PlayerMoveComponent : MoveComponent
             horizontalMove = lastMoveDirection * landingSpeed;
         }
         // Ap dung gravity
+        verticalVelocity += gravity * Time.deltaTime;
         Vector3 gravityMove = new Vector3(horizontalMove.x, verticalVelocity, horizontalMove.y);
         characterController.Move(gravityMove * Time.deltaTime);
 
@@ -189,6 +179,7 @@ public class PlayerMoveComponent : MoveComponent
             enterThisState = true;
             animationComponent.Falling(false);
             moveState = MoveState.Landing;
+            Debug.Log("Falling -> Landing");
             return;
         }
 
@@ -214,7 +205,9 @@ public class PlayerMoveComponent : MoveComponent
         {
             animationComponent.Landing(false, currentSpeed);
             moveState = MoveState.Idle;
-            Debug.Log(" 1111 ");
+
+            Debug.Log("Landing -> Idle");
+
             // KIEM TRA LAI PHAN NAY SAU: mot so truong hop khong thoat duoc Landing khi Falling.
         }
 
@@ -230,11 +223,10 @@ public class PlayerMoveComponent : MoveComponent
         }
 
         // Di chuyen theo huong nhay truoc do
-        Vector3 move = lastMoveDirection * landingSpeed * 1.5f;
+        float extraMove = 1.3f; // He so tang toc khi nhay
+        Vector3 move = lastMoveDirection * landingSpeed * extraMove;
         move.y = verticalVelocity;
         characterController.Move(move * Time.deltaTime);
-
-        Debug.Log("Move " + move + ", verticalVelocity=" + verticalVelocity);
 
         // Ap dung trong luc
         verticalVelocity += gravity * Time.deltaTime;
@@ -246,6 +238,7 @@ public class PlayerMoveComponent : MoveComponent
             enterThisState = true;
             animationComponent.Jumping(false);
             animationComponent.Falling(true);
+            Debug.Log("Jumping -> Falling");
         }
 
     }
@@ -276,14 +269,15 @@ public class PlayerMoveComponent : MoveComponent
 
     }
 
-    private bool IsGroundedByRaycast()
+    private bool IsGroundedByCast()
     {
+        // Day la cach check bang RAY CAST
         RaycastHit hit;
-        // 0.4f; Dieu chinh theo chieu cao va skin width cua CharacterController
-        if ( Physics.Raycast(transform.position, Vector3.down, out hit, 0.4f) )
+        float castDistance = 0.4f; // Dieu chinh theo chieu cao va skin width cua CharacterController
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, castDistance) )
         {
             return true;
-            // Tam thoi khong kiem tra slope
+            // Doan duoi day neu bat la kiem tra Slop. Tam thoi khong kiem tra slope
             //float slopeAngle = Vector3.Angle(hit.normal, Vector3.up);
             //if (slopeAngle < characterController.slopeLimit) // thuong la 45 do
             //    return true;
@@ -291,15 +285,27 @@ public class PlayerMoveComponent : MoveComponent
             //    return false;
         }
         return false;
+
+        // Day la cach check bang SPHERE CAST
+        //RaycastHit hit;
+        //float radius = characterController.radius * 0.85f; // Nho hon radius mot chut de tranh cham vao vat the
+        //float castDistance = 0.3f;
+        //Vector3 origin = transform.position; // Co the nang mot chut de tranh cham vao vat the Bang viec + Vector3.up * 0.1f
+        //if ( Physics.SphereCast(origin, radius, Vector3.down, out hit, castDistance) )
+        //{
+        //    return true;
+        //}
+        //return false;
+
     }
 
-    private bool CheckRealFalling()
+    private bool IsRealFalling()
     {
 
         //return  characterController.velocity.y  <  -Mathf.Epsilon && !characterController.isGrounded;
         if (verticalVelocity < verticalVelocityMax) 
         {
-            if ( IsGroundedByRaycast() )
+            if ( IsGroundedByCast() )
                 return false;
             return true;
         }
