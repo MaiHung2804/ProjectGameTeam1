@@ -47,6 +47,12 @@ public class AnimationComponent : MonoBehaviour
         {
             isLandingEnd = false;
         }
+        else
+        {
+            isLandingEnd = true; // If not landing, consider landing ended
+            // Neu khong co cai nay thi co the lan di chuyen tiep theo, no se bao Landing End chua ket thuc
+        }
+
     }
 
     public bool IsLandingEnd

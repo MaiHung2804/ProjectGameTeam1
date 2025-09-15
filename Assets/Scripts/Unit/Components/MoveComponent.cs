@@ -18,16 +18,16 @@ public abstract class MoveComponent : MonoBehaviour
 
 
     [Header("Move Settings")]
-    [SerializeField] private float moveSpeed = 5f;  // Bien dang input
+    [SerializeField] private float maxSpeed = 5f;  // Luu gia tri MaxSpeed
     [SerializeField] private float stopDistance = 0.1f;
 
     protected Vector3? targetPosition; // Them ? de cho phep null
     protected MoveState moveState; 
 
-    public float MoveSpeed
+    public float MaxSpeed
     {
-        get => moveSpeed;
-        set => moveSpeed = Mathf.Max(0f, value);
+        get => maxSpeed;
+        set => maxSpeed = Mathf.Max(0f, value);
     }
     public float StopDistance
     {
@@ -59,7 +59,7 @@ public abstract class MoveComponent : MonoBehaviour
         targetPosition = target;
         moveState = MoveState.Moving;
     }
-    public virtual void MoveByDirection(Vector3 direction)
+    public virtual void MoveToDirection(Vector3 direction)
     {
         moveState = MoveState.Moving;
     }

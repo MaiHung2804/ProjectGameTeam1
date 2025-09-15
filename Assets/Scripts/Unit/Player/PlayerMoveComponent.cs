@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -16,18 +17,26 @@ public class PlayerMoveComponent : MoveComponent
     private CharacterController characterController;
 
 
-    private bool enterThisState = true;
+    private bool isEnteringState = true;
     private KeyCode jumpKey = KeyCode.Space;
-    private Vector3 inputVector = Vector3.zero;
+    
     private float inputVectorSqrMin = 0.05f; 
+    private float groundSpeedReductionFactor = 1.2f; // Cang lon thi CurrentSpeed giam ve 0 cang nhanh khi khong co input
+    private float airSpeedReductionFactor = 0.5f; // Cang lon thi CurrentSpeed giam ve 0 cang nhanh khi khong co input
+    private float horizontalJumpForceFactor = 1.2f; // Dung khi nhay nhan voi speed ngang
+    private float verticalJumpForce = 6.5f;
+    private bool isFallingFromJump = false;
 
     private float gravity = -9.81f;
-    private float jumpForce = 6f;
     private float verticalVelocity = 0f;
     private float verticalVelocityMax = -2f;
+
+
+    // Cac bien quan trong Quan ly trang thai di chuyen, nhap so lieu
     private float currentSpeed = 0f;
-    private Vector3 lastMoveDirection = Vector3.zero;
-    private float landingSpeed = 0f; 
+    private Vector3 currentDir = Vector3.zero;
+    private Vector3 lastDir = Vector3.zero;
+
 
 
 
@@ -79,74 +88,78 @@ public class PlayerMoveComponent : MoveComponent
     }
     private void HandleIdle()
     {
-        currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, MoveSpeed * 1.5f * Time.deltaTime);
-        animationComponent.MoveSpeed(currentSpeed);
+        if (isEnteringState)
+        {
+            animationComponent.MoveSpeed(currentSpeed);
+            isEnteringState = false;
+            Debug.Log("Enter Idle" + currentSpeed);
+        }
 
         if (Input.GetKey(jumpKey))
         {
             moveState = MoveState.Jumping;
-            enterThisState = true;
-            lastMoveDirection = Vector3.zero;
-            landingSpeed = 0f;
+            isEnteringState = true;
             Debug.Log("Idle -> Jumping");
             return;
         }
 
-        inputVector = MoveInputFromDevices();
-        if (inputVector.sqrMagnitude < inputVectorSqrMin)
+        if (GetDirectionFromDevices(out currentDir, out float speedIntensity))
         {
-            return;
-        }
-        else
-        {
+            currentSpeed = speedIntensity * MaxSpeed;
             moveState = MoveState.Moving;
-            enterThisState = true;
+            isEnteringState = true;
             Debug.Log("Idle -> Moving");
         }
-        // Mac dinh dang Idle thì khong tu dung Falling duoc
+        
+        // Mac dinh Idle thi khong co luc tac dong thi khong Falling duoc. Tru khi co skill Enemy day nhan vat.
     }
 
     private void HandleMoving()
     {
-        // Tinh huong di chuyen theo camera
-        Vector3 moveDir = ConvertInputToDirectionByCamera(inputVector);
+        if (isEnteringState)
+        {
+            animationComponent.MoveSpeed(currentSpeed);
+            isEnteringState = false;
+        }
 
-        // Tinh currentSpeed
-        float inputMagnitude = Mathf.Clamp01(inputVector.magnitude);
-        currentSpeed = inputMagnitude * MoveSpeed;
+        if (!GetDirectionFromDevices(out currentDir, out float speedIntensity))
+        {
+            // Luc nay khong co input, currentDirection luc nay van giu nguyen. CurrentSpeed giam dan ve 0
+            currentDir = lastDir;
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, groundSpeedReductionFactor * MaxSpeed * Time.deltaTime);
+        }
+        else
+        {
+            currentSpeed = speedIntensity * MaxSpeed;
+            lastDir = currentDir;       // Luu huong di chuyen moi nhat
+        }
+        
+        MoveToDirection(currentDir);
 
-        MoveByDirection(moveDir);
-
-        // Cap nhat animation
         animationComponent.MoveSpeed(currentSpeed);
 
         //Exit condition
-
-        if (IsRealFalling())
+        if (IsTrueFalling())
         {
             moveState = MoveState.Falling;
-            landingSpeed = currentSpeed;
-            lastMoveDirection = moveDir;
-            enterThisState = true;
-            Debug.Log("Moving -> Falling");
+            isEnteringState = true;
+            Debug.Log("Moving -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
             moveState = MoveState.Jumping;
-            lastMoveDirection = moveDir;     
-            landingSpeed = currentSpeed;
-            enterThisState = true;
-            Debug.Log("Moving -> Jumping");
+            isEnteringState = true;
+            Debug.Log("Moving -> Jumping " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
 
-        inputVector = MoveInputFromDevices();
-        if (inputVector.sqrMagnitude < inputVectorSqrMin)
+        if (currentSpeed == 0 )
         {
             moveState = MoveState.Idle;
-            enterThisState = true;
+            isEnteringState = true;
+            currentDir = Vector3.zero;
             Debug.Log("Moving -> Idle");
         }
 
@@ -154,102 +167,106 @@ public class PlayerMoveComponent : MoveComponent
 
     private void HanldeFalling()
     {
-        if (enterThisState)
+        if (isEnteringState)
         {
             animationComponent.Falling(true);
-            enterThisState = false;
+            isEnteringState = false;
         }
-        // landingSpeed: Can phai duoc Cap nhat khi bat dau roi hoac nhay. Giu nguyen van toc khi roi
-        // landingSpeed = Mathf.MoveTowards(landingSpeed, 0f, MoveSpeed * 0.5f * Time.deltaTime); // 0.5f la he so giam toc khi roi, cang nho cang cham
+        Vector3 horizontalMove;
 
-        // Ap dung van toc ngang
-        Vector3 horizontalMove = Vector3.zero;
-        if (currentSpeed > 0.1f)
+        if (isFallingFromJump)
         {
-            horizontalMove = lastMoveDirection * landingSpeed;
+            horizontalMove = currentDir * currentSpeed * horizontalJumpForceFactor;
         }
+        else 
+        {
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, airSpeedReductionFactor * MaxSpeed * Time.deltaTime);
+            horizontalMove = currentDir * currentSpeed;
+        }
+        
         // Ap dung gravity
         verticalVelocity += gravity * Time.deltaTime;
-        Vector3 gravityMove = new Vector3(horizontalMove.x, verticalVelocity, horizontalMove.y);
-        characterController.Move(gravityMove * Time.deltaTime);
 
+        Vector3 fallingMove = new Vector3(horizontalMove.x, verticalVelocity, horizontalMove.z);
+        characterController.Move(fallingMove * Time.deltaTime);
 
-        if (characterController.isGrounded)
+        if (!IsTrueFalling())
         {
-            enterThisState = true;
+            isEnteringState = true;
             animationComponent.Falling(false);
+            isFallingFromJump = false;
             moveState = MoveState.Landing;
+            currentDir = Vector3.zero;
             Debug.Log("Falling -> Landing");
             return;
         }
-
     }
-
     private void HandleLanding()
     {
-        if (enterThisState)
+        if (isEnteringState)
         {
-            animationComponent.Landing(true, landingSpeed);
-            enterThisState = false;
+            animationComponent.Landing(true, currentSpeed);
+            isEnteringState = false;
         }
+        currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, groundSpeedReductionFactor * MaxSpeed * Time.deltaTime);
 
-        inputVector = MoveInputFromDevices();
-        if (inputVector.sqrMagnitude > inputVectorSqrMin)
-        {
-            moveState = MoveState.Moving;
-            enterThisState = false;
-            return;
-        }
-
-         if (animationComponent.IsLandingEnd)
+        if (animationComponent.IsLandingEnd)
         {
             animationComponent.Landing(false, currentSpeed);
+            isEnteringState = true;
+            if (GetDirectionFromDevices(out currentDir, out float speedIntensity))
+            {
+                currentSpeed = speedIntensity * MaxSpeed;
+                moveState = MoveState.Moving;
+                Debug.Log("Landing -> Moving");
+                return;
+            }
             moveState = MoveState.Idle;
-
+            currentDir = Vector3.zero;
+            currentSpeed = 0f;
             Debug.Log("Landing -> Idle");
-
-            // KIEM TRA LAI PHAN NAY SAU: mot so truong hop khong thoat duoc Landing khi Falling.
         }
 
     }
 
     private void HandleJumping()
     {
-        if (enterThisState)
+        if (isEnteringState)
         {
-            verticalVelocity = jumpForce;
+            verticalVelocity = verticalJumpForce;
             animationComponent.Jumping(true);
-            enterThisState = false;
+            isEnteringState = false;
+            Debug.Log("Enter Jumping " + " speed " + currentSpeed + " direction " + currentDir);
         }
 
         // Di chuyen theo huong nhay truoc do
-        float extraMove = 1.3f; // He so tang toc khi nhay
-        Vector3 move = lastMoveDirection * landingSpeed * extraMove;
-        move.y = verticalVelocity;
-        characterController.Move(move * Time.deltaTime);
+        Vector3 jumpingMove = currentDir * currentSpeed * horizontalJumpForceFactor;
+        jumpingMove.y = verticalVelocity;
+        characterController.Move(jumpingMove * Time.deltaTime);
 
-        // Ap dung trong luc
+        // Ap dung trong luc cho lan sau
         verticalVelocity += gravity * Time.deltaTime;
 
         // Khi van toc am, thi bat dau roi
-        if (verticalVelocity <= 0f)
+        if (verticalVelocity <= 0)
         {
             moveState = MoveState.Falling;
-            enterThisState = true;
+            isEnteringState = true;
             animationComponent.Jumping(false);
-            animationComponent.Falling(true);
-            Debug.Log("Jumping -> Falling");
+
+            isFallingFromJump = true;
+            lastDir = currentDir;
+            Debug.Log("Jumping -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
         }
 
     }
 
-    public override void MoveByDirection(Vector3 direction)
+    public override void MoveToDirection(Vector3 normalizeDirection)
     {
-        moveState = MoveState.Moving;
         // Quay nhan vat theo huong di chuyen
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        Quaternion targetRotation = Quaternion.LookRotation(normalizeDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
-        Vector3 move = direction.normalized * currentSpeed;
+        Vector3 move = normalizeDirection * currentSpeed;
 
         // Ap dung gravity
         move.y = verticalVelocity;
@@ -299,31 +316,48 @@ public class PlayerMoveComponent : MoveComponent
 
     }
 
-    private bool IsRealFalling()
+    private bool IsTrueFalling()
     {
-
-        //return  characterController.velocity.y  <  -Mathf.Epsilon && !characterController.isGrounded;
-        if (verticalVelocity < verticalVelocityMax) 
+        if (moveState == MoveState.Falling)
         {
-            if ( IsGroundedByCast() )
+            if (characterController.isGrounded) // Lan dau tien cham dat
+            {
+                return false;
+            }
+            return true;
+
+        }
+        // Khi khong cham dat thi verticalVelocity se am,
+        // Roi mot luc roi thì verticalVelocity se nho hon verticalVelocityMax luc do se tinh roi thuc su
+        // Neu chi hoi khong cham dat do dia hinh khong phang thi khong chinh xac
+
+        if (verticalVelocity < verticalVelocityMax)
+        {
+            if ( IsGroundedByCast() ) // Xu ly khi di xuong doc nhieu
                 return false;
             return true;
         }
         return false;
-        
     }
 
-
-    private Vector3 MoveInputFromDevices()
+    #region CODE_OK_DO_NOT_MODIFY
+    private bool GetDirectionFromDevices(out Vector3 direction, out float speedIntensity)
     {
-        Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        Vector3 joystickInput = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
-        return keyboardInput + joystickInput;
-    }    
+        Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) +
+                              new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+        if (input.sqrMagnitude < inputVectorSqrMin)
+        {
+            direction = Vector3.zero;
+            speedIntensity = 0f;
+            return false;
+        }    
+        speedIntensity = Mathf.Clamp01(input.magnitude);
+        direction = ConvertInputToDirectionByCamera(input);
+        return true;
+    }
 
     private Vector3 ConvertInputToDirectionByCamera(Vector3 input)
     {
-
         // Chuyen doi input theo huong nhin trai phai tu Camera. Rat quan trong
         Vector3 camForward = mainCamera.transform.forward;
         camForward.y = 0;
@@ -335,10 +369,9 @@ public class PlayerMoveComponent : MoveComponent
         // Tinh huong di chuyen theo camera
         return (camForward * input.z + camRight * input.x).normalized;
 
-
-        // Lay theo toa do dia phuong cua nhan vat. Nay khong dung nua
-        // Vector3 moveDir = input.sqrMagnitude > 0.01f ? input.normalized : Vector3.zero;
-        // Return moveDir;
+        ////Lay theo toa do dia phuong cua nhan vat. Nay khong dung nua
+        //Vector3 moveDir = input.sqrMagnitude > 0.01f ? input.normalized : Vector3.zero;
+        //return moveDir;
     }
 
     private bool CheckNessessaryComponent()
@@ -371,7 +404,8 @@ public class PlayerMoveComponent : MoveComponent
 
         return true;
     }
+    #endregion
 
-   
+
 
 }
