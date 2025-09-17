@@ -17,11 +17,13 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab)) // Nhấn Tab hiện UI Menu
         {
             isUIVisible = true;
+            Time.timeScale = 0f; // Tạm dừng game khi mở menu
             CanvasMenu.SetActive(isUIVisible);
         }
         else if (Input.GetKeyDown(KeyCode.Escape)) // Nhấn Esc ẩn UI Menu
         {
             isUIVisible = false;
+            Time.timeScale = 1f; // Tiếp tục game khi đóng menu
             CanvasMenu.SetActive(isUIVisible);
         }
     }
@@ -32,20 +34,23 @@ public class UIManager : MonoBehaviour
     } 
     public void PlayButton(string sceneName) // Ấn vào Play load scene lv1
     {
-       DataManager.Instance.player.userName = playername.text;
-       SceneManager.LoadScene(sceneName);
+        UserName();
+        SceneManager.LoadScene(sceneName);
         Debug.Log("Play button clicked, loading scene: " + sceneName);
 
+    }
+    public void UserName()
+    {
+        string name = playername.text;
+        DataManager.Instance.player.userName = name;
     }
     public void ExitButton() // Ấn vào Exit thoát game
     {
         Application.Quit();
-        Debug.Log("Game is exiting");
     }
     public void SaveData() // Ấn vào Save để lưu dữ liệu
     {
         DataManager.Instance.SaveData();        
-        Debug.Log("Data is saved");
     }
     public void ShowCanvasInput() // Hiện CanvasInput để nhập tên
     {
@@ -55,11 +60,15 @@ public class UIManager : MonoBehaviour
     public void BackToMenu(string sceneName) // Quay về Menu chính
     {
         SceneManager.LoadScene(sceneName);
-        Debug.Log("Back to Menu");
     }
-    public void LoadGame(string sceneName) // Load dữ liệu khi ấn SaveGame
+    public void LoadGameButton() // Load dữ liệu khi ấn LoadGame
     {
         DataManager.Instance.LoadData();
+        int level = DataManager.Instance.player.userLevel;
+        string sceneName = "Level" + level;
+        SceneManager.LoadScene(sceneName);
+        Debug.Log("Load Game button clicked, loading scene: " + sceneName);
+
     }
 
 }

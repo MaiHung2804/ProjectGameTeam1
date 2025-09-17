@@ -31,6 +31,7 @@ public class PlayerMoveComponent : MoveComponent
 
 
 
+
     protected void Update()
     {
         // Khong goi base.Update() de tranh viec di chuyen den targetPosition

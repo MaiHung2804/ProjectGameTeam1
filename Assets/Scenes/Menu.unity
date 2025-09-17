@@ -163,7 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c0be82f1bbd3945af65c5676dbde15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemConfigs: []
+  itemConfig: []
+  unitConfig: []
 --- !u!4 &495902105
 Transform:
   m_ObjectHideFlags: 0
@@ -463,6 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 1988857067}
+  playerPrefab: {fileID: 5571120435602184551, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
 --- !u!4 &964625971
 Transform:
   m_ObjectHideFlags: 0
@@ -567,8 +569,12 @@ PrefabInstance:
       value: Load Game
       objectReference: {fileID: 0}
     - target: {fileID: 7519582723713760987, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7519582723713760987, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadGame
+      value: LoadGameButton
       objectReference: {fileID: 0}
     - target: {fileID: 7733916287370248443, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
       propertyPath: m_IsActive
