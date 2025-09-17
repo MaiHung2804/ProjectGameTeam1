@@ -11,7 +11,9 @@ public class manaHandle : MonoBehaviour
         {
             if(consumable != null)
             {
+
                 //consumable.Use(gameObject);
+
             }
             Destroy(gameObject);
         }

@@ -17,7 +17,7 @@ public abstract class BaseItem : ScriptableObject
     public string itemName;
     public Sprite icon;
     public ItemType itemType;
-
+    public GameObject Prefab;
     public abstract void Use(GameObject user);
 }
 

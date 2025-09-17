@@ -9,13 +9,20 @@ public class gunHandle : MonoBehaviour
 
     [Header("Fire Settings")]
     public Transform firePoint;
+
     private float fireCooldown;
+
     private float range;
     private float lastFireTime;
     private void Start()
     {
+
         range = weaponData.attackRange;
         fireCooldown = (1f / weaponData.fireRate);
+
+        range =  weaponData.attackRange;
+        fireCooldown = (1f/ weaponData.fireRate);
+
     }
     void Update()
     {

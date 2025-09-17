@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>      
@@ -51,6 +54,7 @@ public abstract class UnitBase : MonoBehaviour
     protected virtual void OnDeath()
     {
         EventOnDeath?.Invoke(this);
+
         gameObject.SetActive(false);
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Melee/basicSword")]
 public class basicSword : MeleeWeapon
 {
-    public override void Use()
+    public override void Use(GameObject user)
     {
         throw new System.NotImplementedException();
     }

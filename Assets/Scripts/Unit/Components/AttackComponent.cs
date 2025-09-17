@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 /// <summary>
@@ -14,8 +15,11 @@ public class AttackComponent : MonoBehaviour
     private float lastAttackTime = -Mathf.Infinity;
 
     // Phat su kien khi tan cong thanh cong
-    public event Action <UnitBase> EventOnAttackSuccess;
+    public event Action<UnitBase> EventOnAttackSuccess;
 
+    /// <summary>
+    /// Sat thuong moi lan tan cong.
+    /// </summary>
     public float AttackDamage => attackDamage;
 
     public float AttackRange => attackRange;
@@ -42,9 +46,9 @@ public class AttackComponent : MonoBehaviour
     // Thuc hien tan cong muc tieu neu hop le
     public void Attack(UnitBase target)
     {
-        if (!CanAttack) return;
+        //if (!CanAttack) return;
         if (!IsValidTarget(target)) return;
-        
+
         target.OnTakeDamage(attackDamage);
         lastAttackTime = Time.time;
 
@@ -60,5 +64,25 @@ public class AttackComponent : MonoBehaviour
     public void ResetCooldown()
     {
         lastAttackTime = -Mathf.Infinity;
+
+        /// <summary>
+        /// Kiem tra co the tan cong khong
+        /// </summary>
+        //public bool CanAttack => (Time.time >= lastAttackTime + attackCooldown);
+
+        /// <summary>
+        /// Thuc hien tan cong mot don vi muc tieu.
+        /// </summary>
+    //    public void Attack(UnitBase target)
+    //{
+    //    if (target == null || !CanAttack) return;
+
+    //        float distance = Vector3.Distance(transform.position, target.transform.position);
+    //        if (distance <= attackRange)
+    //        {
+    //            target.OnTakeDamage(attackDamage);
+    //            lastAttackTime = Time.time;
+    ////        }
+    //    }
     }
 }

@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45013b1fed352d24ba4c441f2b35eec3, type: 3}
   m_Name: Health
   m_EditorClassIdentifier: 
-  Type: 2
-  ID: 
-  ItemName: healthPotion
-  Description: 
-  AttackDamage: 0
-  AttackSpeed: 0
-  AttackRange: 0
-  prefab: {fileID: 435048297339785275, guid: 529389038f070cf4aacff4014ef2cdba, type: 3}
-  CurrentConsume: 0
+  itemName: HealthPotion
+  icon: {fileID: 0}
+  itemType: 0
+  Prefab: {fileID: 435048297339785275, guid: 529389038f070cf4aacff4014ef2cdba, type: 3}
   amount: 0

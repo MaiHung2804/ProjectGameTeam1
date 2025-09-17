@@ -1,6 +1,10 @@
+
 ﻿using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Rendering;
+
+﻿using UnityEngine;
+
 
 /// <summary>
 /// Quan ly di chuyen cua don vi.
@@ -8,6 +12,7 @@ using UnityEngine.Rendering;
 public class MoveComponent : MonoBehaviour
 {
     [Header("Move Settings")]
+
     [SerializeField] private float moveSpeed = 5f;  // Bien dang input
     [SerializeField] private float stopDistance = 0.1f;
 
@@ -16,11 +21,14 @@ public class MoveComponent : MonoBehaviour
 
     public bool IsMoving => isMoving;
 
+
+
     public float MoveSpeed
     {
         get => moveSpeed;
         set => moveSpeed = Mathf.Max(0f, value);
     }
+
     public float StopDistance
     {
         get => stopDistance;
@@ -60,5 +68,15 @@ public class MoveComponent : MonoBehaviour
     //public virtual void MoveTo(Vector3 target)
     //{ 
     //}
+
+
+
+    //public virtual void MoveTo(Vector3 targetPosition)
+    //{
+    //}
+
+    public virtual void MoveDirection(Vector3 direction)
+    {
+    }
 
 }

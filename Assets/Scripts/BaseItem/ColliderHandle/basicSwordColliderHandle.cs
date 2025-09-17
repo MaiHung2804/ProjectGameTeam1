@@ -14,7 +14,8 @@ public class basicSwordColliderHandle : MonoBehaviour
                 if (weaponData != null)
                 {
                     GameObject enemyObject = other.gameObject;
-                    //weaponData.Use(enemyObject);
+
+                    weaponData.Use(enemyObject);
                 }
 
             }

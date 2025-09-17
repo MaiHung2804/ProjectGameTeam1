@@ -10,6 +10,16 @@
       },
       "url": "https://packages.unity.com"
     },
+<<<<<<< HEAD
+=======
+    "com.unity.collab-proxy": {
+      "version": "2.9.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+>>>>>>> main
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
       "depth": 1,
@@ -63,6 +73,7 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+<<<<<<< HEAD
     "com.unity.inputsystem": {
       "version": "1.14.0",
       "depth": 0,
@@ -72,6 +83,8 @@
       },
       "url": "https://packages.unity.com"
     },
+=======
+>>>>>>> main
     "com.unity.mathematics": {
       "version": "1.2.6",
       "depth": 1,

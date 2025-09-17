@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a02d5d7b9ba2be48b1b0e6f785a20d9, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  Type: 0
-  ID: 
-  ItemName: 
+  ID: 5
+  ItemName: Pistol
   Description: 
-  AttackDamage: 0
-  AttackSpeed: 0
-  AttackRange: 0
-  prefab: {fileID: 0}
+  AttackDamage: 10
+  AttackSpeed: 2
+  AttackRange: 100
+  prefab: {fileID: 4957761961594349738, guid: c9c65314d4c9a0d48928eddd7767ed5b, type: 3}
   CurrentConsume: 0
   attackRange: 0
   fireRate: 0
