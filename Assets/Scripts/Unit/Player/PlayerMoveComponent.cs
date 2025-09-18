@@ -149,7 +149,7 @@ public class PlayerMoveComponent : MoveComponent
             return;
         }
 
-        if (Input.GetKey(jumpKey) || jumpRequested)
+        if (Input.GetKey(jumpKey) || jumpRequested)  
         {
             moveState = MoveState.Jumping;
             isEnteringState = true;
