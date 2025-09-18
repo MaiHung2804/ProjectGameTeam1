@@ -18,6 +18,7 @@ public class PlayerMoveComponent : MoveComponent
 
 
     private bool isEnteringState = true;
+    private bool jumpRequested = false;
     private KeyCode jumpKey = KeyCode.Space;
     
     private float inputVectorSqrMin = 0.05f; 
@@ -95,9 +96,10 @@ public class PlayerMoveComponent : MoveComponent
             Debug.Log("Enter Idle" + currentSpeed);
         }
 
-        if (Input.GetKey(jumpKey))
+        if (Input.GetKey(jumpKey) || jumpRequested)
         {
             moveState = MoveState.Jumping;
+            jumpRequested = false;
             isEnteringState = true;
             Debug.Log("Idle -> Jumping");
             return;
@@ -147,10 +149,11 @@ public class PlayerMoveComponent : MoveComponent
             return;
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(jumpKey) || jumpRequested)
         {
             moveState = MoveState.Jumping;
             isEnteringState = true;
+            jumpRequested = false;
             Debug.Log("Moving -> Jumping " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
@@ -406,6 +409,12 @@ public class PlayerMoveComponent : MoveComponent
     }
     #endregion
 
+    // Ham nay de goi tu UI Button - dang goi tam thoi
+    public void OnJumpButtonPressed()
+    {
+        if ((moveState == MoveState.Idle) || (moveState == MoveState.Moving))
+        { jumpRequested = true; }
 
+    }
 
 }
