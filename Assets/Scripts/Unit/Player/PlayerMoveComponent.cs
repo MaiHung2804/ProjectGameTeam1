@@ -63,7 +63,7 @@ public class PlayerMoveComponent : MoveComponent
         
     }
 
-    protected override void HandleActivites()
+    public override void HandleActivites()
     {
         UpdateVerticalVelocity();
 
@@ -415,6 +415,27 @@ public class PlayerMoveComponent : MoveComponent
         if ((moveState == MoveState.Idle) || (moveState == MoveState.Moving))
         { jumpRequested = true; }
 
+    }
+    public override bool HasMovementInput()
+    {
+        return GetDirectionFromDevices(out _, out _);
+    }
+
+    public override bool CanOutSate()
+    {
+        return false;
+    }
+
+    public override void MoveTo(Vector3 target)
+    {
+        // Khong su dung ham nay trong PlayerMoveComponent
+        Debug.LogWarning("MoveTo is not implemented in PlayerMoveComponent. Use MoveToDirection instead.");
+    }
+
+    public override void Stop()
+    {
+        // Khong su dung ham nay trong PlayerMoveComponent
+        Debug.LogWarning("Stop is not implemented in PlayerMoveComponent. Use input devices to stop movement.");
     }
 
 }
