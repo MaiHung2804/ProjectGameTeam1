@@ -56,7 +56,7 @@ public class PlayerMoveComponent : MoveComponent
 
     }
 
-    private void HandleMoving()
+    public void HandleMoving()
     {
         if (!characterController.isGrounded)
         {
@@ -64,7 +64,7 @@ public class PlayerMoveComponent : MoveComponent
             return;
         }
         Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        Vector3 joystickInput = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
+        Vector3 joystickInput = new Vector3(MoveSpeed * joystick.Horizontal, 0, MoveSpeed * joystick.Vertical);
         Vector3 input = keyboardInput + joystickInput;
 
         float inputMagnitude = Mathf.Clamp01(input.magnitude);
