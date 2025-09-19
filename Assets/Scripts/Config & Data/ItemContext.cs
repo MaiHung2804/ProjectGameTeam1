@@ -39,4 +39,11 @@ public class ItemContext
             // Xử lý hồi máu cho người chơi ở đây
         }
     }
+
+    public void AddDamge(int amount) // Thêm sát thương
+    {
+        baseAttack += amount;
+        Debug.Log("Increased " + config.itemName + " damage by " + amount + ". New Damage: " + baseAttack);
+    }
+
 }

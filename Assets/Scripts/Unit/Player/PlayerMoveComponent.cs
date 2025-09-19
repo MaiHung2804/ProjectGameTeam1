@@ -156,6 +156,9 @@ public class PlayerMoveComponent : MoveComponent
             Debug.Log("Moving -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
+        Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 joystickInput = new Vector3(MoveSpeed * joystick.Horizontal, 0, MoveSpeed * joystick.Vertical);
+        Vector3 input = keyboardInput + joystickInput;
 
         if (Input.GetKey(jumpKey) || jumpRequested)  
         {

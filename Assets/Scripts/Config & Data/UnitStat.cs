@@ -46,7 +46,7 @@ public class UnitStat
         HealthUp(level); // Nâng cấp máu
         DefenseUpg(level); // Nâng cấp phòng thủ
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage) // Nhận sát thương
     {
         int damageTaken = damage - defenseBase;
         if (damageTaken < 0)
@@ -59,12 +59,12 @@ public class UnitStat
             currentHealth = 0;
             Die();
         }
-    } // Nhận sát thương
-    public void Die()
+    }
+    public void Die() // Chết
     {
         
         Debug.Log(config.enemyName + " has died.");
-    } // Chết
+    } 
     public void Heal(int amount) // Hồi máu
     {
         currentHealth += amount;
