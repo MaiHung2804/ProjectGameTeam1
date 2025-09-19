@@ -38,7 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+<<<<<<< HEAD
   m_IndirectSpecularColor: {r: 0.10502498, g: 0.13485196, b: 0.1344606, a: 1}
+=======
+  m_IndirectSpecularColor: {r: 0.35753202, g: 0.40281808, b: 0.40226403, a: 1}
+>>>>>>> origin/TrieuVy
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -1401,8 +1405,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4154bf6e40fe42543a525d9b4fbc965f, type: 3}
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Scenes/TA Dock Thing.unity
 =======
+=======
+<<<<<<<< HEAD:Assets/Scenes/TA Dock Thing.unity
+========
+>>>>>>> origin/TrieuVy
 --- !u!1 &113773755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1458,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 >>>>>>> origin/TrieuVy:Assets/Scenes/Level1.unity
+=======
+>>>>>>>> origin/TrieuVy:Assets/Scenes/Level1.unity
+>>>>>>> origin/TrieuVy
 --- !u!4 &114824946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 55fecf1063fe8474493f4866aaadffbf, type: 3}
@@ -11773,7 +11786,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c72a1ccba595c84daf7def9a8a6fe2d, type: 3}
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Scenes/TA Dock Thing.unity
+=======
+<<<<<<<< HEAD:Assets/Scenes/TA Dock Thing.unity
+>>>>>>> origin/TrieuVy
 --- !u!1001 &850628301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11873,8 +11890,13 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1492103477}
   m_SourcePrefab: {fileID: 100100000, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
+<<<<<<< HEAD
 =======
 >>>>>>> origin/TrieuVy:Assets/Scenes/Level1.unity
+=======
+========
+>>>>>>>> origin/TrieuVy:Assets/Scenes/Level1.unity
+>>>>>>> origin/TrieuVy
 --- !u!4 &855910236 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 436916, guid: 287711fb95cdc004b814e53a055b4b1e, type: 3}
@@ -21010,7 +21032,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2b120c828398db5439578c6f50bef162, type: 3}
   m_PrefabInstance: {fileID: 609556853}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Scenes/TA Dock Thing.unity
+=======
+<<<<<<<< HEAD:Assets/Scenes/TA Dock Thing.unity
+>>>>>>> origin/TrieuVy
 --- !u!1 &1492103470 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 332547309770519870, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
@@ -21033,7 +21059,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8fc76134c3e2b745bb0e178bacc2d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   moveSpeed: 5
+=======
+  maxSpeed: 5
+>>>>>>> origin/TrieuVy
   stopDistance: 0.1
   joystick: {fileID: 780644241}
   mainCamera: {fileID: 1040853779}
@@ -21049,8 +21079,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cfa3313b456024aae05d86cf850f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 =======
 >>>>>>> origin/TrieuVy:Assets/Scenes/Level1.unity
+=======
+========
+>>>>>>>> origin/TrieuVy:Assets/Scenes/Level1.unity
+>>>>>>> origin/TrieuVy
 --- !u!4 &1493065724 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 449564, guid: c8b19df230669df4eb91d90849f0c80a, type: 3}
@@ -22782,13 +22817,21 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610145831}
   serializedVersion: 2
+<<<<<<< HEAD
   m_LocalRotation: {x: 0.90498567, y: 0.33715647, z: -0.07978518, w: 0.24690266}
+=======
+  m_LocalRotation: {x: 0.82890475, y: 0.23766299, z: -0.37186223, w: 0.34373203}
+>>>>>>> origin/TrieuVy
   m_LocalPosition: {x: 7.4, y: 13.57, z: -27.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2099837173}
+<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+  m_LocalEulerAnglesHint: {x: 131.703, y: 42.925995, z: -12.002991}
+>>>>>>> origin/TrieuVy
 --- !u!4 &1612274392 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 55fecf1063fe8474493f4866aaadffbf, type: 3}
@@ -25530,7 +25573,23 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1818831531}
   m_OnClick:
     m_PersistentCalls:
+<<<<<<< HEAD
       m_Calls: []
+=======
+      m_Calls:
+      - m_Target: {fileID: 1492103474}
+        m_TargetAssemblyTypeName: PlayerMoveComponent, Assembly-CSharp
+        m_MethodName: OnJumpButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+>>>>>>> origin/TrieuVy
 --- !u!114 &1818831531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30657,9 +30716,18 @@ SceneRoots:
   - {fileID: 1462759240}
   - {fileID: 132342089}
   - {fileID: 1040853780}
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Scenes/TA Dock Thing.unity
 =======
   - {fileID: 113773757}
   - {fileID: 1428388827}
   - {fileID: 1958739430}
 >>>>>>> origin/TrieuVy:Assets/Scenes/Level1.unity
+=======
+<<<<<<<< HEAD:Assets/Scenes/TA Dock Thing.unity
+========
+  - {fileID: 113773757}
+  - {fileID: 1428388827}
+  - {fileID: 1958739430}
+>>>>>>>> origin/TrieuVy:Assets/Scenes/Level1.unity
+>>>>>>> origin/TrieuVy
