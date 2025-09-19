@@ -56,18 +56,19 @@ public class PlayerMoveComponent : MoveComponent
         }
     }
 
-<<<<<<< HEAD
     private void Start()
-=======
+    {
+        // Dat nhan vat luc dau o tren cao
+        moveState = MoveState.Falling;
+    }
 
 
 
     protected void Update()
->>>>>>> origin/TrieuVy
+
     {
-        // Dat nhan vat luc dau o tren cao
-        moveState = MoveState.Falling;
-        
+        HandleActivites();
+
     }
 
     protected override void HandleActivites()
