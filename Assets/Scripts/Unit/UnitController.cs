@@ -7,11 +7,9 @@ using UnityEngine;
         Idle,
         Moving,
         Attacking,
-        Dead
+        Dead,
     }
-    /// <summary>
-    /// Dieu phoi hanh vi chung (player, enemy, trap...).
-    /// </summary>
+    // Dieu phoi hanh vi chung (player, enemy, trap...).
     [RequireComponent(typeof(MoveComponent))]   // Dam bao rang co component. Khong co Unity tu tim
     [RequireComponent(typeof(AttackComponent))]
     public abstract class UnitController : MonoBehaviour
@@ -20,7 +18,7 @@ using UnityEngine;
         protected AttackComponent attackComponent;
         protected UnitBase unitBase;
 
-         protected UnitState currentState = UnitState.Idle;
+        protected UnitState currentState = UnitState.Idle;
 
         protected virtual void Awake()
         {
@@ -59,10 +57,10 @@ using UnityEngine;
             }
         }
 
-        protected virtual void ChangeState(UnitState newState)
-        {
-            if (currentState == newState) return;
-            currentState = newState;
+    protected virtual void ChangeState(UnitState newState)
+    {
+       if (currentState == newState) return;
+        currentState = newState;
         // Co the them logic khi thay doi trang thai o day
     }
 
@@ -70,9 +68,6 @@ using UnityEngine;
     protected abstract void HandleIdle();
     protected abstract void HandleMoving();
     protected abstract void HandleAttacking();
-    protected virtual void HandleDead()
-        {
-            // Logic chet chung (disable component, animation, v.v.)
-            enabled = false;
-        }
+    protected abstract void HandleDead();
+       
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Quan ly: sat thuong, thoi gian hoi chieu va thuc hien tan cong.
 /// </summary>
-public class AttackComponent : MonoBehaviour
+public abstract class AttackComponent : MonoBehaviour
 {
     [Header("Attack Settings")]
     [SerializeField] private float attackDamage = 20f;
@@ -61,4 +61,11 @@ public class AttackComponent : MonoBehaviour
     {
         lastAttackTime = -Mathf.Infinity;
     }
+
+    public abstract bool HasAttackInput();
+
+    public abstract void HandleActivites();
+
+    public abstract bool CanOutState();
+
 }
