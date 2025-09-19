@@ -60,7 +60,15 @@ public class PlayerMoveComponent : MoveComponent
     {
         // Dat nhan vat luc dau o tren cao
         moveState = MoveState.Falling;
-        
+    }
+
+
+
+    protected void Update()
+
+    {
+        HandleActivites();
+
     }
 
     public override void HandleActivites()
