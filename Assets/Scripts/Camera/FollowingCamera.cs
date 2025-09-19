@@ -68,6 +68,11 @@ public class FollowingCamera : MonoBehaviour
             float moveSpeed = Mathf.Clamp(vectorDistance.magnitude, 0.1f, 10f);
             lastTargetPostion = Vector3.MoveTowards(lastTargetPostion, target.position, moveSpeed * Time.deltaTime);
         }
+        else         
+        {   // CAI NAY RAT HAY: Neu khong co cai nay, thi Camera se van hoi di chuyen 
+            // mot chut khi don vi dung yen, do no chay trong LateUpdate, con don vi chay trong Update
+            lastTargetPostion = target.position;
+        }
         Quaternion rotation = Quaternion.Euler(pitch, yaw, 0);
         Vector3 desiredPosition = lastTargetPostion + rotation * cameraOffset;
         transform.position = desiredPosition;
