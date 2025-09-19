@@ -21,4 +21,21 @@ public class PlayerAttackComponent : AttackComponent
         // Gay sat thuong cho muc tieu
         base.Attack(target);
     }
+
+
+    public override bool HasAttackInput()
+    {
+        return false; 
+    }
+
+    public override void HandleActivites()
+    {
+
+    }
+
+    public override bool CanOutState()
+    {
+        return true;
+    }
 }
+
