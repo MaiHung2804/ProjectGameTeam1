@@ -11,6 +11,8 @@ public class PlayerData
     public int userDefense;
     public int userHp;
     public int currentHp;
+    public int userMana;
+    public int currentMana;
     public int userLevel;
     public int currentLevel;
     public int userGold;
@@ -19,7 +21,7 @@ public class PlayerData
     public float userPositionZ;
     public int currentExperience;
     public int experienceToNextLevel; 
-    public PlayerData(string name, int level, int gold, int hp, int def, int score, Vector3 position, int experience, int dmg)
+    public PlayerData(string name, int level, int gold, int hp, int def, int score, Vector3 position, int experience, int dmg, int mana)
     {
         this.userName = name;
         this.userLevel = level;
@@ -32,6 +34,7 @@ public class PlayerData
         this.currentExperience = experience;
         this.userDamage = dmg;
         this.userDefense = def;
+        this.userMana = mana;
     }
     public Vector3 GetPosition() // Lấy vị trí
     {
@@ -102,6 +105,13 @@ public class PlayerData
         currentHp = userHp; // Hồi máu đầy khi nâng cấp
         Debug.Log("Health upgraded by " + upgradeAmount + ". New HP: " + userHp);
     }
+    public void ManaUp(int upgradeAmount) // Nâng cấp mana
+    {
+        upgradeAmount = upgradeAmount * 5; // Mỗi lần nâng cấp tăng thêm 5 mana
+        userMana += upgradeAmount;
+        currentMana = userMana; // Hồi mana đầy khi nâng cấp
+        Debug.Log("Mana upgraded by " + upgradeAmount + ". New Mana: " + userMana);
+    }
     public void DefenseUpg(int upgradeAmount) // Nâng cấp phòng thủ
     {
         upgradeAmount = upgradeAmount * 2; // Mỗi lần nâng cấp tăng thêm 2 phòng thủ
@@ -116,7 +126,25 @@ public class PlayerData
         }
         Debug.Log("Healed " + healAmount + " HP. Current HP: " + currentHp);
     }
-
+    public void RegenMana(int manaAmount) // Hồi mana
+    {
+        currentMana += manaAmount;
+        if (currentMana > userMana)
+        {
+            currentMana = userMana; // Không được vượt quá mana tối đa
+        }
+        Debug.Log("Regained " + manaAmount + " Mana. Current Mana: " + currentMana);
+    }
+    public void UseMana(int manaCost) // Sử dụng mana
+    {
+        if (manaCost > currentMana)
+        {
+            Debug.Log("Not enough mana!");
+            return;
+        }
+        currentMana -= manaCost;
+        Debug.Log("Used " + manaCost + " Mana. Current Mana: " + currentMana);
+    }
 
 }
  
