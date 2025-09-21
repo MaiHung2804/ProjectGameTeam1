@@ -2,27 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConfigManager : MonoBehaviour
+public class ConfigManager 
 {
-    public static ConfigManager instance { get; private set; }
-
+    private static ConfigManager instance;
+    public static ConfigManager Instance => instance ??= new ConfigManager();
+    private ConfigManager()
+    {
+        InitItemDictionary();
+        InitUnitDictionary();
+    }
     [SerializeField] private List<ItemConfig> itemConfig;
     [SerializeField] private List<UnitConfig> unitConfig;
 
     private Dictionary<string, ItemConfig> configDict;
     private Dictionary<string, UnitConfig> unitDict;
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+  
     public void InitItemDictionary()
     {
         configDict = new Dictionary<string, ItemConfig>();
