@@ -6,6 +6,13 @@ using UnityEngine;
 /// </summary>
 public abstract class AttackComponent : MonoBehaviour
 {
+    public enum AttackState
+    {
+        None,
+        MeleeAttack,
+        RangedAttack,
+    }
+
     [Header("Attack Settings")]
     [SerializeField] private float attackDamage = 20f;
     [SerializeField] private float attackRange = 2f;

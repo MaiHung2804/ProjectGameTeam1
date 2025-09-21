@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class FollowingCamera : MonoBehaviour
@@ -18,7 +19,13 @@ public class FollowingCamera : MonoBehaviour
     private float followThreshold = 0.5f*0.5f; // Khoang cach toi thieu de bat dau di chuyen
     private Vector3 vectorDistance;
     private Vector3 lastTargetPostion;
+    
+    public static FollowingCamera Instance { get; private set; }
 
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -77,5 +84,23 @@ public class FollowingCamera : MonoBehaviour
         Vector3 desiredPosition = lastTargetPostion + rotation * cameraOffset;
         transform.position = desiredPosition;
         transform.LookAt(target.position + Vector3.up * 1.5f);
+    }
+
+    public Vector3 ConvertVectorAsCameraCordination(Vector3 input)
+    {
+        // Chuyen doi input theo huong nhin trai phai tu Camera. Rat quan trong
+        Vector3 camForward = Instance.transform.forward;
+        camForward.y = 0;
+        camForward.Normalize();
+        Vector3 camRight = Instance.transform.right;
+        camRight.y = 0;
+        camRight.Normalize();
+
+        // Tinh huong di chuyen theo camera
+        return (camForward * input.z + camRight * input.x).normalized;
+
+        ////Lay theo toa do dia phuong cua nhan vat. Nay khong dung nua
+        //Vector3 moveDir = input.sqrMagnitude > 0.01f ? input.normalized : Vector3.zero;
+        //return moveDir;
     }
 }
