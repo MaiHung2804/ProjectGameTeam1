@@ -8,10 +8,7 @@ public class PlayerMoveComponent : MoveComponent
 {
     [Header("Player Move Settings")]
     [SerializeField] private Joystick joystick;
-    [SerializeField] private Camera mainCamera;
     
-
-
     private Animator animator;
     private AnimationComponent animationComponent;
     private CharacterController characterController;
@@ -157,7 +154,7 @@ public class PlayerMoveComponent : MoveComponent
             return;
         }
         Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        Vector3 joystickInput = new Vector3(MoveSpeed * joystick.Horizontal, 0, MoveSpeed * joystick.Vertical);
+        Vector3 joystickInput = new Vector3(MaxSpeed * joystick.Horizontal, 0, MaxSpeed * joystick.Vertical);
         Vector3 input = keyboardInput + joystickInput;
 
         if (Input.GetKey(jumpKey) || jumpRequested)  
@@ -366,26 +363,8 @@ public class PlayerMoveComponent : MoveComponent
             return false;
         }    
         speedIntensity = Mathf.Clamp01(input.magnitude);
-        direction = ConvertInputToDirectionByCamera(input);
+        direction = FollowingCamera.Instance.ConvertVectorAsCameraCordination(input);
         return true;
-    }
-
-    private Vector3 ConvertInputToDirectionByCamera(Vector3 input)
-    {
-        // Chuyen doi input theo huong nhin trai phai tu Camera. Rat quan trong
-        Vector3 camForward = mainCamera.transform.forward;
-        camForward.y = 0;
-        camForward.Normalize();
-        Vector3 camRight = mainCamera.transform.right;
-        camRight.y = 0;
-        camRight.Normalize();
-
-        // Tinh huong di chuyen theo camera
-        return (camForward * input.z + camRight * input.x).normalized;
-
-        ////Lay theo toa do dia phuong cua nhan vat. Nay khong dung nua
-        //Vector3 moveDir = input.sqrMagnitude > 0.01f ? input.normalized : Vector3.zero;
-        //return moveDir;
     }
 
     private bool CheckNessessaryComponent()
@@ -405,11 +384,7 @@ public class PlayerMoveComponent : MoveComponent
             Debug.LogError("Animator component is missing.");
             return false;
         }
-        if (mainCamera == null)
-        {
-            Debug.LogError("Main Camera is not assigned and no Camera tagged as MainCamera found.");
-            return false;
-        }
+       
         if (animationComponent == null)
             {
                 Debug.LogError("AnimationComponent is missing.");

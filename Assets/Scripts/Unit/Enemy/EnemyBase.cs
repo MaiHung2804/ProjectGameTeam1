@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyUnit : UnitBase
+public class EnemyBase : UnitBase
 {
     [Header("Enemy Settings")]
     [SerializeField] private float detectionRange = 5f;
@@ -12,31 +12,9 @@ public class EnemyUnit : UnitBase
     private Transform targetPlayer;
     private float lastAttackTime = 0f;
 
-    private void Update()
-    {
-        if (IsDead) return;
-
-        if (targetPlayer == null)
-        {
-            FindPlayer();
-            return;
-        }
-
-        float distance = Vector3.Distance(transform.position, targetPlayer.position);
-
-        if (distance <= attackRange)
-        {
-            TryAttackPlayer();
-        }
-        else if (distance <= detectionRange)
-        {
-            moveComponent?.MoveTo(targetPlayer.position);
-        }
-    }
-
     private void FindPlayer()
     {
-        PlayerUnit player = FindObjectOfType<PlayerUnit>();
+        PlayerBase player = FindObjectOfType<PlayerBase>();
         if (player != null)
         {
             targetPlayer = player.transform;
@@ -54,5 +32,12 @@ public class EnemyUnit : UnitBase
         {
             attackComponent.Attack(playerUnit);
         }
+    }
+
+    protected override void HandleMovement()
+    {         // Enemy movement logic can be implemented here if needed
+    }
+    protected override void HandleAttack()
+    {         // Enemy attack logic can be implemented here if needed
     }
 }
