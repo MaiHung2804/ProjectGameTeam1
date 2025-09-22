@@ -11,6 +11,9 @@ public class GameInputManager : MonoBehaviour
     public static GameInputManager Instance { get; private set; }
     private float inputVectorSqrMin = 0.05f;
 
+    private KeyCode jumpKey = KeyCode.Space;
+    private KeyCode melleAttackKey = KeyCode.J;
+    private KeyCode rangedAttackKey = KeyCode.K;
 
     public event Action OnJumpPressed;
     public event Action OnMelleAttackPressed;
@@ -71,15 +74,15 @@ public class GameInputManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(jumpKey))
         {
             OnJumpPressed?.Invoke();
         }
-        if (Input.GetKeyDown(KeyCode.J))
+        if (Input.GetKeyDown(melleAttackKey))
         {
             OnMelleAttackPressed?.Invoke();
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(rangedAttackKey))
         {
             OnRangedAttackPressed?.Invoke();
         }

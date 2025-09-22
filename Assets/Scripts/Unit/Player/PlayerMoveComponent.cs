@@ -25,23 +25,15 @@ public class PlayerMoveComponent : MoveComponent
     private float verticalJumpForce = 6.5f;
     private bool isFallingFromJump = false;
 
-    private float gravity = -9.81f;
+    private bool canOutState = true; 
+
     private float verticalVelocity = 0f;
     private float verticalVelocityMax = -2f;
-
-
-    // Cac bien quan trong Quan ly trang thai di chuyen, nhap so lieu
-    private float currentSpeed = 0f;
-    private Vector3 currentDir = Vector3.zero;
-    private Vector3 lastDir = Vector3.zero;
-
-
 
 
     protected override void Awake()
     {
         base.Awake();
-        currentSpeed = 0f;
 
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -59,14 +51,6 @@ public class PlayerMoveComponent : MoveComponent
         moveState = MoveState.Falling;
     }
 
-
-
-    protected void Update()
-
-    {
-        HandleActivites();
-
-    }
 
     public override void HandleActivites()
     {

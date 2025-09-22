@@ -8,7 +8,7 @@ public abstract class AttackComponent : MonoBehaviour
 {
     public enum AttackState
     {
-        None,
+        NoneAttack,
         MeleeAttack,
         RangedAttack,
     }

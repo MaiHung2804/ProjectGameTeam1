@@ -4,15 +4,37 @@ using UnityEngine;
 
 public class PlayerBase : UnitBase
 {
-    // Start is called before the first frame update
+    public enum PlayerState
+    {
+        Idle,
+        Moving,
+        Attacking,
+        Dead
+    }
+    public PlayerState CurrentState { get; private set; } = PlayerState.Idle;
+    PlayerMoveComponent moveComponent;
+    PlayerAttackComponent attackComponent;
+
+
+
+
+
     void Start()
     {
-        
+        moveComponent = base.moveComponent as PlayerMoveComponent;
+        attackComponent = base.attackComponent as PlayerAttackComponent;
     }
 
+    //protected override void Update()
+    //{
+    //    base.Update();
+    //}
 
     protected override void HandleMovement()
     {
+        moveComponent.HandleActivites();
+     
+
     }
 
 
