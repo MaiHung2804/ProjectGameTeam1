@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using UnityEditor.XR;
 using UnityEngine;
 using static MoveComponent;
 
@@ -27,16 +28,18 @@ public class GameInputManager : MonoBehaviour
     }
 
     // Tra ve vector di chuyen tu ban phim va joystick
-    public Vector2 GetMoveInput()
+    public bool GetMoveInput(out Vector2 MoveInput)
     {
         float horizontal = Input.GetAxis("Horizontal") + joystick.Horizontal;
         float vertical = Input.GetAxis("Vertical") + joystick.Vertical;
         Vector2 input = new Vector2(horizontal, vertical);
         if (input.sqrMagnitude < inputVectorSqrMin)
         {
-            return Vector2.zero;
+            MoveInput = Vector2.zero;
+            return false; 
         }
-        return input;
+        MoveInput = input;
+        return true;
     }
 
     // Tra ve vector xoay tu Chuot

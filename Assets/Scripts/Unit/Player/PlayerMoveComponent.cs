@@ -9,7 +9,6 @@ public class PlayerMoveComponent : MoveComponent
     [Header("Player Move Settings")]
     [SerializeField] private Joystick joystick;
     
-    private Animator animator;
     private AnimationComponent animationComponent;
     private CharacterController characterController;
 
@@ -361,11 +360,6 @@ public class PlayerMoveComponent : MoveComponent
         if (characterController == null)
         {
             Debug.LogError("CharacterController component is missing.");
-            return false;
-        }
-        if (animator == null)
-        {
-            Debug.LogError("Animator component is missing.");
             return false;
         }
        

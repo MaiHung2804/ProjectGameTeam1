@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
 
 public class PlayerBase : UnitBase
@@ -8,15 +9,22 @@ public class PlayerBase : UnitBase
     {
         Idle,
         Moving,
-        Attacking,
+        Jumping,
+        Falling,
+        Landing,
+        MeleeAttacking,
+        RangedAttacking,
         Dead
     }
-    public PlayerState CurrentState { get; private set; } = PlayerState.Idle;
+    public PlayerState currentState { get; private set; } = PlayerState.Idle;
     PlayerMoveComponent moveComponent;
     PlayerAttackComponent attackComponent;
 
+    private AnimationComponent animationComponent;
+    private Vector2 moveInput;
+    
 
-
+    private bool isEngteringState = true;
 
 
     void Start()
@@ -25,21 +33,35 @@ public class PlayerBase : UnitBase
         attackComponent = base.attackComponent as PlayerAttackComponent;
     }
 
-    //protected override void Update()
-    //{
-    //    base.Update();
-    //}
-
-    protected override void HandleMovement()
+  
+    protected override void HandleInput()
     {
-        moveComponent.HandleActivites();
-     
+        if (IsFixedState(currentState))
+            return;
+
+
+
+
+    }
+
+    protected override void HandleState()
+    {
+
+    }
+
+    protected override void HandleAnimation()
+    {
 
     }
 
 
-    protected override void HandleAttack()
+    private bool IsFixedState(PlayerState currentState)
     {
+        if (currentState == PlayerState.Jumping 
+            || currentState == PlayerState.Falling || 
+            currentState == PlayerState.Landing 
+            || currentState == PlayerState.Dead)
+            return true;
+        return false;
     }
-
 }

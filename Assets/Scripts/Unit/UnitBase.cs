@@ -57,12 +57,15 @@ public abstract class UnitBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        HandleMovement();
-        HandleAttack();
+        HandleInput();
+        HandleState();
+        HandleAnimation();
     }
 
-    protected abstract void HandleMovement();
-    protected abstract void HandleAttack();
+    protected virtual void HandleInput() { }
+    protected virtual void HandleState() { }
+    protected virtual void HandleAnimation() { }
+
 
 
 }
