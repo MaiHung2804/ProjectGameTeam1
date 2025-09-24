@@ -11,11 +11,7 @@ public class PlayerBase : UnitBase
     {
         Idle,
         Moving,
-        Jumping,
-        Falling,
-        Landing,
-        MeleeAttacking,
-        RangedAttacking,
+        Attack,
         Dead
     }
     public PlayerState currentState { get; private set; } = PlayerState.Idle;
@@ -30,16 +26,16 @@ public class PlayerBase : UnitBase
 
     private void OnEnable()
     {
-        InputManager.Instance.OnJumpPressed += RequestJump;
-        InputManager.Instance.OnMelleAttackPressed += RequestMeleeAttack;
-        InputManager.Instance.OnRangedAttackPressed += RequestRangedAttack;
+        PlayerInputManager.Instance.OnJumpPressed += RequestJump;
+        PlayerInputManager.Instance.OnMelleAttackPressed += RequestMeleeAttack;
+        PlayerInputManager.Instance.OnRangedAttackPressed += RequestRangedAttack;
     }
 
     private void OnDisable()
     {
-        InputManager.Instance.OnJumpPressed -= RequestJump;
-        InputManager.Instance.OnMelleAttackPressed -= RequestMeleeAttack;
-        InputManager.Instance.OnRangedAttackPressed -= RequestRangedAttack;
+        PlayerInputManager.Instance.OnJumpPressed -= RequestJump;
+        PlayerInputManager.Instance.OnMelleAttackPressed -= RequestMeleeAttack;
+        PlayerInputManager.Instance.OnRangedAttackPressed -= RequestRangedAttack;
     }
 
 
@@ -50,17 +46,79 @@ public class PlayerBase : UnitBase
         animationComponent = GetComponent<AnimationComponent>();
 
         // Set initial state
-        currentState = PlayerState.Falling;
+        currentState = PlayerState.Idle;
     }
 
   
     protected override void HandleActivities()
     {
-     
+        if (currentState == PlayerState.Idle || currentState == PlayerState.Moving)
+        {
+            moveComponent.HandleActivites();
+        }
+
+        if (currentState == PlayerState.Attack)
+        {
+            attackComponent.HandleActivites();
+        }
+        HandleInput();
 
     }
 
-    
+    private void HandleInput()
+    {
+        PlayerState previousState = currentState;
+        switch (currentState)
+        {
+            case PlayerState.Idle:
+                if (moveInput.magnitude > 0.1f)
+                {
+                    currentState = PlayerState.Moving;
+                }
+                else if (attackComponent.IsAttacking)
+                {
+                    currentState = PlayerState.Attack;
+                }
+                break;
+            case PlayerState.Moving:
+                if (moveInput.magnitude <= 0.1f)
+                {
+                    currentState = PlayerState.Idle;
+                }
+                else if (attackComponent.IsAttacking)
+                {
+                    currentState = PlayerState.Attack;
+                }
+                break;
+            case PlayerState.Attack:
+                if (!attackComponent.IsAttacking)
+                {
+                    if (moveInput.magnitude > 0.1f)
+                    {
+                        currentState = PlayerState.Moving;
+                    }
+                    else
+                    {
+                        currentState = PlayerState.Idle;
+                    }
+                }
+                break;
+            case PlayerState.Dead:
+                // Remain in Dead state
+                break;
+        }
+        if (previousState != currentState)
+        {
+            isEngteringState = true;
+            OnExitState(previousState);
+            OnEnterState(currentState);
+        }
+        else
+        {
+            isEngteringState = false;
+        }
+        animationComponent.UpdateAnimation(currentState, isEngteringState);
+    }
 
 
 

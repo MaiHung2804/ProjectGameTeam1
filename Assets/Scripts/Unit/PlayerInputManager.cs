@@ -6,10 +6,10 @@ using UnityEditor.XR;
 using UnityEngine;
 using static MoveComponent;
 
-public class InputManager : MonoBehaviour
+public class PlayerInputManager : MonoBehaviour
 {
     [SerializeField] private Joystick joystick;
-    public static InputManager Instance { get; private set; }
+    public static PlayerInputManager Instance { get; private set; }
     private float inputVectorSqrMin = 0.05f;
 
     private KeyCode jumpKey = KeyCode.Space;

@@ -62,7 +62,4 @@ public abstract class UnitBase : MonoBehaviour
 
     protected virtual void HandleActivities() { }
 
-
-
-
 }
