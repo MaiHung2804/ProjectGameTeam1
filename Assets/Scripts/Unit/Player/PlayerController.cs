@@ -22,6 +22,15 @@ public class PlayerController : UnitController
         base.Awake();
         playerMove = base.moveComponent as PlayerMoveComponent; // coi lop cha MoveComponent nhu PlayerMoveComponent
         playerAttack = base.attackComponent as PlayerAttackComponent;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        if (players.Length > 1)
+        {
+            Destroy(gameObject); // xóa player trùng
+            return;
+        }
+
+        DontDestroyOnLoad(gameObject);
+    
     }
 
     protected override void HandleIdle()

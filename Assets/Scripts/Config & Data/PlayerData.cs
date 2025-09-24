@@ -9,42 +9,46 @@ public class PlayerData
     public int highScore;
     public int userDamage;
     public int userDefense;
-    public int userHp;
+    public int maxHp;
     public int currentHp;
-    public int userMana;
+    public int maxMana;
     public int currentMana;
     public int userLevel;
     public int currentLevel;
     public int userGold;
-    public float userPositionX;
-    public float userPositionY;
-    public float userPositionZ;
     public int currentExperience;
     public int experienceToNextLevel; 
-    public PlayerData(string name, int level, int gold, int hp, int def, int score, Vector3 position, int experience, int dmg, int mana)
+    public string currentScene;
+    public Vector3 userPosition;
+
+    // Constructor để khởi tạo dữ liệu người chơi (thiếu gì nhắn em để thêm)
+    public PlayerData(string name, int score, int dmg, int def, int hp, int mp, int lv, int gold, Vector3 position, int exp, string scene)
     {
         this.userName = name;
-        this.userLevel = level;
-        this.userGold = gold;
-        this.userHp = hp;
         this.highScore = score;
-        this.userPositionX = position.x;
-        this.userPositionY = position.y;
-        this.userPositionZ = position.z;
-        this.currentExperience = experience;
         this.userDamage = dmg;
         this.userDefense = def;
-        this.userMana = mana;
+        this.maxHp = hp;
+        this.currentHp = hp;
+        this.maxMana = mp;
+        this.currentMana = mp;
+        this.userLevel = lv;
+        this.userGold = gold;
+        this.userPosition = position;
+        this.currentExperience = exp;
+        this.currentLevel = lv;
+        this.currentScene = scene;
+
     }
+
+
     public Vector3 GetPosition() // Lấy vị trí
     {
-        return new Vector3(userPositionX, userPositionY, userPositionZ);
+        return userPosition;
     }
     public void SetPosition(Vector3 position) // Đặt vị trí
     {
-        userPositionX = position.x;
-        userPositionY = position.y;
-        userPositionZ = position.z;
+        userPosition = position;
     }
     public void LevelUp() // Lên cấp
     {
@@ -53,7 +57,7 @@ public class PlayerData
         DamageUpg(userLevel); // Nâng cấp sát thương
         HealthUp(userLevel); // Nâng cấp máu
         DefenseUpg(userLevel); // Nâng cấp phòng thủ
-        Debug.Log("Level Up! New Level: " + userLevel + ", New HP: " + userHp);
+        Debug.Log("Level Up! New Level: " + userLevel + ", New HP: " + maxHp);
     }
     public void AddGold(int amount) // Thêm vàng
     {
@@ -68,7 +72,8 @@ public class PlayerData
             damageTaken = 0;
         }
         currentHp -= damageTaken;
-        if (currentHp < 0)
+        Debug.Log("Took " + damageTaken + " damage. Current HP: " + currentHp);
+        if (currentHp <= 0)
         {
             currentHp = 0;
             Die();
@@ -76,9 +81,9 @@ public class PlayerData
     }
     public void Die() // Chết
     {
+        
         Debug.Log(userName + " has died.");
-      
-        // Xử lý khi người chơi chết (ví dụ: reset vị trí, giảm vàng, v.v.)
+             
     }
     public void TakeExperience(int experience) // Nhận kinh nghiệm
     {
@@ -101,16 +106,16 @@ public class PlayerData
     public void HealthUp(int upgradeAmount) // Nâng cấp máu
     {
         upgradeAmount = upgradeAmount * 10; // Mỗi lần nâng cấp tăng thêm 10 máu
-        userHp += upgradeAmount;
-        currentHp = userHp; // Hồi máu đầy khi nâng cấp
-        Debug.Log("Health upgraded by " + upgradeAmount + ". New HP: " + userHp);
+        maxHp += upgradeAmount;
+        currentHp = maxHp; // Hồi máu đầy khi nâng cấp
+        Debug.Log("Health upgraded by " + upgradeAmount + ". New HP: " + maxHp);
     }
     public void ManaUp(int upgradeAmount) // Nâng cấp mana
     {
         upgradeAmount = upgradeAmount * 5; // Mỗi lần nâng cấp tăng thêm 5 mana
-        userMana += upgradeAmount;
-        currentMana = userMana; // Hồi mana đầy khi nâng cấp
-        Debug.Log("Mana upgraded by " + upgradeAmount + ". New Mana: " + userMana);
+        maxMana += upgradeAmount;
+        currentMana = maxMana; // Hồi mana đầy khi nâng cấp
+        Debug.Log("Mana upgraded by " + upgradeAmount + ". New Mana: " + maxMana);
     }
     public void DefenseUpg(int upgradeAmount) // Nâng cấp phòng thủ
     {
@@ -120,18 +125,18 @@ public class PlayerData
     public void Heal(int healAmount) // Hồi máu
     {
         currentHp += healAmount;
-        if (currentHp > userHp)
+        if (currentHp > maxHp)
         {
-            currentHp = userHp; // Không được vượt quá máu tối đa
+            currentHp = maxHp; // Không được vượt quá máu tối đa
         }
         Debug.Log("Healed " + healAmount + " HP. Current HP: " + currentHp);
     }
     public void RegenMana(int manaAmount) // Hồi mana
     {
         currentMana += manaAmount;
-        if (currentMana > userMana)
+        if (currentMana > maxMana)
         {
-            currentMana = userMana; // Không được vượt quá mana tối đa
+            currentMana = maxMana; // Không được vượt quá mana tối đa
         }
         Debug.Log("Regained " + manaAmount + " Mana. Current Mana: " + currentMana);
     }
