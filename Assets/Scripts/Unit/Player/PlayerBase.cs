@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
+using static UnityEditorInternal.VersionControl.ListControl;
 
 public class PlayerBase : UnitBase
 {
@@ -26,33 +28,42 @@ public class PlayerBase : UnitBase
 
     private bool isEngteringState = true;
 
+    private void OnEnable()
+    {
+        InputManager.Instance.OnJumpPressed += RequestJump;
+        InputManager.Instance.OnMelleAttackPressed += RequestMeleeAttack;
+        InputManager.Instance.OnRangedAttackPressed += RequestRangedAttack;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.OnJumpPressed -= RequestJump;
+        InputManager.Instance.OnMelleAttackPressed -= RequestMeleeAttack;
+        InputManager.Instance.OnRangedAttackPressed -= RequestRangedAttack;
+    }
+
 
     void Start()
     {
         moveComponent = base.moveComponent as PlayerMoveComponent;
         attackComponent = base.attackComponent as PlayerAttackComponent;
+        animationComponent = GetComponent<AnimationComponent>();
+
+        // Set initial state
+        currentState = PlayerState.Falling;
     }
 
   
-    protected override void HandleInput()
+    protected override void HandleActivities()
     {
-        if (IsFixedState(currentState))
-            return;
-
-
-
+     
 
     }
 
-    protected override void HandleState()
-    {
+    
 
-    }
 
-    protected override void HandleAnimation()
-    {
 
-    }
 
 
     private bool IsFixedState(PlayerState currentState)

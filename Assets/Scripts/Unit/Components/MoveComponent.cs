@@ -22,7 +22,7 @@ public abstract class MoveComponent : MonoBehaviour
     protected float currentSpeed = 0f; // Luu gia tri hien tai cua toc do
     protected Vector3 currentDir;
     protected Vector3 lastDir;
-    protected float gravity = -9.81f;
+    
     private float stopDistance = 0.1f;
 
     protected Vector3? targetPosition; // Them ? de cho phep null

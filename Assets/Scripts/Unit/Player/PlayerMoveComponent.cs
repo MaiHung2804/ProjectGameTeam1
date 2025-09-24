@@ -28,6 +28,7 @@ public class PlayerMoveComponent : MoveComponent
 
     private float verticalVelocity = 0f;
     private float verticalVelocityMax = -2f;
+    private float gravity = -9.81f;
 
 
     protected override void Awake()
@@ -35,7 +36,6 @@ public class PlayerMoveComponent : MoveComponent
         base.Awake();
 
         characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
         animationComponent = GetComponent<AnimationComponent>();
         
         if (!CheckNessessaryComponent())
@@ -267,7 +267,7 @@ public class PlayerMoveComponent : MoveComponent
         characterController.Move(move * Time.deltaTime);
     }
 
-    private void UpdateVerticalVelocity()
+    public void UpdateVerticalVelocity()
     {
         if (characterController.isGrounded)
         {
