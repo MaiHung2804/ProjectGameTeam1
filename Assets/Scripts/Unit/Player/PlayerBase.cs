@@ -26,16 +26,16 @@ public class PlayerBase : UnitBase
 
     private void OnEnable()
     {
-        PlayerInputManager.Instance.OnJumpPressed += RequestJump;
-        PlayerInputManager.Instance.OnMelleAttackPressed += RequestMeleeAttack;
-        PlayerInputManager.Instance.OnRangedAttackPressed += RequestRangedAttack;
+        InputManager.Instance.OnJumpPressed += RequestJump;
+        InputManager.Instance.OnMelleAttackPressed += RequestMeleeAttack;
+        InputManager.Instance.OnRangedAttackPressed += RequestRangedAttack;
     }
 
     private void OnDisable()
     {
-        PlayerInputManager.Instance.OnJumpPressed -= RequestJump;
-        PlayerInputManager.Instance.OnMelleAttackPressed -= RequestMeleeAttack;
-        PlayerInputManager.Instance.OnRangedAttackPressed -= RequestRangedAttack;
+        InputManager.Instance.OnJumpPressed -= RequestJump;
+        InputManager.Instance.OnMelleAttackPressed -= RequestMeleeAttack;
+        InputManager.Instance.OnRangedAttackPressed -= RequestRangedAttack;
     }
 
 
