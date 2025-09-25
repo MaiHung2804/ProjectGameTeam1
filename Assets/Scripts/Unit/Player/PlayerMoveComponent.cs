@@ -50,8 +50,7 @@ public class PlayerMoveComponent : MoveComponent
         moveState = MoveState.Falling;
     }
 
-
-    public override void HandleActivites()
+    public override void HandleActivities(Vector2 moveInput, bool isJump)
     {
         UpdateVerticalVelocity();
 
@@ -177,9 +176,10 @@ public class PlayerMoveComponent : MoveComponent
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, airSpeedReductionFactor * MaxSpeed * Time.deltaTime);
             horizontalMove = currentDir * currentSpeed;
         }
-        
-        // Ap dung gravity
-        verticalVelocity += gravity * Time.deltaTime;
+
+        // Bo vi da co UpdateVerticalVelocity
+        //// Ap dung gravity
+        //verticalVelocity += gravity * Time.deltaTime;
 
         Vector3 fallingMove = new Vector3(horizontalMove.x, verticalVelocity, horizontalMove.z);
         characterController.Move(fallingMove * Time.deltaTime);
@@ -215,6 +215,9 @@ public class PlayerMoveComponent : MoveComponent
                 Debug.Log("Landing -> Moving");
                 return;
             }
+
+
+
             moveState = MoveState.Idle;
             currentDir = Vector3.zero;
             currentSpeed = 0f;
@@ -401,5 +404,6 @@ public class PlayerMoveComponent : MoveComponent
         // Khong su dung ham nay trong PlayerMoveComponent
         Debug.LogWarning("Stop is not implemented in PlayerMoveComponent. Use input devices to stop movement.");
     }
+
 
 }

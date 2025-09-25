@@ -3,134 +3,111 @@ using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using UnityEditor.PackageManager.Requests;
 using UnityEngine;
+using UnityEngine.Playables;
 using static UnityEditorInternal.VersionControl.ListControl;
 
 public class PlayerBase : UnitBase
 {
-    public enum PlayerState
-    {
-        Idle,
-        Moving,
-        Attack,
-        Dead
-    }
-    public PlayerState currentState { get; private set; } = PlayerState.Idle;
-    PlayerMoveComponent moveComponent;
-    PlayerAttackComponent attackComponent;
-
-    private AnimationComponent animationComponent;
-    private Vector2 moveInput;
     
+    //private PlayerMoveComponent moveComponent;
+    //private PlayerAttackComponent attackComponent;
 
-    private bool isEngteringState = true;
+    private Vector2 moveInput = Vector2.zero;
+    private bool isJump = false;
+    private bool isAttack = false;   // Se sua sau khi co Enum Skill
 
-    private void OnEnable()
+
+    void OnEnable()
     {
-        InputManager.Instance.OnJumpPressed += RequestJump;
-        InputManager.Instance.OnMelleAttackPressed += RequestMeleeAttack;
-        InputManager.Instance.OnRangedAttackPressed += RequestRangedAttack;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
-        InputManager.Instance.OnJumpPressed -= RequestJump;
-        InputManager.Instance.OnMelleAttackPressed -= RequestMeleeAttack;
-        InputManager.Instance.OnRangedAttackPressed -= RequestRangedAttack;
     }
-
 
     void Start()
     {
-        moveComponent = base.moveComponent as PlayerMoveComponent;
-        attackComponent = base.attackComponent as PlayerAttackComponent;
-        animationComponent = GetComponent<AnimationComponent>();
-
-        // Set initial state
-        currentState = PlayerState.Idle;
+        //moveComponent = base.moveComponent as PlayerMoveComponent;
+        //attackComponent = base.attackComponent as PlayerAttackComponent;
     }
 
   
     protected override void HandleActivities()
     {
-        if (currentState == PlayerState.Idle || currentState == PlayerState.Moving)
-        {
-            moveComponent.HandleActivites();
-        }
-
-        if (currentState == PlayerState.Attack)
-        {
-            attackComponent.HandleActivites();
-        }
-        HandleInput();
-
+        GetInput();
+        SelectOverallState();
+        HandleStateActivities();
     }
 
-    private void HandleInput()
+    private void GetInput()
     {
-        PlayerState previousState = currentState;
+        Vector2 moveInput = InputManager.Instance.GetMoveInput();
+        isJump = InputManager.Instance.IsJumpPressed();
+
+
+        //bool attackInput = InputManager.Instance.GetAttackInput();
+    }
+
+    private void SelectOverallState()
+    {
+        if (IsDead)
+        {
+            ChangeState(UnitState.Dead);
+            return;
+        }
+        else if (isAttack && moveComponent.CanOutSate())
+        {   
+            ChangeState(UnitState.Attack);
+            return;
+        }
+        else if ( moveInput != Vector2.zero && attackComponent.CanOutState())
+        {
+            ChangeState(UnitState.Moving);
+            return;
+        }
+        else if (moveComponent.CanOutSate())
+        {
+            ChangeState(UnitState.Idle);
+            return;
+        }
+    }
+
+    private void HandleStateActivities()
+    {
         switch (currentState)
         {
-            case PlayerState.Idle:
-                if (moveInput.magnitude > 0.1f)
-                {
-                    currentState = PlayerState.Moving;
-                }
-                else if (attackComponent.IsAttacking)
-                {
-                    currentState = PlayerState.Attack;
-                }
+            case UnitState.Moving:
+            case UnitState.Idle:
+                moveComponent.HandleActivities(moveInput, isJump);
                 break;
-            case PlayerState.Moving:
-                if (moveInput.magnitude <= 0.1f)
-                {
-                    currentState = PlayerState.Idle;
-                }
-                else if (attackComponent.IsAttacking)
-                {
-                    currentState = PlayerState.Attack;
-                }
+            case UnitState.Attack:
+                attackComponent.HandleActivities();
                 break;
-            case PlayerState.Attack:
-                if (!attackComponent.IsAttacking)
-                {
-                    if (moveInput.magnitude > 0.1f)
-                    {
-                        currentState = PlayerState.Moving;
-                    }
-                    else
-                    {
-                        currentState = PlayerState.Idle;
-                    }
-                }
-                break;
-            case PlayerState.Dead:
-                // Remain in Dead state
+            case UnitState.Dead:
                 break;
         }
-        if (previousState != currentState)
-        {
-            isEngteringState = true;
-            OnExitState(previousState);
-            OnEnterState(currentState);
-        }
-        else
-        {
-            isEngteringState = false;
-        }
-        animationComponent.UpdateAnimation(currentState, isEngteringState);
     }
 
 
-
-
-
-    private bool IsFixedState(PlayerState currentState)
+    private void ChangeState(UnitState newState)
     {
-        if (currentState == PlayerState.Jumping 
-            || currentState == PlayerState.Falling || 
-            currentState == PlayerState.Landing 
-            || currentState == PlayerState.Dead)
-            return true;
-        return false;
+        if (currentState != newState)
+        {
+            // ExitState(currentState);
+            currentState = newState;
+            // EnterState(newState);
+        }
     }
+
+    private void ExitState(UnitState state)
+    {
+        // Logic khi thoat trang thai
+    }
+
+    private void EnterState(UnitState state)
+    {
+        // Logic khi vao trang thai
+    }
+
+
 }

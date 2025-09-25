@@ -12,6 +12,13 @@ public abstract class UnitBase : MonoBehaviour
     [Header("Unit Settings")]
     [SerializeField] protected int teamID = 0;
 
+    public enum UnitState
+    {
+        Idle, Moving, Attack, Dead
+    }
+
+    public UnitState currentState { get; protected set; } = UnitState.Idle;
+
     protected HealthComponent healthComponent;
     protected AttackComponent attackComponent;
     protected MoveComponent moveComponent;

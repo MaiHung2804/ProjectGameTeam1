@@ -65,7 +65,7 @@ public abstract class AttackComponent : MonoBehaviour
 
     public abstract bool HasAttackInput();
 
-    public abstract void HandleActivites();
+    public abstract void HandleActivities();
 
     public abstract bool CanOutState();
 
