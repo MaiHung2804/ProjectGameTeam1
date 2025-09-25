@@ -10,22 +10,25 @@ using UnityEngine;
 public abstract class UnitBase : MonoBehaviour
 {
     [Header("Unit Settings")]
-    [SerializeField] protected int teamID = 0;
+    [SerializeField] protected Team teamID = Team.Player; // Player = 0
 
     public enum UnitState
     {
         Idle, Moving, Attack, Dead
     }
 
-    public UnitState currentState { get; protected set; } = UnitState.Idle;
+    public UnitState CurrentState { get; protected set; } = UnitState.Idle;
 
     protected HealthComponent healthComponent;
     protected AttackComponent attackComponent;
     protected MoveComponent moveComponent;
+    protected AnimationComponent animationComponent;
+
+
 
     public event Action <UnitBase> EventOnDeath;
 
-    public int TeamID
+    public Team TeamID
     {
           get { return teamID; }
     }
@@ -34,8 +37,9 @@ public abstract class UnitBase : MonoBehaviour
     public HealthComponent GetHealthComponent() => healthComponent;
     public AttackComponent GetAttackComponent() => attackComponent;
     public MoveComponent GetMoveComponent() => moveComponent;
+    public AnimationComponent GetAnimationComponent() => animationComponent;
 
-     /// <param name="damage">  ghi chu luong sat thuong </param>
+    /// <param name="damage">  ghi chu luong sat thuong </param>
     public virtual void OnTakeDamage(float damage)
     {
         if (healthComponent != null)
@@ -60,13 +64,14 @@ public abstract class UnitBase : MonoBehaviour
         healthComponent = GetComponent<HealthComponent>();
         attackComponent = GetComponent<AttackComponent>();
         moveComponent = GetComponent<MoveComponent>();
+        animationComponent = GetComponent<AnimationComponent>();
     }
 
     protected virtual void Update()
     {
-        HandleActivities();
+        UpdateActions();
     }
 
-    protected virtual void HandleActivities() { }
+    protected virtual void UpdateActions() { }
 
 }

@@ -63,10 +63,12 @@ public abstract class AttackComponent : MonoBehaviour
         lastAttackTime = -Mathf.Infinity;
     }
 
-    public abstract bool HasAttackInput();
+    public virtual void HandleComponentActs() { }
 
-    public abstract void HandleActivities();
+    public virtual void HandleComponentActs(Skill skill) { }
 
-    public abstract bool CanOutState();
+    public virtual void HandleComponentActs(UnitBase target) { }
+
+    public abstract bool CanOutComponentState();
 
 }

@@ -7,51 +7,57 @@ using UnityEngine.PlayerLoop;
 public class PlayerMoveComponent : MoveComponent
 {
     [Header("Player Move Settings")]
-    [SerializeField] private Joystick joystick;
     
-    private AnimationComponent animationComponent;
     private CharacterController characterController;
+    private UnitBase playerUnitBase;
+    private AnimationComponent animationComponent;
 
-
-    private bool isEnteringState = true;
-    private bool jumpRequested = false;
-    private KeyCode jumpKey = KeyCode.Space;
     
-    private float inputVectorSqrMin = 0.05f; 
-    private float groundSpeedReductionFactor = 1.2f; // Cang lon thi CurrentSpeed giam ve 0 cang nhanh khi khong co input
-    private float airSpeedReductionFactor = 0.5f; // Cang lon thi CurrentSpeed giam ve 0 cang nhanh khi khong co input
-    private float horizontalJumpForceFactor = 1.2f; // Dung khi nhay nhan voi speed ngang
-    private float verticalJumpForce = 6.5f;
-    private bool isFallingFromJump = false;
-
-    private bool canOutState = true; 
+    
+    private const float INPUT_VECTOR_SQR_MIN = 0.05f; 
+    private const float GROUND_SPEED_REDUCTION = 1.2f; // Cang lon thi CurrentSpeed giam ve 0 cang nhanh khi khong co input
+    private const float AIR_SPEED_REDUCTION = 0.5f; // Cang lon thi CurrentSpeed giam ve 0 cang nhanh khi khong co input
+    private const float HOR_JUMP_FORCE_FACTOR = 1.2f; // Dung khi nhay nhan voi speed ngang
+    private const float VER_JUMP_FORCE = 5f;
+    private const float GRAVITY = -9.81f;
+    private const float VERTICAL_VELOCITY_MAX = -2f;
 
     private float verticalVelocity = 0f;
-    private float verticalVelocityMax = -2f;
-    private float gravity = -9.81f;
+    private bool isFallingFromJump = false;
+    private bool canOutComponentState = true;   // Tong the
+    private bool isEnteringState = true; // Chi tiet trong moi state
+
+    private Vector2 moveInput = Vector2.zero;
+    private bool jumpInput = false;
 
 
     protected override void Awake()
     {
         base.Awake();
-
         characterController = GetComponent<CharacterController>();
-        animationComponent = GetComponent<AnimationComponent>();
-        
-        if (!CheckNessessaryComponent())
+
+        playerUnitBase = GetComponent<UnitBase>();
+        if ( playerUnitBase == null)
         {
-            enabled = false; // Vo hieu hoa component PlayerMoveComponent luc nay
+            playerUnitBase = GetComponentInParent<UnitBase>();
         }
+
+        animationComponent = playerUnitBase.GetAnimationComponent();
+
+
     }
 
     private void Start()
     {
         // Dat nhan vat luc dau o tren cao
         moveState = MoveState.Falling;
+        canOutComponentState = false;
     }
 
-    public override void HandleActivities(Vector2 moveInput, bool isJump)
+    public override void HandleComponentActs(Vector2 moveInput, bool isJump)
     {
+        this.moveInput = moveInput;
+        this.jumpInput = isJump;
         UpdateVerticalVelocity();
 
         switch (moveState)
@@ -81,18 +87,18 @@ public class PlayerMoveComponent : MoveComponent
             animationComponent.MoveSpeed(currentSpeed);
             isEnteringState = false;
             Debug.Log("Enter Idle" + currentSpeed);
+            canOutComponentState = true;
         }
 
-        if (Input.GetKey(jumpKey) || jumpRequested)
+        if (jumpInput)
         {
             moveState = MoveState.Jumping;
-            jumpRequested = false;
             isEnteringState = true;
             Debug.Log("Idle -> Jumping");
             return;
         }
 
-        if (GetDirectionFromDevices(out currentDir, out float speedIntensity))
+        if (GetDirectionFromDevices(moveInput, out currentDir, out float speedIntensity))
         {
             currentSpeed = speedIntensity * MaxSpeed;
             moveState = MoveState.Moving;
@@ -109,13 +115,14 @@ public class PlayerMoveComponent : MoveComponent
         {
             animationComponent.MoveSpeed(currentSpeed);
             isEnteringState = false;
+            canOutComponentState = true;
         }
 
-        if (!GetDirectionFromDevices(out currentDir, out float speedIntensity))
+        if (!GetDirectionFromDevices(moveInput, out currentDir, out float speedIntensity))
         {
             // Luc nay khong co input, currentDirection luc nay van giu nguyen. CurrentSpeed giam dan ve 0
             currentDir = lastDir;
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, groundSpeedReductionFactor * MaxSpeed * Time.deltaTime);
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, GROUND_SPEED_REDUCTION * MaxSpeed * Time.deltaTime);
         }
         else
         {
@@ -135,15 +142,12 @@ public class PlayerMoveComponent : MoveComponent
             Debug.Log("Moving -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
-        Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        Vector3 joystickInput = new Vector3(MaxSpeed * joystick.Horizontal, 0, MaxSpeed * joystick.Vertical);
-        Vector3 input = keyboardInput + joystickInput;
+        // Code cu thi co nhap them Input o day?
 
-        if (Input.GetKey(jumpKey) || jumpRequested)  
+        if (jumpInput)  
         {
             moveState = MoveState.Jumping;
             isEnteringState = true;
-            jumpRequested = false;
             Debug.Log("Moving -> Jumping " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
@@ -164,16 +168,17 @@ public class PlayerMoveComponent : MoveComponent
         {
             animationComponent.Falling(true);
             isEnteringState = false;
+            canOutComponentState = false;
         }
         Vector3 horizontalMove;
 
         if (isFallingFromJump)
         {
-            horizontalMove = currentDir * currentSpeed * horizontalJumpForceFactor;
+            horizontalMove = currentDir * (currentSpeed * HOR_JUMP_FORCE_FACTOR);
         }
         else 
         {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, airSpeedReductionFactor * MaxSpeed * Time.deltaTime);
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, AIR_SPEED_REDUCTION * MaxSpeed * Time.deltaTime);
             horizontalMove = currentDir * currentSpeed;
         }
 
@@ -201,27 +206,26 @@ public class PlayerMoveComponent : MoveComponent
         {
             animationComponent.Landing(true, currentSpeed);
             isEnteringState = false;
+            canOutComponentState = false;
         }
-        currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, groundSpeedReductionFactor * MaxSpeed * Time.deltaTime);
+        currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, GROUND_SPEED_REDUCTION * MaxSpeed * Time.deltaTime);
 
         if (animationComponent.IsLandingEnd)
         {
             animationComponent.Landing(false, currentSpeed);
             isEnteringState = true;
-            if (GetDirectionFromDevices(out currentDir, out float speedIntensity))
+            if (GetDirectionFromDevices(moveInput, out currentDir, out float speedIntensity))
             {
                 currentSpeed = speedIntensity * MaxSpeed;
                 moveState = MoveState.Moving;
                 Debug.Log("Landing -> Moving");
                 return;
             }
-
-
-
             moveState = MoveState.Idle;
             currentDir = Vector3.zero;
             currentSpeed = 0f;
             Debug.Log("Landing -> Idle");
+         
         }
 
     }
@@ -230,19 +234,19 @@ public class PlayerMoveComponent : MoveComponent
     {
         if (isEnteringState)
         {
-            verticalVelocity = verticalJumpForce;
+            verticalVelocity = VER_JUMP_FORCE;
             animationComponent.Jumping(true);
             isEnteringState = false;
             Debug.Log("Enter Jumping " + " speed " + currentSpeed + " direction " + currentDir);
         }
 
         // Di chuyen theo huong nhay truoc do
-        Vector3 jumpingMove = currentDir * currentSpeed * horizontalJumpForceFactor;
+        Vector3 jumpingMove = currentDir * (currentSpeed * HOR_JUMP_FORCE_FACTOR);
         jumpingMove.y = verticalVelocity;
         characterController.Move(jumpingMove * Time.deltaTime);
 
-        // Ap dung trong luc cho lan sau
-        verticalVelocity += gravity * Time.deltaTime;
+        //// Ap dung trong luc cho lan sau
+        //verticalVelocity += gravity * Time.deltaTime;
 
         // Khi van toc am, thi bat dau roi
         if (verticalVelocity <= 0)
@@ -278,7 +282,7 @@ public class PlayerMoveComponent : MoveComponent
         }
         else
         {
-            verticalVelocity += gravity * Time.deltaTime;
+            verticalVelocity += GRAVITY * Time.deltaTime;
         }
 
     }
@@ -286,9 +290,8 @@ public class PlayerMoveComponent : MoveComponent
     private bool IsGroundedByCast()
     {
         // Day la cach check bang RAY CAST
-        RaycastHit hit;
         float castDistance = 0.4f; // Dieu chinh theo chieu cao va skin width cua CharacterController
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, castDistance) )
+        if (Physics.Raycast(transform.position, Vector3.down, castDistance) )
         {
             return true;
             // Doan duoi day neu bat la kiem tra Slop. Tam thoi khong kiem tra slope
@@ -328,7 +331,7 @@ public class PlayerMoveComponent : MoveComponent
         // Roi mot luc roi thì verticalVelocity se nho hon verticalVelocityMax luc do se tinh roi thuc su
         // Neu chi hoi khong cham dat do dia hinh khong phang thi khong chinh xac
 
-        if (verticalVelocity < verticalVelocityMax)
+        if (verticalVelocity < VERTICAL_VELOCITY_MAX)
         {
             if ( IsGroundedByCast() ) // Xu ly khi di xuong doc nhieu
                 return false;
@@ -338,11 +341,10 @@ public class PlayerMoveComponent : MoveComponent
     }
 
     #region CODE_OK_DO_NOT_MODIFY
-    private bool GetDirectionFromDevices(out Vector3 direction, out float speedIntensity)
+    private bool GetDirectionFromDevices(Vector2 input2D, out Vector3 direction, out float speedIntensity)
     {
-        Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) +
-                              new Vector3(joystick.Horizontal, 0, joystick.Vertical);
-        if (input.sqrMagnitude < inputVectorSqrMin)
+        Vector3 input = new Vector3(input2D.x, 0, input2D.y);
+        if (input.sqrMagnitude < INPUT_VECTOR_SQR_MIN)
         {
             direction = Vector3.zero;
             speedIntensity = 0f;
@@ -353,44 +355,12 @@ public class PlayerMoveComponent : MoveComponent
         return true;
     }
 
-    private bool CheckNessessaryComponent()
-    {
-        if (joystick == null)
-        {
-            Debug.LogError("Joystick is not assigned in PlayerMoveComponent.");
-            return false;
-        }
-        if (characterController == null)
-        {
-            Debug.LogError("CharacterController component is missing.");
-            return false;
-        }
-       
-        if (animationComponent == null)
-            {
-                Debug.LogError("AnimationComponent is missing.");
-                return false;
-        }
-
-        return true;
-    }
+   
     #endregion
 
-    // Ham nay de goi tu UI Button - dang goi tam thoi
-    public void OnJumpButtonPressed()
+    public override bool CanOutComponentState()
     {
-        if ((moveState == MoveState.Idle) || (moveState == MoveState.Moving))
-        { jumpRequested = true; }
-
-    }
-    public override bool HasMovementInput()
-    {
-        return GetDirectionFromDevices(out _, out _);
-    }
-
-    public override bool CanOutSate()
-    {
-        return false;
+        return canOutComponentState;
     }
 
     public override void MoveTo(Vector3 target)
@@ -398,7 +368,7 @@ public class PlayerMoveComponent : MoveComponent
         // Khong su dung ham nay trong PlayerMoveComponent
         Debug.LogWarning("MoveTo is not implemented in PlayerMoveComponent. Use MoveToDirection instead.");
     }
-
+    
     public override void Stop()
     {
         // Khong su dung ham nay trong PlayerMoveComponent

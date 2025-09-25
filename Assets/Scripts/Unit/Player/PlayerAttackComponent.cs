@@ -33,7 +33,7 @@ public class PlayerAttackComponent : AttackComponent
 
     }
 
-    public override bool CanOutState()
+    public override bool CanOutComponentState()
     {
         return true;
     }

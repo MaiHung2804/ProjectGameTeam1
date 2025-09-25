@@ -8,80 +8,59 @@ using static UnityEditorInternal.VersionControl.ListControl;
 
 public class PlayerBase : UnitBase
 {
-    
-    //private PlayerMoveComponent moveComponent;
-    //private PlayerAttackComponent attackComponent;
-
     private Vector2 moveInput = Vector2.zero;
-    private bool isJump = false;
-    private bool isAttack = false;   // Se sua sau khi co Enum Skill
-
-
-    void OnEnable()
-    {
-    }
-
-    void OnDisable()
-    {
-    }
-
-    void Start()
-    {
-        //moveComponent = base.moveComponent as PlayerMoveComponent;
-        //attackComponent = base.attackComponent as PlayerAttackComponent;
-    }
+    private bool jumpInput = false;
+    private Skill attackInput = Skill.None;
 
   
-    protected override void HandleActivities()
+    protected override void UpdateActions()
     {
         GetInput();
-        SelectOverallState();
-        HandleStateActivities();
+        SelectState();
+        ActionByState();
     }
 
     private void GetInput()
     {
-        Vector2 moveInput = InputManager.Instance.GetMoveInput();
-        isJump = InputManager.Instance.IsJumpPressed();
-
-
-        //bool attackInput = InputManager.Instance.GetAttackInput();
+        moveInput = InputManager.Instance.GetMoveInput();
+        jumpInput = InputManager.Instance.GetJumpInput();
+        attackInput = InputManager.Instance.GetAttackInput();
     }
 
-    private void SelectOverallState()
+    private void SelectState()
     {
         if (IsDead)
         {
             ChangeState(UnitState.Dead);
             return;
         }
-        else if (isAttack && moveComponent.CanOutSate())
+        else if (attackInput != Skill.None && moveComponent.CanOutComponentState())
         {   
             ChangeState(UnitState.Attack);
             return;
         }
-        else if ( moveInput != Vector2.zero && attackComponent.CanOutState())
+        else if ( moveInput != Vector2.zero && attackComponent.CanOutComponentState())
         {
             ChangeState(UnitState.Moving);
             return;
         }
-        else if (moveComponent.CanOutSate())
+        else if (moveComponent.CanOutComponentState())
         {
             ChangeState(UnitState.Idle);
             return;
         }
     }
 
-    private void HandleStateActivities()
+    private void ActionByState()
     {
-        switch (currentState)
+        switch (CurrentState)
         {
             case UnitState.Moving:
             case UnitState.Idle:
-                moveComponent.HandleActivities(moveInput, isJump);
+                moveComponent.HandleComponentActs(moveInput, jumpInput);
                 break;
             case UnitState.Attack:
-                attackComponent.HandleActivities();
+                attackComponent.HandleComponentActs(attackInput);
                 break;
             case UnitState.Dead:
                 break;
@@ -91,23 +70,23 @@ public class PlayerBase : UnitBase
 
     private void ChangeState(UnitState newState)
     {
-        if (currentState != newState)
+        if (CurrentState != newState)
         {
             // ExitState(currentState);
-            currentState = newState;
+            CurrentState = newState;
             // EnterState(newState);
         }
     }
 
-    private void ExitState(UnitState state)
-    {
-        // Logic khi thoat trang thai
-    }
+    //private void ExitState(UnitState state)
+    //{
+    //    // Logic khi thoat trang thai
+    //}
 
-    private void EnterState(UnitState state)
-    {
-        // Logic khi vao trang thai
-    }
+    //private void EnterState(UnitState state)
+    //{
+    //    // Logic khi vao trang thai
+    //}
 
 
 }

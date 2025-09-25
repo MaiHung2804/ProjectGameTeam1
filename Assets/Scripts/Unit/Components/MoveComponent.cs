@@ -80,11 +80,10 @@ public abstract class MoveComponent : MonoBehaviour
 
     public abstract void Stop();
 
-    public virtual void HandleActivities() { }
+    public virtual void HandleComponentActs() { }
 
-    public virtual void HandleActivities(Vector2 moveInput, bool isJump) { }
+    public virtual void HandleComponentActs(Vector2 moveInput, bool isJump) { }
 
-    public abstract bool HasMovementInput();
 
-    public abstract bool CanOutSate();
+    public abstract bool CanOutComponentState();
 }
