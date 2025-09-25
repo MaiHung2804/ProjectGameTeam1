@@ -12,26 +12,27 @@ public abstract class UnitBase : MonoBehaviour
     [Header("Unit Settings")]
     [SerializeField] protected int teamID = 0;
 
+    public enum UnitState
+    {
+        Idle, Moving, Attack, Dead
+    }
+
+    public UnitState currentState { get; protected set; } = UnitState.Idle;
+
     protected HealthComponent healthComponent;
     protected AttackComponent attackComponent;
     protected MoveComponent moveComponent;
 
     public event Action <UnitBase> EventOnDeath;
 
-    public int TeamID => teamID;
-
-    public bool IsDead
+    public int TeamID
     {
-        get 
-        { return healthComponent != null && healthComponent.IsDead;
-        }
+          get { return teamID; }
     }
 
-
+    public bool IsDead => healthComponent != null && healthComponent.IsDead;
     public HealthComponent GetHealthComponent() => healthComponent;
-
     public AttackComponent GetAttackComponent() => attackComponent;
-
     public MoveComponent GetMoveComponent() => moveComponent;
 
      /// <param name="damage">  ghi chu luong sat thuong </param>
@@ -51,9 +52,8 @@ public abstract class UnitBase : MonoBehaviour
     protected virtual void OnDeath()
     {
         EventOnDeath?.Invoke(this);
-        gameObject.SetActive(false);
+        gameObject.SetActive(false); // Deactive thay vi destroy de co the tai su dung lai
     }
-
 
     protected virtual void Awake()
     {
@@ -61,4 +61,12 @@ public abstract class UnitBase : MonoBehaviour
         attackComponent = GetComponent<AttackComponent>();
         moveComponent = GetComponent<MoveComponent>();
     }
+
+    protected virtual void Update()
+    {
+        HandleActivities();
+    }
+
+    protected virtual void HandleActivities() { }
+
 }

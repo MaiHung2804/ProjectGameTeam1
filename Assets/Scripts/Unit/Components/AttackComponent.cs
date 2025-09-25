@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 public abstract class AttackComponent : MonoBehaviour
 {
+   
     [Header("Attack Settings")]
     [SerializeField] private float attackDamage = 20f;
     [SerializeField] private float attackRange = 2f;
@@ -64,7 +65,7 @@ public abstract class AttackComponent : MonoBehaviour
 
     public abstract bool HasAttackInput();
 
-    public abstract void HandleActivites();
+    public abstract void HandleActivities();
 
     public abstract bool CanOutState();
 

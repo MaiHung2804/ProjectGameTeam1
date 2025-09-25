@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using Unity.VisualScripting;
-//using UnityEditor.Experimental.GraphView;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -8,11 +8,7 @@ public class PlayerMoveComponent : MoveComponent
 {
     [Header("Player Move Settings")]
     [SerializeField] private Joystick joystick;
-    [SerializeField] private Camera mainCamera;
     
-
-
-    private Animator animator;
     private AnimationComponent animationComponent;
     private CharacterController characterController;
 
@@ -28,26 +24,18 @@ public class PlayerMoveComponent : MoveComponent
     private float verticalJumpForce = 6.5f;
     private bool isFallingFromJump = false;
 
-    private float gravity = -9.81f;
+    private bool canOutState = true; 
+
     private float verticalVelocity = 0f;
     private float verticalVelocityMax = -2f;
-
-
-    // Cac bien quan trong Quan ly trang thai di chuyen, nhap so lieu
-    private float currentSpeed = 0f;
-    private Vector3 currentDir = Vector3.zero;
-    private Vector3 lastDir = Vector3.zero;
-
-
+    private float gravity = -9.81f;
 
 
     protected override void Awake()
     {
         base.Awake();
-        currentSpeed = 0f;
 
         characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
         animationComponent = GetComponent<AnimationComponent>();
         
         if (!CheckNessessaryComponent())
@@ -62,16 +50,7 @@ public class PlayerMoveComponent : MoveComponent
         moveState = MoveState.Falling;
     }
 
-
-
-    protected void Update()
-
-    {
-        HandleActivites();
-
-    }
-
-    public override void HandleActivites()
+    public override void HandleActivities(Vector2 moveInput, bool isJump)
     {
         UpdateVerticalVelocity();
 
@@ -156,6 +135,9 @@ public class PlayerMoveComponent : MoveComponent
             Debug.Log("Moving -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
+        Vector3 keyboardInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 joystickInput = new Vector3(MaxSpeed * joystick.Horizontal, 0, MaxSpeed * joystick.Vertical);
+        Vector3 input = keyboardInput + joystickInput;
 
         if (Input.GetKey(jumpKey) || jumpRequested)  
         {
@@ -194,9 +176,10 @@ public class PlayerMoveComponent : MoveComponent
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, airSpeedReductionFactor * MaxSpeed * Time.deltaTime);
             horizontalMove = currentDir * currentSpeed;
         }
-        
-        // Ap dung gravity
-        verticalVelocity += gravity * Time.deltaTime;
+
+        // Bo vi da co UpdateVerticalVelocity
+        //// Ap dung gravity
+        //verticalVelocity += gravity * Time.deltaTime;
 
         Vector3 fallingMove = new Vector3(horizontalMove.x, verticalVelocity, horizontalMove.z);
         characterController.Move(fallingMove * Time.deltaTime);
@@ -232,6 +215,9 @@ public class PlayerMoveComponent : MoveComponent
                 Debug.Log("Landing -> Moving");
                 return;
             }
+
+
+
             moveState = MoveState.Idle;
             currentDir = Vector3.zero;
             currentSpeed = 0f;
@@ -284,7 +270,7 @@ public class PlayerMoveComponent : MoveComponent
         characterController.Move(move * Time.deltaTime);
     }
 
-    private void UpdateVerticalVelocity()
+    public void UpdateVerticalVelocity()
     {
         if (characterController.isGrounded)
         {
@@ -363,26 +349,8 @@ public class PlayerMoveComponent : MoveComponent
             return false;
         }    
         speedIntensity = Mathf.Clamp01(input.magnitude);
-        direction = ConvertInputToDirectionByCamera(input);
+        direction = FollowingCamera.Instance.ConvertVectorAsCameraCordination(input);
         return true;
-    }
-
-    private Vector3 ConvertInputToDirectionByCamera(Vector3 input)
-    {
-        // Chuyen doi input theo huong nhin trai phai tu Camera. Rat quan trong
-        Vector3 camForward = mainCamera.transform.forward;
-        camForward.y = 0;
-        camForward.Normalize();
-        Vector3 camRight = mainCamera.transform.right;
-        camRight.y = 0;
-        camRight.Normalize();
-
-        // Tinh huong di chuyen theo camera
-        return (camForward * input.z + camRight * input.x).normalized;
-
-        ////Lay theo toa do dia phuong cua nhan vat. Nay khong dung nua
-        //Vector3 moveDir = input.sqrMagnitude > 0.01f ? input.normalized : Vector3.zero;
-        //return moveDir;
     }
 
     private bool CheckNessessaryComponent()
@@ -397,16 +365,7 @@ public class PlayerMoveComponent : MoveComponent
             Debug.LogError("CharacterController component is missing.");
             return false;
         }
-        if (animator == null)
-        {
-            Debug.LogError("Animator component is missing.");
-            return false;
-        }
-        if (mainCamera == null)
-        {
-            Debug.LogError("Main Camera is not assigned and no Camera tagged as MainCamera found.");
-            return false;
-        }
+       
         if (animationComponent == null)
             {
                 Debug.LogError("AnimationComponent is missing.");
@@ -445,5 +404,6 @@ public class PlayerMoveComponent : MoveComponent
         // Khong su dung ham nay trong PlayerMoveComponent
         Debug.LogWarning("Stop is not implemented in PlayerMoveComponent. Use input devices to stop movement.");
     }
+
 
 }
