@@ -34,10 +34,10 @@ public class EnemyBase : UnitBase
         }
     }
 
-    protected override void HandleMovement()
-    {         // Enemy movement logic can be implemented here if needed
-    }
-    protected override void HandleAttack()
-    {         // Enemy attack logic can be implemented here if needed
-    }
+    //protected override void HandleMovement()
+    //{         // Enemy movement logic can be implemented here if needed
+    //}
+    //protected override void HandleAttack()
+    //{         // Enemy attack logic can be implemented here if needed
+    //}
 }

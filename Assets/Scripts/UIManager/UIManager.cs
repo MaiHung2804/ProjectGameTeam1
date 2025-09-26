@@ -6,15 +6,14 @@ using UnityEngine.UI;
 using TMPro;
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; }
+    public static UIManager Instance { get; private set; }   
+    private bool isMenuVisible;
 
     [Header("Static UI")]
     public UIMenu menu;
-    private bool isMenuVisible = false;
 
     [Header("Dynamic UI")]
-    public UIHealthBar uiHealthBar;
-    public UIManaBar uiManaBar;
+    public UIDataPlayer uiDataPlayer;
 
     [Header("InputUI")]
     public UIJoystick uiJoystick;
@@ -32,37 +31,51 @@ public class UIManager : MonoBehaviour
         }
         
     }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && !isMenuVisible)
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            menu.ShowMainMenu();
-            isMenuVisible = true;
-        }
-        if (Input.GetKeyDown(KeyCode.Escape) && isMenuVisible)
+            if (menu != null)
+            {
+                isMenuVisible = !menu.settingPanel.activeSelf;
+                menu.settingPanel.SetActive(isMenuVisible);
+                Time.timeScale = isMenuVisible ? 0 : 1; 
+            }
+        } // Nhan Tab show/hide menu
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
-            menu.HideAll();
-            isMenuVisible = false;
+            if (menu != null)
+            {
+                isMenuVisible = !menu.mainMenuPanel.activeSelf;
+                menu.mainMenuPanel.SetActive(isMenuVisible);
+                Time.timeScale = isMenuVisible ? 0 : 1;
+            }
         }
+
     }
-    public void ShowMenu()
+    public void ShowMenu()  // gọi đến hàm ShowMainMenu trong UIMenu 
     {
         menu.ShowMainMenu();
-    }
-    public void QuitGame()
+    } 
+    public void QuitGame()  //gọi đến hàm QuitGame trong UIMenu
     {
         menu.QuitGame();
     }
-    public void ShowInput()
+    public void ShowInput()  //gọi đến hàm ShowInput trong UIMenu
     {
         menu.ShowInput();
     }
-    public void PlayGame(string sceneName)
-    {
-        menu.PlayGame(sceneName);
+    public void PlayGame(string sceneName) //gọi đến hàm PlayGame trong UIMenu
+    {   
+        menu.PlayGame(sceneName);      
     }
-    public void LoadGame()
+    public void LoadGame() //gọi đến hàm LoadGame trong UIMenu
     {
         menu.LoadGame();
+    }
+    public void SaveGame() //gọi đến hàm SaveGame trong UIMenu
+    {
+        menu.SaveGame();
     }
 }

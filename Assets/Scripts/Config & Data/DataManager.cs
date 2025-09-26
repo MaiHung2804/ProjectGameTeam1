@@ -1,131 +1,110 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class DataManager
 {
     private static DataManager instance;
     public static DataManager Instance => instance ??= new DataManager();
-    private const string SaveKey = "Player_Data";
     public PlayerData player { get; private set; }
-    public Transform playerTransform;
-    public GameObject playerPrefab;
-    public string Username { get; set; }
+    private DataManager(){}
 
-
-    private DataManager() 
+    public void SyncPlayerDatat(PlayerControllerTest pc) // Đồng bộ dữ liệu từ PlayerControllerTest vào PlayerData
     {
-        LoadData();
+        if (pc == null) return;
+        player.userLevel = pc.level;
+        player.currentHp = pc.currentHp;
+        player.maxMana = pc.maxMana;
+        player.currentMana = pc.currentMana;
+        player.userGold = pc.gold;
+        player.userDamage = pc.damage;
+        player.userDefense = pc.defense;
+        player.userPosition = pc.transform.position;
+        player.currentExperience = pc.currentExperience;
+        player.highScore = pc.highScore; 
+        player.userLevel = pc.level;
     }
-
-    
-    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    //{        
-    //    if (playerTransform == null)
-    //    {
-    //        GameObject found = GameObject.FindGameObjectWithTag("Player");
-    //        if (found != null)
-    //        {
-    //            playerTransform = found.transform;
-    //            Debug.Log("PlayerTransform được gán lại từ scene.");
-    //        }
-    //        else
-    //        {
-    //            Debug.LogWarning("Không tìm thấy Player trong scene!");
-    //            return;
-    //        }
-    //    }
-
-    //    // Nếu player data chưa có thì tạo mặc định
-    //    if (player == null)
-    //    {
-    //        player = new PlayerData("Player", 1, 0, 100, 0, 0, playerTransform.position, 5, 10);
-    //    }
-
-    //    // Load vị trí từ PlayerPrefs nếu có
-    //    Vector3 newPos;
-    //    if (PlayerPrefs.HasKey("PosX") && PlayerPrefs.HasKey("PosY") && PlayerPrefs.HasKey("PosZ"))
-    //    {
-    //        newPos = new Vector3(
-    //            PlayerPrefs.GetFloat("PosX"),
-    //            PlayerPrefs.GetFloat("PosY"),
-    //            PlayerPrefs.GetFloat("PosZ")
-    //        );
-    //    }
-    //    else
-    //    {
-    //        newPos = playerTransform.position; // Vị trí mặc định nếu không có dữ liệu lưu
-    //    }
-    //    playerTransform.position = newPos;
-    //    player.SetPosition(newPos);
-    //    Debug.Log("Scene Loaded: " + scene.name + ", Player Position: " + playerTransform.position);
-    //}
-    //private void OnApplicationQuit() // Khi thoát game tự động lưu dữ liệu
-    //{
-    //    if (player != null)
-    //    {
-    //        SaveData();
-    //    }
-    //}
     public void SaveData() // Lưu dữ liệu
     {
-        if (player == null || playerTransform == null)
-        {
-            Debug.LogWarning("⚠ SaveData failed: " + player +" hoặc " + playerTransform + " bị null");
-            return;
-        }
-        PlayerPrefs.SetString("UserName", player.userName);
+
+        PlayerPrefs.SetString("UserName", player.userName); //
         PlayerPrefs.SetInt("Level", player.userLevel);
-        PlayerPrefs.SetInt("Health", player.userHp);
+        PlayerPrefs.SetInt("Health", player.maxHp);
+        PlayerPrefs.SetInt("CurrentHealth", player.currentHp);
         PlayerPrefs.SetInt("Gold", player.userGold);
         PlayerPrefs.SetInt("HighScore", player.highScore);
         PlayerPrefs.SetInt("Experience", player.currentExperience);
-        PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
-        PlayerPrefs.SetFloat("PosX", playerTransform.position.x);
-        PlayerPrefs.SetFloat("PosY", playerTransform.position.y);
-        PlayerPrefs.SetFloat("PosZ", playerTransform.position.z);
         PlayerPrefs.SetInt("Damage", player.userDamage);
         PlayerPrefs.SetInt("Defense", player.userDefense);
+        PlayerPrefs.SetInt("Mana", player.maxMana);
+        PlayerPrefs.SetInt("CurrentMana", player.currentMana);
+        PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
+        PlayerPrefs.SetFloat("PosX", player.userPosition.x);
+        PlayerPrefs.SetFloat("PosY", player.userPosition.y);
+        PlayerPrefs.SetFloat("PosZ", player.userPosition.z);
+        
         PlayerPrefs.Save();
-        Debug.Log("Data Saved");
-        Debug.Log("Scene: " + SceneManager.GetActiveScene().name + ", Position: " + playerTransform.position);
+        Debug.Log("Data Saved");       
+        Debug.Log($"[SaveData] name={player.userName}, level={player.userLevel}, hp={player.currentHp}/{player.maxHp}, mp= {player.currentMana}/{player.maxMana}, pos={player.userPosition}, scene={SceneManager.GetActiveScene().name}");
     }
     public void LoadData() // Load dữ liệu
     {
-        if (PlayerPrefs.HasKey(SaveKey))
-        {
-            string name = PlayerPrefs.GetString("UserName", "Player");
-            int level = PlayerPrefs.GetInt("Level", 1);
-            int health = PlayerPrefs.GetInt("Health", 100);
-            int gold = PlayerPrefs.GetInt("Gold", 0);
-            int score = PlayerPrefs.GetInt("HighScore", 0);
-            string sceneName = PlayerPrefs.GetString("SceneName", "Level1");
-            float posX = PlayerPrefs.GetFloat("PosX", 0);
-            float posY = PlayerPrefs.GetFloat("PosY", 0);
-            float posZ = PlayerPrefs.GetFloat("PosZ", 0);
-            int experience = PlayerPrefs.GetInt("Experience", 0);
-            int dmg = PlayerPrefs.GetInt("Damage", 10);
-            int def = PlayerPrefs.GetInt("Defense", 5);
-            int mana = PlayerPrefs.GetInt("Mana", 50);
-            Vector3 position = new Vector3(posX, posY, posZ);
+        
+        string name = PlayerPrefs.GetString("UserName");
+        int lv = PlayerPrefs.GetInt("Level");
+        int hp = PlayerPrefs.GetInt("Health");
+        int gold = PlayerPrefs.GetInt("Gold");
+        int score = PlayerPrefs.GetInt("HighScore");
+        string sceneName = PlayerPrefs.GetString("SceneName");
+        float posX = PlayerPrefs.GetFloat("PosX");
+        float posY = PlayerPrefs.GetFloat("PosY");
+        float posZ = PlayerPrefs.GetFloat("PosZ");
+        int exp = PlayerPrefs.GetInt("Experience");
+        int dmg = PlayerPrefs.GetInt("Damage");
+        int def = PlayerPrefs.GetInt("Defense");
+        int mp = PlayerPrefs.GetInt("Mana");
+        Vector3 position = new Vector3(posX, posY, posZ);
+        player = new PlayerData(name, score, dmg, def, hp, mp, lv, gold, position, exp, sceneName);
+        Debug.Log($"[LoadData] name={name}, level={lv}, hp={hp}, pos={position}, scene={sceneName}");
 
-            player = new PlayerData(name, level, gold, health, score, experience, position, def, dmg, mana);
-            SceneManager.LoadScene(sceneName);
-            Debug.Log("Scene Loaded: " + sceneName);
+    }
+    public void CreateDefaultPlayer(string name, string sceneName, Vector3 startPos) // Tạo dữ liệu mặc định
+    {
+       player = new PlayerData(name, 0, 10, 5, 100, 50, 1, 0, startPos, 0, sceneName);
+        Debug.Log($"Default Player Created: name={name}, scene={sceneName}, pos={startPos}");
+    }
+    public bool HasSave() // Kiểm tra dữ liệu đã lưu
+    {
+        if (player == null)
+        {
+            Debug.LogWarning("SaveData failed: PlayerData is null");
+            return false;
+        }
+        else
+        {           
+            SaveData();
+            return true;
+        }
+    }
+    public bool HasLoad() // Kiểm tra dữ liệu đã load
+    {
+        if (!PlayerPrefs.HasKey("UserName"))
+        {
+            player = null;
+            Debug.LogWarning("LoadData failed: No saved data found");
+            return false;
         }
         else
         {
-            player = new PlayerData("Player", 1, 0, 100, 0, 0, Vector3.zero, 5, 10, 50);
-            Debug.Log("No saved data found, created new player data.");
-
+            LoadData();
+            return true;
         }
     }
-    public void ResetData() // Xóa tất cả dữ liệu
-    {
-        player = new PlayerData("Player", 1, 0, 100, 0, 0, Vector3.zero, 5, 10, 50);
-        SaveData();
-    }   
+
 
 }
