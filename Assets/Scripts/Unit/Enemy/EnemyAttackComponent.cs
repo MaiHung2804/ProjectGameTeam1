@@ -8,14 +8,16 @@ public class EnemyAttackComponent : AttackComponent
         return false;
     }
 
-    public override void HandleActivites()
-    {
-        // Với enemy thì không cần xử lý phức tạp ở đây
-        // Attack sẽ được gọi trong EnemyBase
-    }
+
 
     public override bool CanOutState()
     {
         return true; // Luôn có thể thoát khỏi state attack
+    }
+
+    public override void HandleActivities()
+    {
+        //    // Với enemy thì không cần xử lý phức tạp ở đây
+        //    // Attack sẽ được gọi trong EnemyBase
     }
 }

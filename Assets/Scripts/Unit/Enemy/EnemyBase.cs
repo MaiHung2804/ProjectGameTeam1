@@ -26,46 +26,46 @@ public class EnemyBase : UnitBase
         }
     }
 
-    protected override void HandleMovement()
-    {
-        if (IsDead) return;
+    //protected override void HandleMovement()
+    //{
+    //    if (IsDead) return;
 
-        if (targetPlayer == null)
-        {
-            FindPlayer();
-            return;
-        }
+    //    if (targetPlayer == null)
+    //    {
+    //        FindPlayer();
+    //        return;
+    //    }
 
-        float distance = Vector3.Distance(transform.position, targetPlayer.position);
+    //    float distance = Vector3.Distance(transform.position, targetPlayer.position);
 
-        // Nếu thấy Player trong phạm vi detectionRange mà chưa tới attackRange → đuổi theo
-        if (distance > attackRange && distance <= detectionRange)
-        {
-            moveComponent?.MoveTo(targetPlayer.position);
-        }
-        else
-        {
-            moveComponent?.Stop();
-        }
-    }
+    //    // Nếu thấy Player trong phạm vi detectionRange mà chưa tới attackRange → đuổi theo
+    //    if (distance > attackRange && distance <= detectionRange)
+    //    {
+    //        moveComponent?.MoveTo(targetPlayer.position);
+    //    }
+    //    else
+    //    {
+    //        moveComponent?.Stop();
+    //    }
+    //}
 
-    protected override void HandleAttack()
-    {
-        if (IsDead || targetPlayer == null) return;
+    //protected override void HandleAttack()
+    //{
+    //    if (IsDead || targetPlayer == null) return;
 
-        float distance = Vector3.Distance(transform.position, targetPlayer.position);
+    //    float distance = Vector3.Distance(transform.position, targetPlayer.position);
 
-        if (distance <= attackRange && Time.time - lastAttackTime >= attackCooldown)
-        {
-            lastAttackTime = Time.time;
+    //    if (distance <= attackRange && Time.time - lastAttackTime >= attackCooldown)
+    //    {
+    //        lastAttackTime = Time.time;
 
-            UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
-            if (playerUnit != null)
-            {
-                attackComponent?.Attack(playerUnit);
-            }
-        }
-    }
+    //        UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
+    //        if (playerUnit != null)
+    //        {
+    //            attackComponent?.Attack(playerUnit);
+    //        }
+    //    }
+    //}
     
     private void TryAttackPlayer()
     {

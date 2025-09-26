@@ -30,7 +30,7 @@ public class EnemyMoveComponent : MoveComponent
         moveState = MoveState.Idle;
     }
 
-    public override void HandleActivites()
+    public override void HandleActivities()
     {
         if (targetPosition.HasValue)
         {
