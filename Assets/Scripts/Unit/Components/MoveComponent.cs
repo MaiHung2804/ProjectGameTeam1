@@ -22,8 +22,10 @@ public abstract class MoveComponent : MonoBehaviour
     protected Vector3 currentDir;
     protected Vector3 lastDir;
     protected float stopDistance = 0.1f;
-    protected Vector3? targetPosition; // Them ? de cho phep null
-    protected MoveState moveState; 
+    protected Vector3? targetPosition = null; // Them ? de cho phep null
+    protected MoveState moveState = MoveState.Idle;
+
+    public virtual void InitComponent() { }
 
     public float MaxSpeed
     {
@@ -61,12 +63,6 @@ public abstract class MoveComponent : MonoBehaviour
         get => stopDistance;
         set => stopDistance = Mathf.Max(0f, value);
     }
-
-    protected virtual void Awake()
-    {
-        targetPosition = null;
-        moveState = MoveState.Idle;
-    }
   
     /// <summary>
     /// Dat vi tri dich va bat dau di chuyen den do.
@@ -80,11 +76,10 @@ public abstract class MoveComponent : MonoBehaviour
 
     public abstract void Stop();
 
-    public virtual void HandleActivities() { }
+    public virtual void HandleComponentActs() { }
 
-    public virtual void HandleActivities(Vector2 moveInput, bool isJump) { }
+    public virtual void HandleComponentActs(Vector2 moveInput, bool isJump) { }
 
-    public abstract bool HasMovementInput();
 
-    public abstract bool CanOutSate();
+    public abstract bool CanOutComponentState();
 }

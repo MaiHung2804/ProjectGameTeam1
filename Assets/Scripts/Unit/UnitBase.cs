@@ -10,32 +10,62 @@ using UnityEngine;
 public abstract class UnitBase : MonoBehaviour
 {
     [Header("Unit Settings")]
-    [SerializeField] protected int teamID = 0;
+    [SerializeField] protected Team teamID = Team.Player; // Player = 0
+    public Team TeamID
+    {
+        get { return teamID; }
+    }
 
     public enum UnitState
     {
         Idle, Moving, Attack, Dead
     }
 
-    public UnitState currentState { get; protected set; } = UnitState.Idle;
+    public UnitState CurrentState { get; protected set; } = UnitState.Idle;
 
     protected HealthComponent healthComponent;
     protected AttackComponent attackComponent;
     protected MoveComponent moveComponent;
+    protected AnimationComponent animationComponent;
 
-    public event Action <UnitBase> EventOnDeath;
-
-    public int TeamID
-    {
-          get { return teamID; }
-    }
-
+    public event Action<UnitBase> EventOnDeath;
+   
     public bool IsDead => healthComponent != null && healthComponent.IsDead;
     public HealthComponent GetHealthComponent() => healthComponent;
     public AttackComponent GetAttackComponent() => attackComponent;
     public MoveComponent GetMoveComponent() => moveComponent;
+    public AnimationComponent GetAnimationComponent() => animationComponent;
 
-     /// <param name="damage">  ghi chu luong sat thuong </param>
+    
+
+    protected virtual void Start()
+    {
+        InitComponent(); 
+    }
+
+
+    protected virtual void Update()
+    {
+        UpdateActions();
+    }
+
+    private void InitComponent()
+    {
+        healthComponent = GetComponent<HealthComponent>();
+        attackComponent = GetComponent<AttackComponent>();
+        moveComponent = GetComponent<MoveComponent>();
+        animationComponent = GetComponent<AnimationComponent>();
+
+        healthComponent.InitComponent();
+        animationComponent.InitComponent();
+        moveComponent.InitComponent();
+        attackComponent.InitComponent();
+    }
+
+
+    protected virtual void UpdateActions() { }
+
+    /// <param name="damage">  ghi chu luong sat thuong </param>
     public virtual void OnTakeDamage(float damage)
     {
         if (healthComponent != null)
@@ -55,18 +85,9 @@ public abstract class UnitBase : MonoBehaviour
         gameObject.SetActive(false); // Deactive thay vi destroy de co the tai su dung lai
     }
 
-    protected virtual void Awake()
-    {
-        healthComponent = GetComponent<HealthComponent>();
-        attackComponent = GetComponent<AttackComponent>();
-        moveComponent = GetComponent<MoveComponent>();
-    }
 
-    protected virtual void Update()
-    {
-        HandleActivities();
-    }
 
-    protected virtual void HandleActivities() { }
+
+
 
 }

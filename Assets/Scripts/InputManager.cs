@@ -13,17 +13,17 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; }
     private float inputVectorSqrMin = 0.05f;
 
-    private KeyCode jumpKey = KeyCode.Space;
-    private KeyCode meleeAtackKey = KeyCode.J; // skill 1
-    private KeyCode rangedAttackKey = KeyCode.K; // skill 2
+    private KeyCode keyJump = KeyCode.Space;
+    private KeyCode keyMeleeAttack = KeyCode.J; // skill 1
+    private KeyCode keyRangedAttack = KeyCode.K; // skill 2
 
-    public event Action OnJumpPressed;
-    public event Action OnMeleeAttackPressed;
-    public event Action OnRangedAttackPressed;
+    public event Action EventOnJump;
+    public event Action EventOnMeleeAttack;
+    public event Action EventOnRangedAttack;
 
-    private bool isJumpPressed = false;
-    private bool isMeleeAttackPressed = false;
-    private bool isRangedAttackPressed = false;
+    private bool isJumpOnUI = false;
+    private bool isMeleeAttackOnUI = false;
+    private bool isRangedAttackOnUI = false;
 
     private void Awake()
     {
@@ -44,70 +44,82 @@ public class InputManager : MonoBehaviour
         return input;
     }
 
-    // Tra ve vector xoay tu Chuot
-    public Vector2 GetRotateFromMouse()
+    // Tra ve vector di chuyen tu Chuot
+    public Vector2 GetRotateFromMouseInput()
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
         return new Vector2(mouseX, mouseY);
     }
 
-    public float GetZoomFromMouse()
+    public float GetZoomFromMouseInput()
     {
         return Input.GetAxis("Mouse ScrollWheel");
     }
 
-    public bool IsControlPressed()
+    public bool GetControlInput()
     {
         return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
     }
 
-    public bool IsJumpPressed()
+    public bool GetJumpInput()
     {
-        return Input.GetKey(jumpKey) || isJumpPressed;
+        return Input.GetKey(keyJump) || isJumpOnUI;
     }
-    public bool IsMeleeAttackPressed()
+    public Skill GetAttackInput()
     {
-        return Input.GetKey(meleeAtackKey) || isMeleeAttackPressed;
-    }
-    public bool IsRangedAttackPressed()
-    {
-        return Input.GetKey(rangedAttackKey) || isRangedAttackPressed;
-    }
-    public bool IsAttackPressed()
-    {
-        return IsMeleeAttackPressed() || IsRangedAttackPressed();
+        if ( GetMeleeAttackInput())
+        {
+            return Skill.MeleeAttack;
+        }
+        if ( GetRangedAttackInput())
+        {
+            return Skill.RangedAttack;
+        }
+        return Skill.None;
     }
 
+    public bool GetMeleeAttackInput()
+    {
+        return Input.GetKey(keyMeleeAttack) || isMeleeAttackOnUI;
+    }
+    public bool GetRangedAttackInput()
+    {
+        return Input.GetKey(keyRangedAttack) || isRangedAttackOnUI;
+    }
+
+
+    #region KHU VUC CHO CAC NUT UI
     // Can gan OnPointerDown va OnPointerUp de bat su kien UI trong Unity o cac nut
     public void JumpUIDown()
     {
-        isJumpPressed = true;
-        OnJumpPressed?.Invoke();
+        isJumpOnUI = true;
+        EventOnJump?.Invoke();
     }
 
     public void JumpUIUp()
     {
-        isJumpPressed = false;
+        isJumpOnUI = false;
     }
 
     public void MeleeAttackUIDown()
     {
-        isMeleeAttackPressed = true;
-        OnMeleeAttackPressed?.Invoke();
+        isMeleeAttackOnUI = true;
+        EventOnMeleeAttack?.Invoke();
     }
     public void MeleeAttackUIUp()
     {
-        isMeleeAttackPressed = false;
+        isMeleeAttackOnUI = false;
     }
 
     public void RangedAttackUIDown()
     {
-        isRangedAttackPressed = true;
-        OnRangedAttackPressed?.Invoke();
+        isRangedAttackOnUI = true;
+        EventOnRangedAttack?.Invoke();
     }
     public void RangedAttackUIUp()
     {
-        isRangedAttackPressed = false;
+        isRangedAttackOnUI = false;
     }
+    #endregion
 }
