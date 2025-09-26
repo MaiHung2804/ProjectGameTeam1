@@ -26,7 +26,7 @@ public class EnemyBase : UnitBase
         }
     }
 
-    //protected override void HandleMovement()
+    //protected override void HandleMovement() //todo
     //{
     //    if (IsDead) return;
 
@@ -49,7 +49,7 @@ public class EnemyBase : UnitBase
     //    }
     //}
 
-    //protected override void HandleAttack()
+    //protected override void HandleAttack() //todo
     //{
     //    if (IsDead || targetPlayer == null) return;
 
@@ -66,7 +66,7 @@ public class EnemyBase : UnitBase
     //        }
     //    }
     //}
-    
+
     private void TryAttackPlayer()
     {
         if (Time.time - lastAttackTime < attackCooldown) return;

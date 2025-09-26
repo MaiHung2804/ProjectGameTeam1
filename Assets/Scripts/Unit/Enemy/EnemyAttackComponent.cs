@@ -2,22 +2,31 @@
 
 public class EnemyAttackComponent : AttackComponent
 {
-    public override bool HasAttackInput()
+    //public override bool HasAttackInput()
+    //{
+    //    // Enemy không cần input, chỉ tấn công khi trong range
+    //    return false;
+    //}
+
+
+
+    //public override bool CanOutState()
+    //{
+    //    return true; // Luôn có thể thoát khỏi state attack
+    //}
+
+    //public override void HandleActivities()
+    //{
+    //    //    // Với enemy thì không cần xử lý phức tạp ở đây
+    //    //    // Attack sẽ được gọi trong EnemyBase
+    //}
+    public override bool CanOutComponentState()
     {
-        // Enemy không cần input, chỉ tấn công khi trong range
-        return false;
+        return false; //todo
     }
 
-
-
-    public override bool CanOutState()
+    public override void Stop()
     {
-        return true; // Luôn có thể thoát khỏi state attack
-    }
-
-    public override void HandleActivities()
-    {
-        //    // Với enemy thì không cần xử lý phức tạp ở đây
-        //    // Attack sẽ được gọi trong EnemyBase
+        //todo
     }
 }

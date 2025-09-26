@@ -2,6 +2,11 @@
 
 public class EnemyMoveComponent : MoveComponent
 {
+    public override bool CanOutComponentState()  //todo
+    {
+        return false;
+    }
+
     public override void MoveTo(Vector3 target)
     {
         targetPosition = target;
@@ -30,22 +35,22 @@ public class EnemyMoveComponent : MoveComponent
         moveState = MoveState.Idle;
     }
 
-    public override void HandleActivities()
-    {
-        if (targetPosition.HasValue)
-        {
-            MoveTo(targetPosition.Value);
-        }
-    }
+    //public override void HandleActivities() //todo
+    //{
+    //    if (targetPosition.HasValue)
+    //    {
+    //        MoveTo(targetPosition.Value);
+    //    }
+    //}
 
-    public override bool HasMovementInput()
-    {
-        // Enemy không cần input từ người chơi
-        return false;
-    }
+    //public override bool HasMovementInput() //todo
+    //{
+    //    // Enemy không cần input từ người chơi
+    //    return false;
+    //}
 
-    public override bool CanOutSate()
-    {
-        return true;
-    }
+    //public override bool CanOutSate() //todo
+    //{
+    //    return true;
+    //}
 }
