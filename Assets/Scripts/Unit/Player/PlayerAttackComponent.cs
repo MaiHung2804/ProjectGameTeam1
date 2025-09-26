@@ -28,7 +28,7 @@ public class PlayerAttackComponent : AttackComponent
         return false; 
     }
 
-    public override void HandleActivites()
+    public override void HandleActivities()
     {
 
     }

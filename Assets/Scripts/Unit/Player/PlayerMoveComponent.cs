@@ -9,7 +9,6 @@ public class PlayerMoveComponent : MoveComponent
     [Header("Player Move Settings")]
     [SerializeField] private Joystick joystick;
     
-    private Animator animator;
     private AnimationComponent animationComponent;
     private CharacterController characterController;
 
@@ -25,26 +24,18 @@ public class PlayerMoveComponent : MoveComponent
     private float verticalJumpForce = 6.5f;
     private bool isFallingFromJump = false;
 
-    private float gravity = -9.81f;
+    private bool canOutState = true; 
+
     private float verticalVelocity = 0f;
     private float verticalVelocityMax = -2f;
-
-
-    // Cac bien quan trong Quan ly trang thai di chuyen, nhap so lieu
-    private float currentSpeed = 0f;
-    private Vector3 currentDir = Vector3.zero;
-    private Vector3 lastDir = Vector3.zero;
-
-
+    private float gravity = -9.81f;
 
 
     protected override void Awake()
     {
         base.Awake();
-        currentSpeed = 0f;
 
         characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
         animationComponent = GetComponent<AnimationComponent>();
         
         if (!CheckNessessaryComponent())
@@ -59,16 +50,7 @@ public class PlayerMoveComponent : MoveComponent
         moveState = MoveState.Falling;
     }
 
-
-
-    protected void Update()
-
-    {
-        HandleActivites();
-
-    }
-
-    public override void HandleActivites()
+    public override void HandleActivities(Vector2 moveInput, bool isJump)
     {
         UpdateVerticalVelocity();
 
@@ -194,9 +176,10 @@ public class PlayerMoveComponent : MoveComponent
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, airSpeedReductionFactor * MaxSpeed * Time.deltaTime);
             horizontalMove = currentDir * currentSpeed;
         }
-        
-        // Ap dung gravity
-        verticalVelocity += gravity * Time.deltaTime;
+
+        // Bo vi da co UpdateVerticalVelocity
+        //// Ap dung gravity
+        //verticalVelocity += gravity * Time.deltaTime;
 
         Vector3 fallingMove = new Vector3(horizontalMove.x, verticalVelocity, horizontalMove.z);
         characterController.Move(fallingMove * Time.deltaTime);
@@ -232,6 +215,9 @@ public class PlayerMoveComponent : MoveComponent
                 Debug.Log("Landing -> Moving");
                 return;
             }
+
+
+
             moveState = MoveState.Idle;
             currentDir = Vector3.zero;
             currentSpeed = 0f;
@@ -284,7 +270,7 @@ public class PlayerMoveComponent : MoveComponent
         characterController.Move(move * Time.deltaTime);
     }
 
-    private void UpdateVerticalVelocity()
+    public void UpdateVerticalVelocity()
     {
         if (characterController.isGrounded)
         {
@@ -379,11 +365,6 @@ public class PlayerMoveComponent : MoveComponent
             Debug.LogError("CharacterController component is missing.");
             return false;
         }
-        if (animator == null)
-        {
-            Debug.LogError("Animator component is missing.");
-            return false;
-        }
        
         if (animationComponent == null)
             {
@@ -423,5 +404,6 @@ public class PlayerMoveComponent : MoveComponent
         // Khong su dung ham nay trong PlayerMoveComponent
         Debug.LogWarning("Stop is not implemented in PlayerMoveComponent. Use input devices to stop movement.");
     }
+
 
 }

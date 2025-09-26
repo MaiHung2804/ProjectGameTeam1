@@ -66,4 +66,25 @@ public class EnemyBase : UnitBase
             }
         }
     }
+    
+    private void TryAttackPlayer()
+    {
+        if (Time.time - lastAttackTime < attackCooldown) return;
+
+        lastAttackTime = Time.time;
+
+        UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
+        if (playerUnit != null)
+        {
+            attackComponent.Attack(playerUnit);
+        }
+    }
+
+    //protected override void HandleMovement()
+    //{         // Enemy movement logic can be implemented here if needed
+    //}
+    //protected override void HandleAttack()
+    //{         // Enemy attack logic can be implemented here if needed
+    //}
+
 }

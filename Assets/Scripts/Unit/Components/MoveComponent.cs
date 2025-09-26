@@ -16,11 +16,12 @@ public abstract class MoveComponent : MonoBehaviour
         Landing
     }
 
-
     [Header("Move Settings")]
-    [SerializeField] private float maxSpeed = 5f;  // Luu gia tri MaxSpeed
-    [SerializeField] private float stopDistance = 0.1f;
-
+    protected float maxSpeed = 5f;  // Luu gia tri MaxSpeed
+    protected float currentSpeed = 0f; // Luu gia tri hien tai cua toc do
+    protected Vector3 currentDir;
+    protected Vector3 lastDir;
+    protected float stopDistance = 0.1f;
     protected Vector3? targetPosition; // Them ? de cho phep null
     protected MoveState moveState; 
 
@@ -29,6 +30,32 @@ public abstract class MoveComponent : MonoBehaviour
         get => maxSpeed;
         set => maxSpeed = Mathf.Max(0f, value);
     }
+
+    public float CurrentSpeed
+    {
+        get => currentSpeed;
+        set => currentSpeed = Mathf.Clamp(value, 0f, maxSpeed);
+    }
+
+    public Vector3 CurrentDir
+    {
+        get => currentDir;
+        set
+        {
+            if (value != Vector3.zero)
+            {
+                currentDir = value.normalized;
+                lastDir = currentDir;
+            }
+            else
+            {
+                currentDir = Vector3.zero;
+            }
+        }
+    }
+
+    public Vector3 LastDir => lastDir;
+
     public float StopDistance
     {
         get => stopDistance;
@@ -40,12 +67,7 @@ public abstract class MoveComponent : MonoBehaviour
         targetPosition = null;
         moveState = MoveState.Idle;
     }
-    
-    protected virtual void Update()
-    {
-        HandleActivites();
-    }
-
+  
     /// <summary>
     /// Dat vi tri dich va bat dau di chuyen den do.
     /// Dung abstract de bat buoc cac lop con phai override.
@@ -58,7 +80,9 @@ public abstract class MoveComponent : MonoBehaviour
 
     public abstract void Stop();
 
-    public abstract void HandleActivites();
+    public virtual void HandleActivities() { }
+
+    public virtual void HandleActivities(Vector2 moveInput, bool isJump) { }
 
     public abstract bool HasMovementInput();
 
