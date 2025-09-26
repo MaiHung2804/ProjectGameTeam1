@@ -9,7 +9,6 @@ public class PlayerMoveComponent : MoveComponent
     [Header("Player Move Settings")]
     
     private CharacterController characterController;
-    private UnitBase playerUnitBase;
     private AnimationComponent animationComponent;
 
     
@@ -30,25 +29,12 @@ public class PlayerMoveComponent : MoveComponent
     private Vector2 moveInput = Vector2.zero;
     private bool jumpInput = false;
 
-
-    protected override void Awake()
+    public override void InitComponent()
     {
-        base.Awake();
         characterController = GetComponent<CharacterController>();
+        UnitBase unit = GetComponent<UnitBase>();
+        animationComponent = unit.GetAnimationComponent();
 
-        playerUnitBase = GetComponent<UnitBase>();
-        if ( playerUnitBase == null)
-        {
-            playerUnitBase = GetComponentInParent<UnitBase>();
-        }
-
-        animationComponent = playerUnitBase.GetAnimationComponent();
-
-
-    }
-
-    private void Start()
-    {
         // Dat nhan vat luc dau o tren cao
         moveState = MoveState.Falling;
         canOutComponentState = false;
@@ -86,7 +72,7 @@ public class PlayerMoveComponent : MoveComponent
         {
             animationComponent.MoveSpeed(currentSpeed);
             isEnteringState = false;
-            Debug.Log("Enter Idle" + currentSpeed);
+            //Debug.Log("Enter Idle" + currentSpeed);
             canOutComponentState = true;
         }
 
@@ -94,7 +80,7 @@ public class PlayerMoveComponent : MoveComponent
         {
             moveState = MoveState.Jumping;
             isEnteringState = true;
-            Debug.Log("Idle -> Jumping");
+            //Debug.Log("Idle -> Jumping");
             return;
         }
 
@@ -103,7 +89,7 @@ public class PlayerMoveComponent : MoveComponent
             currentSpeed = speedIntensity * MaxSpeed;
             moveState = MoveState.Moving;
             isEnteringState = true;
-            Debug.Log("Idle -> Moving");
+            //Debug.Log("Idle -> Moving");
         }
         
         // Mac dinh Idle thi khong co luc tac dong thi khong Falling duoc. Tru khi co skill Enemy day nhan vat.
@@ -139,7 +125,7 @@ public class PlayerMoveComponent : MoveComponent
         {
             moveState = MoveState.Falling;
             isEnteringState = true;
-            Debug.Log("Moving -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
+            //Debug.Log("Moving -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
         // Code cu thi co nhap them Input o day?
@@ -148,7 +134,7 @@ public class PlayerMoveComponent : MoveComponent
         {
             moveState = MoveState.Jumping;
             isEnteringState = true;
-            Debug.Log("Moving -> Jumping " + " speed " + currentSpeed + " direction " + currentDir);
+            //Debug.Log("Moving -> Jumping " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
 
@@ -157,7 +143,7 @@ public class PlayerMoveComponent : MoveComponent
             moveState = MoveState.Idle;
             isEnteringState = true;
             currentDir = Vector3.zero;
-            Debug.Log("Moving -> Idle");
+            //Debug.Log("Moving -> Idle");
         }
 
     }
@@ -196,7 +182,7 @@ public class PlayerMoveComponent : MoveComponent
             isFallingFromJump = false;
             moveState = MoveState.Landing;
             currentDir = Vector3.zero;
-            Debug.Log("Falling -> Landing");
+            //Debug.Log("Falling -> Landing");
             return;
         }
     }
@@ -218,13 +204,13 @@ public class PlayerMoveComponent : MoveComponent
             {
                 currentSpeed = speedIntensity * MaxSpeed;
                 moveState = MoveState.Moving;
-                Debug.Log("Landing -> Moving");
+                //Debug.Log("Landing -> Moving");
                 return;
             }
             moveState = MoveState.Idle;
             currentDir = Vector3.zero;
             currentSpeed = 0f;
-            Debug.Log("Landing -> Idle");
+            //Debug.Log("Landing -> Idle");
          
         }
 
@@ -237,7 +223,7 @@ public class PlayerMoveComponent : MoveComponent
             verticalVelocity = VER_JUMP_FORCE;
             animationComponent.Jumping(true);
             isEnteringState = false;
-            Debug.Log("Enter Jumping " + " speed " + currentSpeed + " direction " + currentDir);
+            //Debug.Log("Enter Jumping " + " speed " + currentSpeed + " direction " + currentDir);
         }
 
         // Di chuyen theo huong nhay truoc do
@@ -257,7 +243,7 @@ public class PlayerMoveComponent : MoveComponent
 
             isFallingFromJump = true;
             lastDir = currentDir;
-            Debug.Log("Jumping -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
+            //Debug.Log("Jumping -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
         }
 
     }
@@ -371,9 +357,10 @@ public class PlayerMoveComponent : MoveComponent
     
     public override void Stop()
     {
-        // Khong su dung ham nay trong PlayerMoveComponent
-        Debug.LogWarning("Stop is not implemented in PlayerMoveComponent. Use input devices to stop movement.");
+        currentDir = Vector3.zero;
+        currentSpeed = 0f;
     }
 
+   
 
 }

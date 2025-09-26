@@ -12,7 +12,6 @@ public class PlayerBase : UnitBase
     private bool jumpInput = false;
     private Skill attackInput = Skill.None;
 
-  
     protected override void UpdateActions()
     {
         GetInput();
@@ -72,9 +71,15 @@ public class PlayerBase : UnitBase
     {
         if (CurrentState != newState)
         {
-            // ExitState(currentState);
+            if ( CurrentState == UnitState.Moving)
+            {
+                moveComponent.Stop();
+            }
+            if (CurrentState == UnitState.Attack)
+            {
+                attackComponent.Stop();
+            }
             CurrentState = newState;
-            // EnterState(newState);
         }
     }
 

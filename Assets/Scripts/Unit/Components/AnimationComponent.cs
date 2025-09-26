@@ -8,18 +8,12 @@ public class AnimationComponent : MonoBehaviour
     private Animator animator;
     private bool isLandingEnd = false;
 
-    protected virtual void Awake()
+
+    public void InitComponent()
     {
-        if (animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
-        if (animator == null)
-        {
-            Debug.LogError("Animator component not found on " + gameObject.name);
-            enabled = false; // Disable this component if Animator is not found
-        }
+        animator = GetComponent<Animator>();
     }
+
 
     public void MoveSpeed(float speed)
     {
@@ -60,6 +54,15 @@ public class AnimationComponent : MonoBehaviour
       set => isLandingEnd = value;
     }
 
+    public void SkillAttack(Skill skill,bool isAttacking)
+    {
+        if (skill == Skill.None) return;
+        if (skill == Skill.MeleeAttack) 
+            animator.SetBool("MeleeAttack", isAttacking);
+
+        if (skill == Skill.RangedAttack) 
+            animator.SetBool("RangedAttack", isAttacking);
+    }
 
     // Animation Event
     public void TurnOnLandingEnd()

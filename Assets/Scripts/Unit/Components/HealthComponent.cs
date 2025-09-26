@@ -9,6 +9,11 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;    // Se lay trong UnitData sau
     [SerializeField] private float currentHealth;
 
+    public void InitComponent()
+    {
+        
+    }
+
     public bool IsDead
     {
         get { return currentHealth <= 0f; }

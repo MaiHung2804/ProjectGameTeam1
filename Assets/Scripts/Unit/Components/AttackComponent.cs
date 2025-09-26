@@ -8,9 +8,9 @@ public abstract class AttackComponent : MonoBehaviour
 {
    
     [Header("Attack Settings")]
-    [SerializeField] private float attackDamage = 20f;
-    [SerializeField] private float attackRange = 2f;
-    [SerializeField] private float attackCooldown = 1f;
+    private float attackDamage = 20f;
+    private float attackRange = 2f;
+    private float attackCooldown = 1f;
 
     private float lastAttackTime = -Mathf.Infinity;
 
@@ -26,6 +26,8 @@ public abstract class AttackComponent : MonoBehaviour
 
     // Kiem tra xem don vi co the tan cong hay khong
     public bool CanAttack => (Time.time >= lastAttackTime + attackCooldown);
+
+    public virtual void InitComponent() { }
 
     ///<summary>
     ///Kiem tra muc tieu hop le de tan cong
@@ -70,5 +72,8 @@ public abstract class AttackComponent : MonoBehaviour
     public virtual void HandleComponentActs(UnitBase target) { }
 
     public abstract bool CanOutComponentState();
+
+    public abstract void Stop();
+    
 
 }
