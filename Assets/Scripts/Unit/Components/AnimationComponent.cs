@@ -67,5 +67,20 @@ public class AnimationComponent : MonoBehaviour
         isLandingEnd = true;
         Debug.Log("Landing End Animation Event");
     }
+    public void Speed(float speed)
+    {
+        animator.SetFloat("Speed", speed);
+    }
+
+    public void Attack()
+    {
+        animator.SetTrigger("Attack");
+    }
+
+    public void Die()
+    {
+        animator.SetTrigger("Die");
+    }
+
 
 }
