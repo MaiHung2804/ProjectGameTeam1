@@ -5,19 +5,29 @@ using UnityEngine.UIElements;
 
 public class UIJoystick : MonoBehaviour
 {
-    [SerializeField] private Joystick joyStick;
-    [SerializeField] private Button attackBtn;
-    public Vector2 moveDirection { get; private set; }
-    public bool isAttack { get; private set; }
-    void Start()
-    {
-    
-    }
+    //[SerializeField] private Joystick joyStick;
+    [SerializeField] private Button meleeAttackBtn;
+    [SerializeField] private Button rangeAttackBtn;
+    public InputManager inputManager;
+
 
     // Update is called once per frame
     void Update()
     {
-        moveDirection = new Vector2(joyStick.Horizontal, joyStick.Vertical);
+
     }
 
+    public void OnMeleeAttackButtonDown()
+    {
+        inputManager.MeleeAttackUIDown();
+    }
+    public void OnMeleeAttackButtonUp()
+    {
+        inputManager.MeleeAttackUIUp();
+    }
+    public void OnMoveJoyStick()
+    {
+        inputManager.GetMoveInput();
+    }
+   
 }
