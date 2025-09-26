@@ -11,7 +11,7 @@ public class mana : Consumable
 {
    
 
-    public override void Use(GameObject user)
+    public override void Use(UnitBase target)
     {
         throw new System.NotImplementedException();
     }

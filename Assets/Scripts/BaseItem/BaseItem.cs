@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public abstract class BaseItem : ScriptableObject
     public Sprite icon;
     public ItemType itemType;
     public GameObject Prefab;
-    public abstract void Use(GameObject user);
+
+    public abstract void Use(UnitBase target);
 }
 

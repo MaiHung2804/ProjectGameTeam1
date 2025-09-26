@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(menuName = "Item/Consumable/health")]
-public class health : Consumable
+
+public class MagicWand1 : RangedWeapon
 {
     public override void Use(UnitBase target)
     {
-        throw new System.NotImplementedException();
+        throw new System.NotImplementedException(); 
     }
 }

@@ -46,43 +46,43 @@ public class AttackComponent : MonoBehaviour
     // Thuc hien tan cong muc tieu neu hop le
     public void Attack(UnitBase target)
     {
-        //if (!CanAttack) return;
-        if (!IsValidTarget(target)) return;
+    //    //if (!CanAttack) return;
+    //    if (!IsValidTarget(target)) return;
 
-        target.OnTakeDamage(attackDamage);
-        lastAttackTime = Time.time;
+    //    target.OnTakeDamage(attackDamage);
+    //    lastAttackTime = Time.time;
 
-        // Phat su kien tan cong thanh cong
-        EventOnAttackSuccess?.Invoke(target);
+    //    // Phat su kien tan cong thanh cong
+    //    EventOnAttackSuccess?.Invoke(target);
 
-        // HIEU UNG TAN CONG O DAY (NEU CAN)
-    }
+    //    // HIEU UNG TAN CONG O DAY (NEU CAN)
+    //}
 
-    /// <summary>
-    /// Reset thoi gian hoi chieu, cho phep tan cong ngay lap tuc
-    /// </summary> 
-    public void ResetCooldown()
-    {
-        lastAttackTime = -Mathf.Infinity;
+    ///// <summary>
+    ///// Reset thoi gian hoi chieu, cho phep tan cong ngay lap tuc
+    ///// </summary> 
+    //public void ResetCooldown()
+    //{
+    //    lastAttackTime = -Mathf.Infinity;
 
-        /// <summary>
-        /// Kiem tra co the tan cong khong
-        /// </summary>
-        //public bool CanAttack => (Time.time >= lastAttackTime + attackCooldown);
+    //    /// < summary >
+    //    /// Kiem tra co the tan cong khong
+    //    /// </ summary >
+    //    public bool CanAttack => (Time.time >= lastAttackTime + attackCooldown);
 
-        /// <summary>
-        /// Thuc hien tan cong mot don vi muc tieu.
-        /// </summary>
+    //    /// <summary>
+    //    /// Thuc hien tan cong mot don vi muc tieu.
+    //    /// </summary>
     //    public void Attack(UnitBase target)
     //{
     //    if (target == null || !CanAttack) return;
 
-    //        float distance = Vector3.Distance(transform.position, target.transform.position);
-    //        if (distance <= attackRange)
-    //        {
-    //            target.OnTakeDamage(attackDamage);
-    //            lastAttackTime = Time.time;
-    ////        }
+    //    float distance = Vector3.Distance(transform.position, target.transform.position);
+    //    if (distance <= attackRange)
+    //    {
+    //        target.OnTakeDamage(attackDamage);
+    //        lastAttackTime = Time.time;
+    //        //        }
     //    }
     }
 }

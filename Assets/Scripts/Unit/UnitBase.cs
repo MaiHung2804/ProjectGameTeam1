@@ -40,6 +40,7 @@ public abstract class UnitBase : MonoBehaviour
      /// <param name="damage">  ghi chu luong sat thuong </param>
     public virtual void OnTakeDamage(float damage)
     {
+        Debug.Log("đã gọi OntakeDamage");
         if (healthComponent != null)
         {
             healthComponent.TakeDamage(damage);
@@ -53,6 +54,7 @@ public abstract class UnitBase : MonoBehaviour
     // Logic khi unit chet
     protected virtual void OnDeath()
     {
+        Debug.Log("đã gọi thông báo chết");
         EventOnDeath?.Invoke(this);
 
         gameObject.SetActive(false);

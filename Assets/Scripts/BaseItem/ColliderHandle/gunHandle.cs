@@ -39,7 +39,7 @@ public class gunHandle : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, range))
         {
-            GameObject target = hit.collider.gameObject;
+            UnitBase target = hit.collider.GetComponent<UnitBase>();
 
             if (target.CompareTag("Enemy"))
             {
