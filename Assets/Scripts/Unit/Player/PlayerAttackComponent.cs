@@ -46,6 +46,8 @@ public class PlayerAttackComponent : AttackComponent
             canOutComponentState = false;
             animationComponent.SkillAttack(currentSkill, true);
             lastSkill = currentSkill;
+
+
         }
 
     }
@@ -80,9 +82,12 @@ public class PlayerAttackComponent : AttackComponent
 
     public override void Stop()
     {
-        Debug.Log("PlayerAttackComponent Stop called.");
+        
         canOutComponentState = true;
         animationComponent.SkillAttack(currentSkill, false);
+        currentSkill = Skill.None;
+        lastSkill = Skill.None;
+        Debug.Log("PlayerAttackComponent Stop called." + currentSkill);
     }
 
 }

@@ -10,7 +10,9 @@ public class EnemyBase : UnitBase
     private Transform targetPlayer;     // Player hiện tại
     private float lastAttackTime = 0f;  // Thời điểm lần đánh trước
 
-    private void Start()
+
+
+    protected override void Start()
     {
         FindPlayer();
     }
@@ -26,7 +28,7 @@ public class EnemyBase : UnitBase
         }
     }
 
-    protected override void HandleMovement()
+    protected void HandleMovement()
     {
         if (IsDead) return;
 
@@ -49,15 +51,14 @@ public class EnemyBase : UnitBase
         }
     }
 
-    //protected override void HandleMovement()
+    //protected void HandleMovement()
     //{         // Enemy movement logic can be implemented here if needed
     //}
-    //protected override void HandleAttack()
-    //{         // Enemy attack logic can be implemented here if needed
-    //}
+   
     protected override void UpdateActions()
-    {         // Enemy movement logic can be implemented here if needed
-    protected override void HandleAttack()
+    { }
+    //Enemy movement logic can be implemented here if needed
+    protected void HandleAttack()
     {
         if (IsDead || targetPlayer == null) return;
 

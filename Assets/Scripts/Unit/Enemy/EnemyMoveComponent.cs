@@ -30,7 +30,7 @@ public class EnemyMoveComponent : MoveComponent
         moveState = MoveState.Idle;
     }
 
-    public override void HandleActivites()
+    public void HandleActivites()
     {
         if (targetPosition.HasValue)
         {
@@ -38,13 +38,13 @@ public class EnemyMoveComponent : MoveComponent
         }
     }
 
-    public override bool HasMovementInput()
+    public bool HasMovementInput()
     {
         // Enemy không cần input từ người chơi
         return false;
     }
 
-    public override bool CanOutSate()
+    public override bool CanOutComponentState()
     {
         return true;
     }
