@@ -17,17 +17,17 @@ public class InputManager : MonoBehaviour
     private KeyCode keyJump = KeyCode.Space;
     private KeyCode keyMeleeAttack = KeyCode.J; // skill 1
     private KeyCode keyRangedAttack = KeyCode.K; // skill 2
-    private KeyCode keySpellAttack = KeyCode.L; // skill 3
+    private KeyCode keyMagicAttack = KeyCode.L; // skill 3
 
     public event Action EventOnJump;
     public event Action EventOnMeleeAttack;
     public event Action EventOnRangedAttack;
-    public event Action EventOnSpellAttack;
+    public event Action EventOnMagicAttack;
 
     private bool isJumpOnUI = false;
     private bool isMeleeAttackOnUI = false;
     private bool isRangedAttackOnUI = false;
-    private bool isSpellAttackOnUI = false;
+    private bool isMagicAttackOnUI = false;
 
     private void Awake()
     {
@@ -81,9 +81,9 @@ public class InputManager : MonoBehaviour
             return Skill.RangedAttack;
         }
 
-        if (GetSpellAttackInput())
+        if (GetMagicAttackInput())
         {
-            return Skill.SpellAttack;
+            return Skill.MagicAttack;
         }
 
         return Skill.None;
@@ -97,9 +97,9 @@ public class InputManager : MonoBehaviour
     {
         return Input.GetKey(keyRangedAttack) || isRangedAttackOnUI;
     }
-    public bool GetSpellAttackInput()
+    public bool GetMagicAttackInput()
     {
-        return Input.GetKey(keySpellAttack) || isSpellAttackOnUI;
+        return Input.GetKey(keyMagicAttack) || isMagicAttackOnUI;
     }
 
     #region KHU VUC CHO CAC NUT UI
@@ -135,14 +135,14 @@ public class InputManager : MonoBehaviour
         isRangedAttackOnUI = false;
     }
 
-    public void SpellAttackUIDown()
+    public void MagicAttackUIDown()
     {
-        isSpellAttackOnUI = true;
-        EventOnSpellAttack?.Invoke();
+        isMagicAttackOnUI = true;
+        EventOnMagicAttack?.Invoke();
     }
-    public void SpellAttackUIUp()
+    public void MagicAttackUIUp()
     {
-        isSpellAttackOnUI = false;
+        isMagicAttackOnUI = false;
     }
     #endregion
 }

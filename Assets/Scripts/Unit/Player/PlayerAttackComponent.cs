@@ -21,25 +21,24 @@ public class PlayerAttackComponent : AttackComponent
 
     public override void HandleComponentActs(Skill skill)
     {
+        if (!isLastSkillEnd())
+        {
+            return;
+        }
+
         currentSkill = skill;
         switch (currentSkill)
         {
             case Skill.None:
                 canOutComponentState = true;
                 break;
-            case Skill.MeleeAttack:
-                SkillMeleeAttack();
-                break;
-            case Skill.RangedAttack:
-                SkillRangedAttack();
-                break;
             default:
-                canOutComponentState = true;
+                DoSkill();
                 break;
         }
     }
 
-    private void SkillMeleeAttack()
+    private void DoSkill()
     {
         if (currentSkill != lastSkill)
         {
@@ -47,31 +46,27 @@ public class PlayerAttackComponent : AttackComponent
             animationComponent.SkillAttack(currentSkill, true);
             lastSkill = currentSkill;
         }
-
-    }
-
-    private void SkillRangedAttack()
-    { 
-        Debug.Log("Ranged Attack Skill activated.");
     }
 
 
-    // Goi ham nay tu PlayerController de tan cong mot muc tieu
-    public void AttackTarget(UnitBase target, int skillIndex = 0)
+    private bool isLastSkillEnd()
     {
-        if (!CanAttack) return;
-        if (!IsValidTarget(target)) return;
-
-        // Goi animation tan cong (co the truyen skillIndex neu co nhieu chieu)
-        if (animationComponent != null)
+        switch (lastSkill)
         {
-            // animationComponent.PlayAttackAnimation(skillIndex);
+            case Skill.MeleeAttack:
+                canOutComponentState = true;
+                return true; 
+            case Skill.RangedAttack:
+                canOutComponentState = false;
+                return animationComponent.IsRangedAttackingEnd;
+            case Skill.MagicAttack:
+                canOutComponentState = false;
+                return animationComponent.IsMagicAttackingEnd;
+            default: // Skill.None
+                canOutComponentState = true;
+                return true;
         }
-
-        // Gay sat thuong cho muc tieu
-        base.Attack(target);
     }
-
 
     public override bool CanOutComponentState()
     {

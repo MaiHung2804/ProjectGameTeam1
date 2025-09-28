@@ -34,17 +34,18 @@ public class PlayerBase : UnitBase
             return;
         }
         else if (attackInput != Skill.None && moveComponent.CanOutComponentState())
-        {   
+        {
             ChangeState(UnitState.Attack);
             return;
         }
-        else if ( moveInput != Vector2.zero && attackComponent.CanOutComponentState())
+        else if (moveInput != Vector2.zero && attackComponent.CanOutComponentState())
         {
             ChangeState(UnitState.Moving);
             return;
         }
-        else if (moveComponent.CanOutComponentState())
+        else if (moveComponent.CanOutComponentState() )
         {
+            //Debug.Log(" AttackComponent.CanOutComponentState()" + attackComponent.CanOutComponentState());
             ChangeState(UnitState.Idle);
             return;
         }
@@ -52,6 +53,7 @@ public class PlayerBase : UnitBase
 
     private void ActionByState()
     {
+        //Debug.Log("Current State: " + CurrentState);
         switch (CurrentState)
         {
             case UnitState.Moving:
