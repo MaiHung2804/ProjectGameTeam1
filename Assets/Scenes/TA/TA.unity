@@ -11027,15 +11027,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.4
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.06
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 47.12
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13929,13 +13929,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1040853776}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.3318324, y: 6.626, z: 8.062}
+  m_LocalRotation: {x: 0, y: 0.9396927, z: 0, w: 0.34202018}
+  m_LocalPosition: {x: 9.5, y: 7.92, z: 55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 140, z: 0}
 --- !u!1001 &1041396293
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15045,7 +15045,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1106182737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6ec47e79862a1d42829ad5f119346ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 71e2e7c2fc643fa45a9096ce47a701dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 780644241}
@@ -20128,7 +20128,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -20278,10 +20278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47757ab88eee02d4cba50194ca79a482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 20
-  attackRange: 2
-  attackCooldown: 1
-  animationComponent: {fileID: 0}
 --- !u!114 &1492103484
 MonoBehaviour:
   m_ObjectHideFlags: 0
