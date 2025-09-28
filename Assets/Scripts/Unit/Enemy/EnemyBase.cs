@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿
+
+using UnityEngine;
 
 public class EnemyBase : UnitBase
 {
@@ -10,8 +12,9 @@ public class EnemyBase : UnitBase
     private Transform targetPlayer;     // Player hiện tại
     private float lastAttackTime = 0f;  // Thời điểm lần đánh trước
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         FindPlayer();
     }
 
@@ -26,46 +29,38 @@ public class EnemyBase : UnitBase
         }
     }
 
-    //protected override void HandleMovement() //todo
-    //{
-    //    if (IsDead) return;
+    protected override void UpdateActions()
+    {
+        if (IsDead) return;
 
-    //    if (targetPlayer == null)
-    //    {
-    //        FindPlayer();
-    //        return;
-    //    }
+        if (targetPlayer == null)
+        {
+            FindPlayer();
+            return;
+        }
 
-    //    float distance = Vector3.Distance(transform.position, targetPlayer.position);
+        float distance = Vector3.Distance(transform.position, targetPlayer.position);
 
-    //    // Nếu thấy Player trong phạm vi detectionRange mà chưa tới attackRange → đuổi theo
-    //    if (distance > attackRange && distance <= detectionRange)
-    //    {
-    //        moveComponent?.MoveTo(targetPlayer.position);
-    //    }
-    //    else
-    //    {
-    //        moveComponent?.Stop();
-    //    }
-    //}
-
-    //protected override void HandleAttack() //todo
-    //{
-    //    if (IsDead || targetPlayer == null) return;
-
-    //    float distance = Vector3.Distance(transform.position, targetPlayer.position);
-
-    //    if (distance <= attackRange && Time.time - lastAttackTime >= attackCooldown)
-    //    {
-    //        lastAttackTime = Time.time;
-
-    //        UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
-    //        if (playerUnit != null)
-    //        {
-    //            attackComponent?.Attack(playerUnit);
-    //        }
-    //    }
-    //}
+        if (distance > attackRange && distance <= detectionRange)
+        {
+            // Đuổi theo Player
+            moveComponent?.MoveTo(targetPlayer.position);
+            CurrentState = UnitState.Moving;
+        }
+        else if (distance <= attackRange)
+        {
+            // Dừng lại và tấn công
+            moveComponent?.Stop();
+            TryAttackPlayer();
+            CurrentState = UnitState.Attack;
+        }
+        else
+        {
+            // Không thấy Player
+            moveComponent?.Stop();
+            CurrentState = UnitState.Idle;
+        }
+    }
 
     private void TryAttackPlayer()
     {
@@ -76,22 +71,104 @@ public class EnemyBase : UnitBase
         UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
         if (playerUnit != null)
         {
-            attackComponent.Attack(playerUnit);
+            attackComponent?.Attack(playerUnit);
         }
     }
-
-
-    //protected override void HandleMovement()
-    //{         // Enemy movement logic can be implemented here if needed
-    //}
-    //protected override void HandleAttack()
-    //{         // Enemy attack logic can be implemented here if needed
-    //}
-
-
-    protected override void UpdateActions()
-    {         // Enemy movement logic can be implemented here if needed
-    }
-    
-
 }
+//using UnityEngine;
+
+//public class EnemyBase : UnitBase
+//{
+//    [Header("Enemy Settings")]
+//    [SerializeField] private float detectionRange = 5f;     // Khoảng cách phát hiện Player
+//    [SerializeField] private float attackRange = 1.5f;      // Khoảng cách đánh
+//    [SerializeField] private float attackCooldown = 1.5f;   // Thời gian hồi chiêu
+
+//    private Transform targetPlayer;     // Player hiện tại
+//    private float lastAttackTime = 0f;  // Thời điểm lần đánh trước
+
+//    private void Start()
+//    {
+//        FindPlayer();
+//    }
+
+//    private void FindPlayer()
+//    {
+//        if (targetPlayer != null) return;
+
+//        PlayerBase player = FindObjectOfType<PlayerBase>();
+//        if (player != null)
+//        {
+//            targetPlayer = player.transform;
+//        }
+//    }
+
+//    //protected override void HandleMovement() //todo
+//    //{
+//    //    if (IsDead) return;
+
+//    //    if (targetPlayer == null)
+//    //    {
+//    //        FindPlayer();
+//    //        return;
+//    //    }
+
+//    //    float distance = Vector3.Distance(transform.position, targetPlayer.position);
+
+//    //    // Nếu thấy Player trong phạm vi detectionRange mà chưa tới attackRange → đuổi theo
+//    //    if (distance > attackRange && distance <= detectionRange)
+//    //    {
+//    //        moveComponent?.MoveTo(targetPlayer.position);
+//    //    }
+//    //    else
+//    //    {
+//    //        moveComponent?.Stop();
+//    //    }
+//    //}
+
+//    //protected override void HandleAttack() //todo
+//    //{
+//    //    if (IsDead || targetPlayer == null) return;
+
+//    //    float distance = Vector3.Distance(transform.position, targetPlayer.position);
+
+//    //    if (distance <= attackRange && Time.time - lastAttackTime >= attackCooldown)
+//    //    {
+//    //        lastAttackTime = Time.time;
+
+//    //        UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
+//    //        if (playerUnit != null)
+//    //        {
+//    //            attackComponent?.Attack(playerUnit);
+//    //        }
+//    //    }
+//    //}
+
+//    private void TryAttackPlayer()
+//    {
+//        if (Time.time - lastAttackTime < attackCooldown) return;
+
+//        lastAttackTime = Time.time;
+
+//        UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
+//        if (playerUnit != null)
+//        {
+//            attackComponent.Attack(playerUnit);
+//        }
+//    }
+
+
+//    //protected override void HandleMovement()
+//    //{         // Enemy movement logic can be implemented here if needed
+//    //}
+//    //protected override void HandleAttack()
+//    //{         // Enemy attack logic can be implemented here if needed
+//    //}
+
+
+//    protected override void UpdateActions()
+//    {         // Enemy movement logic can be implemented here if needed
+//    }
+
+
+//}
