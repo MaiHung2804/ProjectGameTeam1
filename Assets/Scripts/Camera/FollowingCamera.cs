@@ -29,24 +29,24 @@ public class FollowingCamera : MonoBehaviour
 
     void Start()
     {
-        //GameObject player = GameObject.FindGameObjectWithTag("Player");
-        //if (player != null)
-        //{
-        //    target = player.transform;
-        //    lastTargetPostion = target.position;
-        //}
-        //else
-        //{
-        //    Debug.LogError("Player not found. Please make sure the player has the 'Player' tag.");
-        //}
-        // em comment lai doan nay de test
-        Vector3 angles = transform.eulerAngles;
-        yaw = angles.y;
-        pitch = angles.x;
-        if (target != null)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
         {
+            target = player.transform;
             lastTargetPostion = target.position;
         }
+        else
+        {
+            Debug.LogError("Player not found. Please make sure the player has the 'Player' tag.");
+        }
+        // em comment lai doan nay de test
+        //Vector3 angles = transform.eulerAngles;
+        //yaw = angles.y;
+        //pitch = angles.x;
+        //if (target != null)
+        //{
+        //    lastTargetPostion = target.position;
+        //}
 
 
     }

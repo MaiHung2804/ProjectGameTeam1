@@ -65,7 +65,6 @@ public abstract class UnitBase : MonoBehaviour
 
     protected virtual void UpdateActions() { }
 
-
     /// <param name="damage">  ghi chu luong sat thuong </param>
     public virtual void OnTakeDamage(float damage)
     {
