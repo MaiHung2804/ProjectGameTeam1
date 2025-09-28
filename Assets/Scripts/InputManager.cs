@@ -17,14 +17,17 @@ public class InputManager : MonoBehaviour
     private KeyCode keyJump = KeyCode.Space;
     private KeyCode keyMeleeAttack = KeyCode.J; // skill 1
     private KeyCode keyRangedAttack = KeyCode.K; // skill 2
+    private KeyCode keySpellAttack = KeyCode.L; // skill 3
 
     public event Action EventOnJump;
     public event Action EventOnMeleeAttack;
     public event Action EventOnRangedAttack;
+    public event Action EventOnSpellAttack;
 
     private bool isJumpOnUI = false;
     private bool isMeleeAttackOnUI = false;
     private bool isRangedAttackOnUI = false;
+    private bool isSpellAttackOnUI = false;
 
     private void Awake()
     {
@@ -77,6 +80,12 @@ public class InputManager : MonoBehaviour
         {
             return Skill.RangedAttack;
         }
+
+        if (GetSpellAttackInput())
+        {
+            return Skill.SpellAttack;
+        }
+
         return Skill.None;
     }
 
@@ -88,7 +97,10 @@ public class InputManager : MonoBehaviour
     {
         return Input.GetKey(keyRangedAttack) || isRangedAttackOnUI;
     }
-
+    public bool GetSpellAttackInput()
+    {
+        return Input.GetKey(keySpellAttack) || isSpellAttackOnUI;
+    }
 
     #region KHU VUC CHO CAC NUT UI
     // Can gan OnPointerDown va OnPointerUp de bat su kien UI trong Unity o cac nut
@@ -121,6 +133,16 @@ public class InputManager : MonoBehaviour
     public void RangedAttackUIUp()
     {
         isRangedAttackOnUI = false;
+    }
+
+    public void SpellAttackUIDown()
+    {
+        isSpellAttackOnUI = true;
+        EventOnSpellAttack?.Invoke();
+    }
+    public void SpellAttackUIUp()
+    {
+        isSpellAttackOnUI = false;
     }
     #endregion
 }

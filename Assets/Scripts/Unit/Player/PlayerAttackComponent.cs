@@ -46,8 +46,6 @@ public class PlayerAttackComponent : AttackComponent
             canOutComponentState = false;
             animationComponent.SkillAttack(currentSkill, true);
             lastSkill = currentSkill;
-
-
         }
 
     }
