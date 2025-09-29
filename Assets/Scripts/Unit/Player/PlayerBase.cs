@@ -11,6 +11,8 @@ public class PlayerBase : UnitBase
     private Vector2 moveInput = Vector2.zero;
     private bool jumpInput = false;
     private Skill attackInput = Skill.None;
+    private float minMeleeAttackTime = 1f;
+    private float lastMeleeAttackTime = -Mathf.Infinity;
 
     protected override void UpdateActions()
     {
@@ -24,6 +26,16 @@ public class PlayerBase : UnitBase
         moveInput = InputManager.Instance.GetMoveInput();
         jumpInput = InputManager.Instance.GetJumpInput();
         attackInput = InputManager.Instance.GetAttackInput();
+        
+        if (attackInput == Skill.MeleeAttack)
+        {
+            lastMeleeAttackTime = Time.time;
+        }
+        if (attackInput == Skill.None && Time.time - lastMeleeAttackTime < minMeleeAttackTime)
+        {
+            attackInput = Skill.MeleeAttack;
+        }
+
     }
 
     private void SelectState()
