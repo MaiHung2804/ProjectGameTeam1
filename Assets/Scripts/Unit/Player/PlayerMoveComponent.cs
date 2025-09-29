@@ -107,6 +107,7 @@ public class PlayerMoveComponent : MoveComponent
         if (!GetDirectionFromDevices(moveInput, out currentDir, out float speedIntensity))
         {
             // Luc nay khong co input, currentDirection luc nay van giu nguyen. CurrentSpeed giam dan ve 0
+            Debug.Log(" No input moving ");
             currentDir = lastDir;
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, GROUND_SPEED_REDUCTION * MaxSpeed * Time.deltaTime);
         }
@@ -128,7 +129,6 @@ public class PlayerMoveComponent : MoveComponent
             //Debug.Log("Moving -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
-        // Code cu thi co nhap them Input o day?
 
         if (jumpInput)  
         {

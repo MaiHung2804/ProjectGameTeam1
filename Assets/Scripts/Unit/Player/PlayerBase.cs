@@ -33,17 +33,22 @@ public class PlayerBase : UnitBase
             ChangeState(UnitState.Dead);
             return;
         }
+        if ( !attackComponent.CanOutComponentState())
+        {
+            ChangeState(UnitState.Attack);
+            return;
+        }
         else if (attackInput != Skill.None && moveComponent.CanOutComponentState())
         {
             ChangeState(UnitState.Attack);
             return;
         }
-        else if (moveInput != Vector2.zero && attackComponent.CanOutComponentState())
+        else if (moveInput != Vector2.zero ) //&& attackComponent.CanOutComponentState())
         {
             ChangeState(UnitState.Moving);
             return;
         }
-        else if (moveComponent.CanOutComponentState() )
+        else if (moveComponent.CanOutComponentState())
         {
             //Debug.Log(" AttackComponent.CanOutComponentState()" + attackComponent.CanOutComponentState());
             ChangeState(UnitState.Idle);

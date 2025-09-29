@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class PlayerAttackComponent : AttackComponent
@@ -21,10 +23,9 @@ public class PlayerAttackComponent : AttackComponent
 
     public override void HandleComponentActs(Skill skill)
     {
-        if (!isLastSkillEnd())
-        {
-            return;
-        }
+        
+        UpdateStatusOfLastSkill();
+        if (!canOutComponentState) return;
 
         currentSkill = skill;
         switch (currentSkill)
@@ -49,23 +50,27 @@ public class PlayerAttackComponent : AttackComponent
     }
 
 
-    private bool isLastSkillEnd()
+    private void UpdateStatusOfLastSkill()
     {
         switch (lastSkill)
         {
-            case Skill.MeleeAttack:
-                canOutComponentState = true;
-                return true; 
             case Skill.RangedAttack:
-                canOutComponentState = false;
-                return animationComponent.IsRangedAttackingEnd;
+                canOutComponentState = animationComponent.IsRangedAttackingEnd;
+                break;
             case Skill.MagicAttack:
-                canOutComponentState = false;
-                return animationComponent.IsMagicAttackingEnd;
+                canOutComponentState = animationComponent.IsMagicAttackingEnd;
+                break;
+            case Skill.MeleeAttack:
             default: // Skill.None
                 canOutComponentState = true;
-                return true;
+                break;
         }
+        if (canOutComponentState)
+        {
+            animationComponent.SkillAttack(lastSkill, false);
+            Stop();
+        }
+        
     }
 
     public override bool CanOutComponentState()
