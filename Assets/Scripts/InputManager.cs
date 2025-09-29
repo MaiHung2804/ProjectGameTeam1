@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour
     private bool isMeleeAttackOnUI = false;
     private bool isRangedAttackOnUI = false;
     private bool isMagicAttackOnUI = false;
+   
 
     private void Awake()
     {
