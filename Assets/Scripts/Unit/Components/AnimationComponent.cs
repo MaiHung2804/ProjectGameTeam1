@@ -93,17 +93,17 @@ public class AnimationComponent : MonoBehaviour
     public void TurnOnLandingEnd()
     {
         isLandingEnd = true;
-        Debug.Log("Landing End Animation Event");
+        //Debug.Log("Landing End Animation Event");
     }
     public void TurnOnRangedAttackingEnd()
     {
         isRangedAttackingEnd = true;
-        Debug.Log("Ranged Attacking End Animation Event");
+        //Debug.Log("Ranged Attacking End Animation Event");
     }
     public void TurnOnMagicAttackingEnd()
     {
         isMagicAttackingEnd = true;
-        Debug.Log("Magic Attacking End Animation Event");
+        //Debug.Log("Magic Attacking End Animation Event");
     }
 
 

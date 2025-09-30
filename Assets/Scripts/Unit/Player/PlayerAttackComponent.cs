@@ -85,7 +85,7 @@ public class PlayerAttackComponent : AttackComponent
         animationComponent.SkillAttack(currentSkill, false);
         currentSkill = Skill.None;
         lastSkill = Skill.None;
-        Debug.Log("PlayerAttackComponent Stop called." + currentSkill);
+        //Debug.Log("PlayerAttackComponent Stop called." + currentSkill);
     }
 
 }
