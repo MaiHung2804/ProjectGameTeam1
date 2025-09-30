@@ -9,6 +9,7 @@ public class UIDataPlayer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerLevelText;
     [SerializeField] private Slider uiHealthBar;
     [SerializeField] private Slider uiManaBar;
+    [SerializeField] private Slider uiExpBar;
     private PlayerControllerTest player;
 
     private void Start()
@@ -50,6 +51,11 @@ public class UIDataPlayer : MonoBehaviour
         {
             uiManaBar.maxValue = data.maxMana;  
             uiManaBar.value = data.currentMana;
+        }
+        if (uiExpBar != null)
+        {
+            uiExpBar.maxValue = data.experienceToNextLevel;
+            uiExpBar.value = data.currentExperience;   
         }
     }
 }
