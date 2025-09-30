@@ -10,7 +10,9 @@ public class EnemyBase : UnitBase
     private Transform targetPlayer;     // Player hiện tại
     private float lastAttackTime = 0f;  // Thời điểm lần đánh trước
 
-    private void Start()
+
+
+    protected override void Start()
     {
         FindPlayer();
     }
@@ -26,72 +28,51 @@ public class EnemyBase : UnitBase
         }
     }
 
-    //protected override void HandleMovement() //todo
-    //{
-    //    if (IsDead) return;
-
-    //    if (targetPlayer == null)
-    //    {
-    //        FindPlayer();
-    //        return;
-    //    }
-
-    //    float distance = Vector3.Distance(transform.position, targetPlayer.position);
-
-    //    // Nếu thấy Player trong phạm vi detectionRange mà chưa tới attackRange → đuổi theo
-    //    if (distance > attackRange && distance <= detectionRange)
-    //    {
-    //        moveComponent?.MoveTo(targetPlayer.position);
-    //    }
-    //    else
-    //    {
-    //        moveComponent?.Stop();
-    //    }
-    //}
-
-    //protected override void HandleAttack() //todo
-    //{
-    //    if (IsDead || targetPlayer == null) return;
-
-    //    float distance = Vector3.Distance(transform.position, targetPlayer.position);
-
-    //    if (distance <= attackRange && Time.time - lastAttackTime >= attackCooldown)
-    //    {
-    //        lastAttackTime = Time.time;
-
-    //        UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
-    //        if (playerUnit != null)
-    //        {
-    //            attackComponent?.Attack(playerUnit);
-    //        }
-    //    }
-    //}
-
-    private void TryAttackPlayer()
+    protected void HandleMovement()
     {
-        if (Time.time - lastAttackTime < attackCooldown) return;
+        if (IsDead) return;
 
-        lastAttackTime = Time.time;
-
-        UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
-        if (playerUnit != null)
+        if (targetPlayer == null)
         {
-            attackComponent.Attack(playerUnit);
+            FindPlayer();
+            return;
+        }
+
+        float distance = Vector3.Distance(transform.position, targetPlayer.position);
+
+        // Nếu thấy Player trong phạm vi detectionRange mà chưa tới attackRange → đuổi theo
+        if (distance > attackRange && distance <= detectionRange)
+        {
+            moveComponent?.MoveTo(targetPlayer.position);
+        }
+        else
+        {
+            moveComponent?.Stop();
         }
     }
 
-
-    //protected override void HandleMovement()
+    //protected void HandleMovement()
     //{         // Enemy movement logic can be implemented here if needed
     //}
-    //protected override void HandleAttack()
-    //{         // Enemy attack logic can be implemented here if needed
-    //}
-
-
+   
     protected override void UpdateActions()
-    {         // Enemy movement logic can be implemented here if needed
-    }
-    
+    { }
+    //Enemy movement logic can be implemented here if needed
+    protected void HandleAttack()
+    {
+        if (IsDead || targetPlayer == null) return;
 
+        float distance = Vector3.Distance(transform.position, targetPlayer.position);
+
+        if (distance <= attackRange && Time.time - lastAttackTime >= attackCooldown)
+        {
+            lastAttackTime = Time.time;
+
+            UnitBase playerUnit = targetPlayer.GetComponent<UnitBase>();
+            if (playerUnit != null)
+            {
+                attackComponent?.Attack(playerUnit);
+            }
+        }
+    }
 }

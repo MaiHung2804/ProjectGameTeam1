@@ -7,7 +7,8 @@ public class AnimationComponent : MonoBehaviour
 {
     private Animator animator;
     private bool isLandingEnd = false;
-
+    private bool isRangedAttackingEnd = false;
+    private bool isMagicAttackingEnd = false;
 
     public void InitComponent()
     {
@@ -54,22 +55,58 @@ public class AnimationComponent : MonoBehaviour
       set => isLandingEnd = value;
     }
 
+    public bool IsRangedAttackingEnd
+    {   get => isRangedAttackingEnd;
+        set => isRangedAttackingEnd = value;
+    }
+
+    public bool IsMagicAttackingEnd
+    {   get => isMagicAttackingEnd;
+        set => isMagicAttackingEnd = value;
+    }
+
     public void SkillAttack(Skill skill,bool isAttacking)
     {
         if (skill == Skill.None) return;
         if (skill == Skill.MeleeAttack) 
             animator.SetBool("MeleeAttack", isAttacking);
 
-        if (skill == Skill.RangedAttack) 
+        if (skill == Skill.RangedAttack)
+        {
             animator.SetBool("RangedAttack", isAttacking);
+            if (isAttacking)
+                isRangedAttackingEnd = false;
+            else 
+                isRangedAttackingEnd = true; // If not attacking, consider attack ended
+        }
+        if (skill == Skill.MagicAttack)
+        {
+            animator.SetBool("MagicAttack", isAttacking);
+            if (isAttacking)
+                isMagicAttackingEnd = false;
+            else
+                isMagicAttackingEnd = true; // If not attacking, consider attack ended
+        }
     }
 
     // Animation Event
     public void TurnOnLandingEnd()
     {
         isLandingEnd = true;
-        Debug.Log("Landing End Animation Event");
+        //Debug.Log("Landing End Animation Event");
     }
+    public void TurnOnRangedAttackingEnd()
+    {
+        isRangedAttackingEnd = true;
+        //Debug.Log("Ranged Attacking End Animation Event");
+    }
+    public void TurnOnMagicAttackingEnd()
+    {
+        isMagicAttackingEnd = true;
+        //Debug.Log("Magic Attacking End Animation Event");
+    }
+
+
     public void Speed(float speed)
     {
         animator.SetFloat("Speed", speed);

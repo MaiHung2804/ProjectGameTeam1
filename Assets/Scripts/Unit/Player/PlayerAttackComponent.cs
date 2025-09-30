@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class PlayerAttackComponent : AttackComponent
@@ -21,25 +23,23 @@ public class PlayerAttackComponent : AttackComponent
 
     public override void HandleComponentActs(Skill skill)
     {
+        
+        UpdateStatusOfLastSkill();
+        if (!canOutComponentState) return;
+
         currentSkill = skill;
         switch (currentSkill)
         {
             case Skill.None:
                 canOutComponentState = true;
                 break;
-            case Skill.MeleeAttack:
-                SkillMeleeAttack();
-                break;
-            case Skill.RangedAttack:
-                SkillRangedAttack();
-                break;
             default:
-                canOutComponentState = true;
+                DoSkill();
                 break;
         }
     }
 
-    private void SkillMeleeAttack()
+    private void DoSkill()
     {
         if (currentSkill != lastSkill)
         {
@@ -47,31 +47,31 @@ public class PlayerAttackComponent : AttackComponent
             animationComponent.SkillAttack(currentSkill, true);
             lastSkill = currentSkill;
         }
-
-    }
-
-    private void SkillRangedAttack()
-    { 
-        Debug.Log("Ranged Attack Skill activated.");
     }
 
 
-    // Goi ham nay tu PlayerController de tan cong mot muc tieu
-    public void AttackTarget(UnitBase target, int skillIndex = 0)
+    private void UpdateStatusOfLastSkill()
     {
-        if (!CanAttack) return;
-        if (!IsValidTarget(target)) return;
-
-        // Goi animation tan cong (co the truyen skillIndex neu co nhieu chieu)
-        if (animationComponent != null)
+        switch (lastSkill)
         {
-            // animationComponent.PlayAttackAnimation(skillIndex);
+            case Skill.RangedAttack:
+                canOutComponentState = animationComponent.IsRangedAttackingEnd;
+                break;
+            case Skill.MagicAttack:
+                canOutComponentState = animationComponent.IsMagicAttackingEnd;
+                break;
+            case Skill.MeleeAttack:
+            default: // Skill.None
+                canOutComponentState = true;
+                break;
         }
-
-        // Gay sat thuong cho muc tieu
-        base.Attack(target);
+        if (canOutComponentState)
+        {
+            animationComponent.SkillAttack(lastSkill, false);
+            Stop();
+        }
+        
     }
-
 
     public override bool CanOutComponentState()
     {
@@ -80,9 +80,12 @@ public class PlayerAttackComponent : AttackComponent
 
     public override void Stop()
     {
-        Debug.Log("PlayerAttackComponent Stop called.");
+        
         canOutComponentState = true;
         animationComponent.SkillAttack(currentSkill, false);
+        currentSkill = Skill.None;
+        lastSkill = Skill.None;
+        //Debug.Log("PlayerAttackComponent Stop called." + currentSkill);
     }
 
 }

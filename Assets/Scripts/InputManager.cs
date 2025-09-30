@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using UnityEditor;
 using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,14 +17,18 @@ public class InputManager : MonoBehaviour
     private KeyCode keyJump = KeyCode.Space;
     private KeyCode keyMeleeAttack = KeyCode.J; // skill 1
     private KeyCode keyRangedAttack = KeyCode.K; // skill 2
+    private KeyCode keyMagicAttack = KeyCode.L; // skill 3
 
     public event Action EventOnJump;
     public event Action EventOnMeleeAttack;
     public event Action EventOnRangedAttack;
+    public event Action EventOnMagicAttack;
 
     private bool isJumpOnUI = false;
     private bool isMeleeAttackOnUI = false;
     private bool isRangedAttackOnUI = false;
+    private bool isMagicAttackOnUI = false;
+   
 
     private void Awake()
     {
@@ -76,6 +81,12 @@ public class InputManager : MonoBehaviour
         {
             return Skill.RangedAttack;
         }
+
+        if (GetMagicAttackInput())
+        {
+            return Skill.MagicAttack;
+        }
+
         return Skill.None;
     }
 
@@ -87,7 +98,10 @@ public class InputManager : MonoBehaviour
     {
         return Input.GetKey(keyRangedAttack) || isRangedAttackOnUI;
     }
-
+    public bool GetMagicAttackInput()
+    {
+        return Input.GetKey(keyMagicAttack) || isMagicAttackOnUI;
+    }
 
     #region KHU VUC CHO CAC NUT UI
     // Can gan OnPointerDown va OnPointerUp de bat su kien UI trong Unity o cac nut
@@ -120,6 +134,16 @@ public class InputManager : MonoBehaviour
     public void RangedAttackUIUp()
     {
         isRangedAttackOnUI = false;
+    }
+
+    public void MagicAttackUIDown()
+    {
+        isMagicAttackOnUI = true;
+        EventOnMagicAttack?.Invoke();
+    }
+    public void MagicAttackUIUp()
+    {
+        isMagicAttackOnUI = false;
     }
     #endregion
 }
