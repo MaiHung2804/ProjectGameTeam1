@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 223962711}
   - component: {fileID: 223962710}
   m_Layer: 0
-  m_Name: "InputM\xE2nger"
+  m_Name: "InputM\xE2ngerDemo"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,67 +216,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5322870785704937550, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
-      propertyPath: instance
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5322870785704937550, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
-      propertyPath: joysticks
-      value: 
-      objectReference: {fileID: 2040019850}
-    - target: {fileID: 5322870785704937550, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
-      propertyPath: controller
-      value: 
-      objectReference: {fileID: 544127346}
     - target: {fileID: 5571120435602184551, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
       propertyPath: m_Name
-      value: Player Maria WProp J J Ong Variant
+      value: Player Demo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5571120435602184551, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 544127350}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
 --- !u!1 &544127344 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5571120435602184551, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
   m_PrefabInstance: {fileID: 360248850}
   m_PrefabAsset: {fileID: 0}
---- !u!143 &544127346 stripped
-CharacterController:
-  m_CorrespondingSourceObject: {fileID: 8436455749256751320, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
-  m_PrefabInstance: {fileID: 360248850}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &544127350
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 544127344}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +614,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1870028856094868343, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2412645926912825934, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -681,6 +638,22 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 544127344}
+    - target: {fileID: 7650601219344620290, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 223962710}
+    - target: {fileID: 7650601219344620290, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 223962710}
+    - target: {fileID: 7650601219344620290, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: JumpUIUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7650601219344620290, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: JumpUIDown
+      objectReference: {fileID: 0}
     - target: {fileID: 7972818352975911756, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
       propertyPath: uiExpBar
       value: 
@@ -688,6 +661,22 @@ PrefabInstance:
     - target: {fileID: 8121835144264693804, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271682223376551919, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 223962710}
+    - target: {fileID: 8271682223376551919, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 223962710}
+    - target: {fileID: 8271682223376551919, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MagicAttackUIUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8271682223376551919, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MagicAttackUIDown
       objectReference: {fileID: 0}
     - target: {fileID: 8521224189723883523, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
       propertyPath: m_AnchorMax.x
