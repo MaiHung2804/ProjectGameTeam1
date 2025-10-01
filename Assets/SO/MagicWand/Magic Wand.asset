@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a5be4ffc3f7654e90bdd2fb0d4a4bc, type: 3}
   m_Name: Magic Wand
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: MagicWand
   icon: {fileID: 0}
   itemType: 0
-  Prefab: {fileID: 0}
-  attackRange: 0
-  fireRate: 0
+  Prefab: {fileID: 8597984717404046718, guid: d8c6632b8140bfe4382972d9aa50e775, type: 3}
+  attackRange: 80
+  fireRate: 1
