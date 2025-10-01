@@ -107,7 +107,6 @@ public class PlayerMoveComponent : MoveComponent
         if (!GetDirectionFromDevices(moveInput, out currentDir, out float speedIntensity))
         {
             // Luc nay khong co input, currentDirection luc nay van giu nguyen. CurrentSpeed giam dan ve 0
-            Debug.Log(" No input moving. Last dir " + lastDir + " current Speed " + currentSpeed);
             currentDir = lastDir;
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, GROUND_SPEED_REDUCTION * MaxSpeed * Time.deltaTime);
         }
@@ -191,6 +190,7 @@ public class PlayerMoveComponent : MoveComponent
             isEnteringState = false;
             canOutComponentState = false;
         }
+        
         currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, GROUND_SPEED_REDUCTION * MaxSpeed * Time.deltaTime);
 
         if (animationComponent.IsLandingEnd)
@@ -355,9 +355,10 @@ public class PlayerMoveComponent : MoveComponent
     public override void Stop()
     {
         currentDir = Vector3.zero;
-        currentSpeed = 0f;
+        // De the nay de tranh nhan vat bi dung lai dot ngot
+        //currentSpeed = 0f;
     }
 
-   
+
 
 }
