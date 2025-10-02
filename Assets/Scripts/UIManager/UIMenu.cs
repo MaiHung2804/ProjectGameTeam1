@@ -71,7 +71,7 @@ public class UIMenu : MonoBehaviour
     public void SaveGame() //khi nhấn nút SaveGame sẽ lưu dữ liệu hiện tại của nhân vật vào PlayerPrefs
     {
         var pc = FindObjectOfType<PlayerControllerTest>();
-        DataManager.Instance.SyncPlayerDatat(pc);
+        //DataManager.Instance.SyncPlayerData(pc);
         DataManager.Instance.HasSave();
 
     }

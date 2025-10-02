@@ -60,7 +60,6 @@ public class PlayerControllerTest : MonoBehaviour
         transform.position = data.GetPosition();
         currentExperience = data.currentExperience;
         highScore = data.highScore;
-        level = data.userLevel;
     }
 
 
