@@ -96,6 +96,7 @@ public class DataManager
         if (!PlayerPrefs.HasKey("UserName"))
         {
             player = null;
+            CreateDefaultPlayer();
             Debug.LogWarning("LoadData failed: No saved data found");
             return false;
         }
@@ -106,5 +107,9 @@ public class DataManager
         }
     }
 
+    public void Init()
+    {
+        HasLoad();
+    }
 
 }

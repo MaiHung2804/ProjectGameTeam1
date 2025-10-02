@@ -14,6 +14,7 @@ public abstract class MoveComponent : MonoBehaviour
         Falling,
         Jumping,
         Landing,
+        
 
     }
 
