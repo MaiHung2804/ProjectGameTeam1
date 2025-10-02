@@ -991,7 +991,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3783393923648032672
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3323,7 +3323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2776878498427321889
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4055,7 +4055,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 7040465714930535508}
   uiDataPlayer: {fileID: 7972818352975911756}
-  uiJoystick: {fileID: 3001152015159899299}
 --- !u!1 &6209776715454851601
 GameObject:
   m_ObjectHideFlags: 0
@@ -4855,7 +4854,6 @@ MonoBehaviour:
   uiHealthBar: {fileID: 127078312696859886}
   uiManaBar: {fileID: 5556177739046587987}
   uiExpBar: {fileID: 0}
-  uiExp: {fileID: 0}
 --- !u!1 &7663610568736595154
 GameObject:
   m_ObjectHideFlags: 0
@@ -4999,7 +4997,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7598995399557728952}
-  - component: {fileID: 3001152015159899299}
   m_Layer: 5
   m_Name: InputUI
   m_TagString: Untagged
@@ -5031,18 +5028,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3001152015159899299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7745797207176949520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd05afc86eaf86e4b9b8479572d10237, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7861634805876319263
 GameObject:
   m_ObjectHideFlags: 0
@@ -5468,7 +5453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2680187116501415213
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5546,7 +5531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2018266412622822880
 RectTransform:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 332547309770519870, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_Name
-      value: Player Maria WProp J J Ong Variant
+      value: Player Demo
       objectReference: {fileID: 0}
     - target: {fileID: 1141278401098837892, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58,9 +58,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 332547309770519870, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5322870785704937550}
-    - targetCorrespondingSourceObject: {fileID: 332547309770519870, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1437256533540430578}
   m_SourcePrefab: {fileID: 100100000, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
 --- !u!1 &5571120435602184551 stripped
@@ -68,30 +65,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 332547309770519870, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
   m_PrefabInstance: {fileID: 5318164573845384281}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5322870785704937550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5571120435602184551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24742273d4bc06a46b92a71d6890a901, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  instance: {fileID: 0}
-  level: 1
-  currentHp: 100
-  maxHp: 100
-  currentMana: 50
-  maxMana: 50
-  gold: 0
-  damage: 10
-  defense: 5
-  currentExperience: 0
-  highScore: 0
-  speed: 5
 --- !u!54 &1437256533540430578
 Rigidbody:
   m_ObjectHideFlags: 0

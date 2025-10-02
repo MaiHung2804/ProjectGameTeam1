@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 223962711}
   - component: {fileID: 223962710}
   m_Layer: 0
-  m_Name: "InputM\xE2ngerDemo"
+  m_Name: InputManagerDemo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,13 +223,55 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5571120435602184551, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 544127349}
+    - targetCorrespondingSourceObject: {fileID: 5571120435602184551, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 544127354}
   m_SourcePrefab: {fileID: 100100000, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
 --- !u!1 &544127344 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5571120435602184551, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
   m_PrefabInstance: {fileID: 360248850}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &544127349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544127344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fc76134c3e2b745bb0e178bacc2d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &544127354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544127344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24742273d4bc06a46b92a71d6890a901, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instance: {fileID: 0}
+  level: 1
+  currentHp: 100
+  maxHp: 100
+  currentMana: 50
+  maxMana: 50
+  gold: 0
+  damage: 10
+  defense: 5
+  currentExperience: 0
+  highScore: 0
+  speed: 5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +672,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 223962710}
+    - target: {fileID: 5384358773435935955, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6048125765488210190, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -686,6 +732,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8801522929118797323, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8830217194980387287, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9122798405328965769, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -702,7 +756,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.3659973
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3001152015159899299, guid: 3b303ff248e4e134491cde877ed08601, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
