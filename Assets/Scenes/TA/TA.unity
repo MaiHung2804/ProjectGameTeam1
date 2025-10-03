@@ -15045,7 +15045,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1106182737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6ec47e79862a1d42829ad5f119346ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 71e2e7c2fc643fa45a9096ce47a701dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 780644241}
@@ -20278,10 +20278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47757ab88eee02d4cba50194ca79a482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 20
-  attackRange: 2
-  attackCooldown: 1
-  animationComponent: {fileID: 0}
 --- !u!114 &1492103484
 MonoBehaviour:
   m_ObjectHideFlags: 0

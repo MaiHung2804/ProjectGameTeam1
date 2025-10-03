@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.ExceptionServices;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
-using UnityEngine.Playables;
-using static UnityEditorInternal.VersionControl.ListControl;
+
 
 public class PlayerBase : UnitBase
 {
@@ -26,7 +21,7 @@ public class PlayerBase : UnitBase
         moveInput = InputManager.Instance.GetMoveInput();
         jumpInput = InputManager.Instance.GetJumpInput();
         attackInput = InputManager.Instance.GetAttackInput();
-        
+
         if (attackInput == Skill.MeleeAttack)
         {
             lastMeleeAttackTime = Time.time;
@@ -45,7 +40,7 @@ public class PlayerBase : UnitBase
             ChangeState(UnitState.Dead);
             return;
         }
-        if ( !attackComponent.CanOutComponentState())
+        if (!attackComponent.CanOutComponentState())
         {
             ChangeState(UnitState.Attack);
             return;
@@ -55,7 +50,7 @@ public class PlayerBase : UnitBase
             ChangeState(UnitState.Attack);
             return;
         }
-        else if (moveInput != Vector2.zero ) //&& attackComponent.CanOutComponentState())
+        else if (moveInput != Vector2.zero) //&& attackComponent.CanOutComponentState())
         {
             ChangeState(UnitState.Moving);
             return;
@@ -91,7 +86,7 @@ public class PlayerBase : UnitBase
     {
         if (CurrentState != newState)
         {
-            if ( CurrentState == UnitState.Moving)
+            if (CurrentState == UnitState.Moving)
             {
                 moveComponent.Stop();
             }

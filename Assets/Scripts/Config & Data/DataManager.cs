@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
+﻿
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
+
 
 public class DataManager
 {
@@ -96,7 +92,6 @@ public class DataManager
         {
             player = null;
             CreateDefaultPlayer("Player", "MainMenu", new Vector3(-3,4,0));
-            CreateDefaultPlayer();
             //CreateDefaultPlayer();
             Debug.LogWarning("LoadData failed: No saved data found");
             return false;

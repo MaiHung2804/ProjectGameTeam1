@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using UnityEditor.XR;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
 using static MoveComponent;
 
 public class InputManager : MonoBehaviour

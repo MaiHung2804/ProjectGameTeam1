@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FollowingCamera : MonoBehaviour
 {
-    [SerializeField] Transform target; 
+    [SerializeField] Transform target;
     private Vector3 cameraOffset = new Vector3(1, 2.5f, -8);
     private float mouseSensitivity = 3.0f;
     private float zoomSpeed = 2f;
@@ -16,10 +16,10 @@ public class FollowingCamera : MonoBehaviour
     private float minPitch = -20;
     private float maxPitch = 60;
 
-    private float followThreshold = 0.5f*0.5f; // Khoang cach toi thieu de bat dau di chuyen
+    private float followThreshold = 0.5f * 0.5f; // Khoang cach toi thieu de bat dau di chuyen
     private Vector3 vectorDistance;
     private Vector3 lastTargetPostion;
-    
+
     public static FollowingCamera Instance { get; private set; }
 
     void Awake()
@@ -89,7 +89,7 @@ public class FollowingCamera : MonoBehaviour
             float moveSpeed = Mathf.Clamp(vectorDistance.magnitude, 0.1f, 10f);
             lastTargetPostion = Vector3.MoveTowards(lastTargetPostion, target.position, moveSpeed * Time.deltaTime);
         }
-        else         
+        else
         {   // CAI NAY RAT HAY: Neu khong co cai nay, thi Camera se van hoi di chuyen 
             // mot chut khi don vi dung yen, do no chay trong LateUpdate, con don vi chay trong Update
             lastTargetPostion = target.position;
