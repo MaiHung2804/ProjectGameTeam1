@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Item/Consumable/ManaPotion")]
+
+
+
+
 public class mana : Consumable
 {
+   
 
-    public override void Use(GameObject user)
+    public override void Use(UnitBase target)
     {
-        ///UpdateMana
+        throw new System.NotImplementedException();
     }
 }
