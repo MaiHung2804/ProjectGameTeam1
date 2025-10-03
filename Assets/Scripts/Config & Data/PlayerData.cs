@@ -41,7 +41,6 @@ public class PlayerData
 
     }
 
-
     public Vector3 GetPosition() // Lấy vị trí
     {
         return userPosition;

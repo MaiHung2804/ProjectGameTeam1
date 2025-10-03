@@ -15,8 +15,6 @@ public class UIManager : MonoBehaviour
     [Header("Dynamic UI")]
     public UIDataPlayer uiDataPlayer;
 
-    [Header("InputUI")]
-    public UIJoystick uiJoystick;
  
     private void Awake()
     {

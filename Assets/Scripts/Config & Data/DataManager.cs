@@ -14,21 +14,20 @@ public class DataManager
     public PlayerData player { get; private set; }
     private DataManager(){}
 
-    public void SyncPlayerDatat(PlayerControllerTest pc) // Đồng bộ dữ liệu từ PlayerControllerTest vào PlayerData
-    {
-        if (pc == null) return;
-        player.userLevel = pc.level;
-        player.currentHp = pc.currentHp;
-        player.maxMana = pc.maxMana;
-        player.currentMana = pc.currentMana;
-        player.userGold = pc.gold;
-        player.userDamage = pc.damage;
-        player.userDefense = pc.defense;
-        player.userPosition = pc.transform.position;
-        player.currentExperience = pc.currentExperience;
-        player.highScore = pc.highScore; 
-        player.userLevel = pc.level;
-    }
+    //public void SyncPlayerData(PlayerControllerTest pc) // Đồng bộ dữ liệu từ PlayerControllerTest vào PlayerData
+    //{
+    //    if (pc == null) return;
+    //    player.userLevel = pc.level;
+    //    player.currentHp = pc.currentHp;
+    //    player.maxMana = pc.maxMana;
+    //    player.currentMana = pc.currentMana;
+    //    player.userGold = pc.gold;
+    //    player.userDamage = pc.damage;
+    //    player.userDefense = pc.defense;
+    //    player.userPosition = pc.transform.position;
+    //    player.currentExperience = pc.currentExperience;
+    //    player.highScore = pc.highScore; 
+    //}
     public void SaveData() // Lưu dữ liệu
     {
 
@@ -96,7 +95,7 @@ public class DataManager
         if (!PlayerPrefs.HasKey("UserName"))
         {
             player = null;
-            Debug.LogWarning("LoadData failed: No saved data found");
+            CreateDefaultPlayer("Player", "MainMenu", new Vector3(-3,4,0));
             return false;
         }
         else

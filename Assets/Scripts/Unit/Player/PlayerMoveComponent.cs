@@ -128,7 +128,6 @@ public class PlayerMoveComponent : MoveComponent
             //Debug.Log("Moving -> Falling " + " speed " + currentSpeed + " direction " + currentDir);
             return;
         }
-        // Code cu thi co nhap them Input o day?
 
         if (jumpInput)  
         {
@@ -168,9 +167,6 @@ public class PlayerMoveComponent : MoveComponent
             horizontalMove = currentDir * currentSpeed;
         }
 
-        // Bo vi da co UpdateVerticalVelocity
-        //// Ap dung gravity
-        //verticalVelocity += gravity * Time.deltaTime;
 
         Vector3 fallingMove = new Vector3(horizontalMove.x, verticalVelocity, horizontalMove.z);
         characterController.Move(fallingMove * Time.deltaTime);
@@ -194,6 +190,7 @@ public class PlayerMoveComponent : MoveComponent
             isEnteringState = false;
             canOutComponentState = false;
         }
+        
         currentSpeed = Mathf.MoveTowards(currentSpeed, 0f, GROUND_SPEED_REDUCTION * MaxSpeed * Time.deltaTime);
 
         if (animationComponent.IsLandingEnd)
@@ -358,9 +355,10 @@ public class PlayerMoveComponent : MoveComponent
     public override void Stop()
     {
         currentDir = Vector3.zero;
-        currentSpeed = 0f;
+        // De the nay de tranh nhan vat bi dung lai dot ngot
+        //currentSpeed = 0f;
     }
 
-   
+
 
 }

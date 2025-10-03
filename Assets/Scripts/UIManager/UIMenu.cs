@@ -58,6 +58,7 @@ public class UIMenu : MonoBehaviour
     public void LoadGame() //khi nhấn nút LoadGame sẽ load dữ liệu từ PlayerPrefs và áp dụng vào nhân vật rồi load scene đã lưu
     {
         DataManager.Instance.HasLoad();
+        HideAll();
         PlayerControllerTest pc = FindObjectOfType<PlayerControllerTest>();
         SceneManager.LoadScene(DataManager.Instance.player.currentScene);
 
@@ -70,7 +71,7 @@ public class UIMenu : MonoBehaviour
     public void SaveGame() //khi nhấn nút SaveGame sẽ lưu dữ liệu hiện tại của nhân vật vào PlayerPrefs
     {
         var pc = FindObjectOfType<PlayerControllerTest>();
-        DataManager.Instance.SyncPlayerDatat(pc);
+        //DataManager.Instance.SyncPlayerData(pc);
         DataManager.Instance.HasSave();
 
     }
