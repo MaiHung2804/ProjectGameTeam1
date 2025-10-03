@@ -97,6 +97,7 @@ public class DataManager
             player = null;
             CreateDefaultPlayer("Player", "MainMenu", new Vector3(-3,4,0));
             CreateDefaultPlayer();
+            //CreateDefaultPlayer();
             Debug.LogWarning("LoadData failed: No saved data found");
             return false;
         }
