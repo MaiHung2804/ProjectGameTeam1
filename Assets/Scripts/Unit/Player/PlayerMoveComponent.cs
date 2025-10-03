@@ -121,7 +121,7 @@ public class PlayerMoveComponent : MoveComponent
         animationComponent.MoveSpeed(currentSpeed);
 
         //Exit condition
-        if (IsTrueFalling())
+        if (CheckIsFalling())
         {
             moveState = MoveState.Falling;
             isEnteringState = true;
@@ -147,6 +147,18 @@ public class PlayerMoveComponent : MoveComponent
 
     }
 
+
+    public void ChangeState(MoveState to)
+    {
+        if (moveState == to)
+        {
+            return;
+        } 
+        moveState = to;
+        isEnteringState = true;
+    }
+
+
     private void HanldeFalling()
     {
         if (isEnteringState)
@@ -171,7 +183,7 @@ public class PlayerMoveComponent : MoveComponent
         Vector3 fallingMove = new Vector3(horizontalMove.x, verticalVelocity, horizontalMove.z);
         characterController.Move(fallingMove * Time.deltaTime);
 
-        if (!IsTrueFalling())
+        if (!CheckIsFalling())
         {
             isEnteringState = true;
             animationComponent.Falling(false);
@@ -299,7 +311,7 @@ public class PlayerMoveComponent : MoveComponent
 
     }
 
-    private bool IsTrueFalling()
+    private bool CheckIsFalling()
     {
         if (moveState == MoveState.Falling)
         {
