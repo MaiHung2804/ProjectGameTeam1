@@ -14,6 +14,9 @@ public abstract class MoveComponent : MonoBehaviour
         Falling,
         Jumping,
         Landing
+        Landing,
+        
+
     }
 
     [Header("Move Settings")]

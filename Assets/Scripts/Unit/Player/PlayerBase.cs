@@ -67,6 +67,7 @@ public class PlayerBase : UnitBase
             return;
         }
     }
+    // // ActionByState: Thuc hien hanh dong theo trang thai hien tai
 
     private void ActionByState()
     {
