@@ -36,6 +36,7 @@ public class PlayerData
         this.userGold = gold;
         this.userPosition = position;
         this.currentExperience = exp;
+        this.experienceToNextLevel = lv * 100;
         this.currentLevel = lv;
         this.currentScene = scene;
 

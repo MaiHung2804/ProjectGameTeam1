@@ -44,4 +44,6 @@ public class HealthComponent : MonoBehaviour
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
     }
+
+
 }

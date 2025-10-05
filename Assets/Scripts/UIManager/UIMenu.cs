@@ -11,12 +11,25 @@ public class UIMenu : MonoBehaviour
     public GameObject inputPanel;
     public GameObject settingPanel;
     public TMP_InputField inputField;
-    public  GameObject player;
+    public PlayerControllerTest player;
 
+    private void Start()
+    {
+        if (player == null)
+        {
+            player = FindObjectOfType<PlayerControllerTest>();
+            if (player == null)
+            {
+                Debug.LogError("PlayerControllerTest not found in the scene.");
+                return;
+            }
+            
+        }
+    }
     private void Awake()
     {
         inputPanel.SetActive(false);
-        player = GameObject.FindGameObjectWithTag("Player");
+
     }
     public void ShowMainMenu() //tắt hết các panel khác và chỉ hiện main menu
     {
@@ -50,7 +63,7 @@ public class UIMenu : MonoBehaviour
             Debug.LogWarning("Player name is empty. Please enter a valid name.");
             return;
         }
-        DataManager.Instance.CreateDefaultPlayer(playerName, sceneName, new Vector3(-3, 5, 2));
+        DataManager.LoadData();
         SceneManager.LoadScene(sceneName);  
         HideAll();
         
@@ -58,9 +71,10 @@ public class UIMenu : MonoBehaviour
     public void LoadGame() //khi nhấn nút LoadGame sẽ load dữ liệu từ PlayerPrefs và áp dụng vào nhân vật rồi load scene đã lưu
     {
         DataManager.Instance.HasLoad();
+        //player.ApplyDataToPlayer();
         HideAll();
-        PlayerControllerTest pc = FindObjectOfType<PlayerControllerTest>();
-        SceneManager.LoadScene(DataManager.Instance.player.currentScene);
+        //PlayerControllerTest pc = FindObjectOfType<PlayerControllerTest>();
+        //SceneManager.LoadScene(DataManager.Instance.player.currentScene);
 
     }
     public void QuitGame() //khi nhấn nút QuitGame sẽ thoát game
@@ -70,9 +84,10 @@ public class UIMenu : MonoBehaviour
     }
     public void SaveGame() //khi nhấn nút SaveGame sẽ lưu dữ liệu hiện tại của nhân vật vào PlayerPrefs
     {
-        var pc = FindObjectOfType<PlayerControllerTest>();
+        //var pc = FindObjectOfType<PlayerControllerTest>();
         //DataManager.Instance.SyncPlayerData(pc);
-        DataManager.Instance.HasSave();
+        //DataManager.Instance.HasSave();
+        player.Save();
 
     }
 }

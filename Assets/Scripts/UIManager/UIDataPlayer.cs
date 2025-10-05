@@ -12,14 +12,24 @@ public class UIDataPlayer : MonoBehaviour
     [SerializeField] private Slider uiExpBar;
     private PlayerControllerTest player;
 
+
     private void Start()
     {
-        var playerObj = GameObject.FindGameObjectWithTag("Player");
-        if (playerObj != null)
+        if (player == null)
         {
-            player = playerObj.GetComponent<PlayerControllerTest>();
+            player = FindObjectOfType<PlayerControllerTest>();
+            if (player == null)
+            {
+                Debug.LogError("PlayerControllerTest not found in the scene.");
+                return;
+            }
         }
-        UpdateUI();
+        StartCoroutine(DelayedUIUpdate());
+    }
+    private IEnumerator DelayedUIUpdate()
+    {
+        yield return new WaitForSeconds(0.5f); // Đợi 0.5 giây để đảm bảo PlayerControllerTest đã khởi tạo xong
+        UpdateUI(); // Cập nhật giao diện người chơi sau khi đợi
     }
 
     private void Update()
@@ -32,31 +42,21 @@ public class UIDataPlayer : MonoBehaviour
 
     public void UpdateUI() // Cập nhật giao diện người chơi
     {
-        var data = DataManager.Instance.player;
-        if (data == null) return;
-
-        if (playerNameText != null) 
-            playerNameText.text = data.userName;
-
-        if (playerLevelText != null)
-            playerLevelText.text = data.userLevel.ToString();
-
-        if (uiHealthBar != null)
-        {
-            uiHealthBar.maxValue = data.maxHp; 
-            uiHealthBar.value = data.currentHp;
-        }
-
-        if (uiManaBar!= null)
-        {
-            uiManaBar.maxValue = data.maxMana;  
-            uiManaBar.value = data.currentMana;
-        }
-        if (uiExpBar != null)
-        {
-            uiExpBar.maxValue = data.experienceToNextLevel;
-            uiExpBar.value = data.currentExperience;   
-        }
+        if (player == null || player.playerData == null)
+            return;
+        var data = player.playerData;
+        playerNameText.text = data.userName;       
+        playerLevelText.text = data.userLevel.ToString();       
+        
+        uiHealthBar.maxValue = data.maxHp; 
+        uiHealthBar.value = data.currentHp;       
+        
+        uiManaBar.maxValue = data.maxMana;  
+        uiManaBar.value = data.currentMana;       
+        
+        uiExpBar.maxValue = data.experienceToNextLevel;
+        uiExpBar.value = data.currentExperience;   
+        
     }
 }
 
