@@ -11807,9 +11807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ef91743987fd741813799e04f0fb7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 20
-  attackRange: 2
-  attackCooldown: 1
 --- !u!114 &894642913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11822,8 +11819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65371b22f0a90e14a83bf13ecda4d27a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
-  stopDistance: 0.1
 --- !u!114 &894642914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11838,8 +11833,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamID: 0
   detectionRange: 5
-  attackRange: 1.5
-  attackCooldown: 1.5
 --- !u!143 &894642915
 CharacterController:
   m_ObjectHideFlags: 0
@@ -15214,6 +15207,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1106182738}
+  - component: {fileID: 1106182739}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -15236,6 +15230,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1106182739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106182737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e2e7c2fc643fa45a9096ce47a701dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joystick: {fileID: 780644241}
 --- !u!1001 &1108393388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20453,9 +20460,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8fc76134c3e2b745bb0e178bacc2d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
-  stopDistance: 0.1
-  joystick: {fileID: 780644241}
 --- !u!114 &1492103477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20480,10 +20484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47757ab88eee02d4cba50194ca79a482, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 20
-  attackRange: 2
-  attackCooldown: 1
-  animationComponent: {fileID: 0}
 --- !u!114 &1492103481
 MonoBehaviour:
   m_ObjectHideFlags: 0

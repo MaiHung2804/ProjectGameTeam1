@@ -40,7 +40,10 @@ public class HealthComponent : MonoBehaviour
     //  Hoi mau cho don vi.
     public void Cure(float amount)
     {
-        if (IsDead) return;
+        if (IsDead)
+        {
+            return;
+        }
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
     }

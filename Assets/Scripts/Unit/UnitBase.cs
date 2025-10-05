@@ -65,7 +65,6 @@ public abstract class UnitBase : MonoBehaviour
 
     protected virtual void UpdateActions() { }
 
-
     /// <param name="damage">  ghi chu luong sat thuong </param>
     public virtual void OnTakeDamage(float damage)
     {
@@ -83,7 +82,7 @@ public abstract class UnitBase : MonoBehaviour
     protected virtual void OnDeath()
     {
         EventOnDeath?.Invoke(this);
-        gameObject.SetActive(false); // Deactive thay vi destroy de co the tai su dung lai
+        //gameObject.SetActive(false); // Deactive thay vi destroy de co the tai su dung lai
     }
 
 
