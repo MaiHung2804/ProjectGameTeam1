@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Camera/FollowingCamera.cs.meta
 guid: 7247751513fbeeb44b70ef6e250f1786
+========
+guid: d70d55e956a1ca34896d6a69e630192a
+>>>>>>>> origin/QuyetThang:Assets/Scripts/BaseItem/BaseItem.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

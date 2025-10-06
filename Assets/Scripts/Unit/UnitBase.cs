@@ -85,8 +85,7 @@ public abstract class UnitBase : MonoBehaviour
         //gameObject.SetActive(false); // Deactive thay vi destroy de co the tai su dung lai
     }
 
-
-
+    public Vector3 Position => transform.position;
 
 
 
