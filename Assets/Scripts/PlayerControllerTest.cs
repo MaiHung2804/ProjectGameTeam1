@@ -14,6 +14,11 @@ public class PlayerControllerTest : MonoBehaviour
         playerData = DataManager.Instance.player;
         rb = GetComponent<Rigidbody>();
     }
+    void Start()
+    {
+        healthCompentTest.SetHealth();
+        GetTransform();
+    }
     void Update()
     {
 
@@ -40,19 +45,25 @@ public class PlayerControllerTest : MonoBehaviour
     {
         healthCompentTest.TakeDamage(10);
 
-        DataManager.Instance.SaveData();
     }
     public void Heal()
     {
         healthCompentTest.Heal(10);
 
-        DataManager.Instance.SaveData();
+
     }
     public void SetTransform()
     {
         if (DataManager.Instance.player != null)
         {
             DataManager.Instance.player.userPosition = transform.position;
+        }
+    }
+    public void GetTransform()
+    {
+        if (DataManager.Instance.player != null)
+        {
+            transform.position = DataManager.Instance.player.userPosition;
         }
     }
 

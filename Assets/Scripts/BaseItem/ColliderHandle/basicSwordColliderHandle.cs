@@ -27,11 +27,11 @@ public class basicSwordColliderHandle : MonoBehaviour
         if (target == null) return;
 
         // Kiểm tra TeamID 
-        if (target.TeamID != 2)
-        {
-            Debug.Log("target  có ID khác 2 (phải = 2 thì mới trừ máu)");
-            return;
-        }
+        //if (target.TeamID != 2) // tạm cmt đoạn này
+        //{
+        //    Debug.Log("target  có ID khác 2 (phải = 2 thì mới trừ máu)");
+        //    return;
+        //}
 
         // Gọi Use() của vũ khí, truyền target
         if (equippedWeapon != null && target !=null)

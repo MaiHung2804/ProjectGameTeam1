@@ -22,7 +22,7 @@ public class UIMenu : MonoBehaviour
     }
     private void Start()
     {
-        playerControllerTest = GetComponent<PlayerControllerTest>();
+        playerControllerTest = FindObjectOfType<PlayerControllerTest>();
     }
     public void ShowMainMenu() //tắt hết các panel khác và chỉ hiện main menu
     {
@@ -69,14 +69,16 @@ public class UIMenu : MonoBehaviour
         SceneManager.LoadScene(sceneName);
         HideAll();
 
-        Debug.Log($"✅ New Game Started with Player Name: {playerName}");
+        Debug.Log($" New Game Started with Player Name: {playerName}");
 
     }
     public void LoadGame() //khi nhấn nút LoadGame sẽ load dữ liệu từ PlayerPrefs và áp dụng vào nhân vật rồi load scene đã lưu
     {
 
         DataManager.Instance.LoadData();
+        playerControllerTest.GetTransform();
         SceneManager.LoadScene(DataManager.Instance.player.currentScene);
+        //playerControllerTest.GetTransform();
 
         HideAll();
 

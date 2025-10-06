@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static PlayerData;
 
 public class PlayerData
 {
@@ -42,7 +41,7 @@ public class PlayerData
 
         this.currentHp = (currentHp > 0) ? currentHp : hp;
         this.currentMana = (currentMp > 0) ? currentMp : mp;
-
+        this.currentExperience = (currentExp > 0) ? currentExp : 0;
     }
     public PlayerData() // Constructor mặc định
     {

@@ -7,10 +7,7 @@ public class DataManager
     private static DataManager instance;
     public static DataManager Instance => instance ??= new DataManager();
 
-    public PlayerData player { get; private set; }
-    private const string PlayerSlotSavekey1 = "Slot1";
-    private const string PlayerSlotSavekey2 = "Slot2";
-    private const string PlayerSlotSavekey3 = "Slot3";
+    public PlayerData player;
     private DataManager() {  }
 
     // ✅ Tạo dữ liệu mới khi bắt đầu New Game

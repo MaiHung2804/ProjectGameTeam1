@@ -9,34 +9,50 @@ public class HealthCompentTest : MonoBehaviour
     public PlayerData playerData;
     
 
-    public event Action<int, int> OnHealthChanged; // Sự kiện để thông báo khi máu thay đổi
 
-    
+
+
+    void Awake()
+    {
+        playerData = DataManager.Instance.player;
+        
+    }
+    private void Start()
+    {
+        SetHealth();
+    }
 
     public void SetHealth() 
     {
-        playerData = DataManager.Instance.player;
         if (playerData != null)
         {
-                maxHealth = playerData.maxHp;
-                currentHealth = playerData.currentHp;
+            maxHealth = playerData.maxHp;
+            currentHealth = playerData.currentHp;
+
         }
         else
         {
-                Debug.LogWarning(" No player data found in HealthCompentTest.");
+            Debug.LogWarning("No player data found in HealthComponentTest.");
         }
-     } 
+    } 
 
     public void TakeDamage(int amount)
     {
+
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        if (playerData != null)
+        {
+            playerData.currentHp = currentHealth;
+        }
 
 
     }
     public void Heal(int amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);;
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        if (playerData != null)
+        {
+            playerData.currentHp = currentHealth;
+        }
     }
 }

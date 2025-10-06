@@ -32,11 +32,11 @@ public class fireBallHandle : MonoBehaviour
         if (collision != null) 
         {
             UnitBase target = collision.gameObject.GetComponent<UnitBase>();
-            if (target.TeamID != 2 && target.TeamID != 3) 
-            {
-                //Debug.Log("TeamID != 2 or 3 ");
-                return; 
-            }
+            //if (target.TeamID != 2 && target.TeamID != 3) // tạm cmm đoạn này
+            //{
+            //    //Debug.Log("TeamID != 2 or 3 ");
+            //    return; 
+            //}
             target.OnTakeDamage(50);
             //Debug.Log("Đã gọi OnTakeDamage");
         Destroy(gameObject);
