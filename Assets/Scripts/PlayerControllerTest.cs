@@ -2,30 +2,58 @@
 
 public class PlayerControllerTest : MonoBehaviour
 {
-    public PlayerData playerData;
+    private PlayerData playerData;
+    public HealthCompentTest healthCompentTest;
+    private Rigidbody rb;
 
-    void Start()
+    public float speed = 5;
+
+    void Awake()
     {
+        healthCompentTest = GetComponent<HealthCompentTest>();
         playerData = DataManager.Instance.player;
-
-        //ApplyDataToPlayer();
+        rb = GetComponent<Rigidbody>();
     }
-
     void Update()
     {
-      
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            TakeDame();
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+           Heal();
+        }
+
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        rb.velocity = movement * speed;
+        rb.angularVelocity = movement * speed;
+        SetTransform();
+
+
     }
-    //public void ApplyDataToPlayer()
-    //{
-    //    transform.position = playerData.userPosition;
-    //}
-    public void UppdateDataFromPlayer()
+
+    public void TakeDame()
     {
-        playerData.userPosition = transform.position;
+        healthCompentTest.TakeDamage(10);
+
+        DataManager.Instance.SaveData();
     }
-    public void Save()
+    public void Heal()
     {
-        UppdateDataFromPlayer();
-        DataManager.SaveData(playerData);
+        healthCompentTest.Heal(10);
+
+        DataManager.Instance.SaveData();
     }
+    public void SetTransform()
+    {
+        if (DataManager.Instance.player != null)
+        {
+            DataManager.Instance.player.userPosition = transform.position;
+        }
+    }
+
 }

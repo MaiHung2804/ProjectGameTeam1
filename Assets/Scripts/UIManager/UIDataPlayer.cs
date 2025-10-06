@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
+
 public class UIDataPlayer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI playerNameText;
@@ -10,54 +12,33 @@ public class UIDataPlayer : MonoBehaviour
     [SerializeField] private Slider uiHealthBar;
     [SerializeField] private Slider uiManaBar;
     [SerializeField] private Slider uiExpBar;
-    private PlayerControllerTest player;
-
-
-    private void Start()
+    private PlayerData player;
+    void Start()
     {
-        if (player == null)
-        {
-            player = FindObjectOfType<PlayerControllerTest>();
-            if (player == null)
-            {
-                Debug.LogError("PlayerControllerTest not found in the scene.");
-                return;
-            }
-        }
-        StartCoroutine(DelayedUIUpdate());
-    }
-    private IEnumerator DelayedUIUpdate()
-    {
-        yield return new WaitForSeconds(0.5f); // Đợi 0.5 giây để đảm bảo PlayerControllerTest đã khởi tạo xong
-        UpdateUI(); // Cập nhật giao diện người chơi sau khi đợi
+        
     }
 
     private void Update()
     {
-        if (player != null)
-        {
-            UpdateUI();
-        }
+        UppdateUI();
     }
+   
 
-    public void UpdateUI() // Cập nhật giao diện người chơi
+    public void UppdateUI()
     {
-        if (player == null || player.playerData == null)
-            return;
-        var data = player.playerData;
-        playerNameText.text = data.userName;       
-        playerLevelText.text = data.userLevel.ToString();       
+        player = DataManager.Instance.player;
+        if (player == null) return;
         
-        uiHealthBar.maxValue = data.maxHp; 
-        uiHealthBar.value = data.currentHp;       
+        playerNameText.text = player.userName;
+        playerLevelText.text = player.currentLevel.ToString();
         
-        uiManaBar.maxValue = data.maxMana;  
-        uiManaBar.value = data.currentMana;       
-        
-        uiExpBar.maxValue = data.experienceToNextLevel;
-        uiExpBar.value = data.currentExperience;   
-        
+        uiHealthBar.maxValue = player.maxHp;
+        uiHealthBar.value = player.currentHp;
+        uiManaBar.maxValue = player.maxMana;
+        uiManaBar.value = player.currentMana;
+        uiExpBar.maxValue = player.maxExp;
+        uiExpBar.value = player.currentExperience;
+
     }
 }
-
-
+   
