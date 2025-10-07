@@ -11,25 +11,18 @@ public class UIMenu : MonoBehaviour
     public GameObject inputPanel;
     public GameObject settingPanel;
     public TMP_InputField inputField;
-    public PlayerControllerTest player;
+    private PlayerControllerTest playerControllerTest;
 
-    private void Start()
-    {
-        if (player == null)
-        {
-            player = FindObjectOfType<PlayerControllerTest>();
-            if (player == null)
-            {
-                Debug.LogError("PlayerControllerTest not found in the scene.");
-                return;
-            }
-            
-        }
-    }
+
+
     private void Awake()
     {
         inputPanel.SetActive(false);
 
+    }
+    private void Start()
+    {
+        playerControllerTest = GetComponent<PlayerControllerTest>();
     }
     public void ShowMainMenu() //tắt hết các panel khác và chỉ hiện main menu
     {
@@ -57,24 +50,35 @@ public class UIMenu : MonoBehaviour
     }
     public void PlayGame(string sceneName)  //khi nhấn nút PlayGame sẽ lấy tên input và load scene level1 -VY (có thể đổi)
     {
-        string playerName = inputField.text;
-        if (string.IsNullOrEmpty(playerName))
-        {
-            Debug.LogWarning("Player name is empty. Please enter a valid name.");
-            return;
-        }
-        DataManager.LoadData();
-        SceneManager.LoadScene(sceneName);  
-        HideAll();
+        // Xóa dữ liệu cũ để bắt đầu lại
+        DataManager.DeleteData();
         
+        // Tạo dữ liệu người chơi mới
+        DataManager.Instance.NewPlayerData();
+
+        string playerName = inputField.text;
+        if (!string.IsNullOrEmpty(playerName))
+            DataManager.Instance.player.userName = playerName;
+        else
+            DataManager.Instance.player.userName = "Player";
+
+        // Lưu dữ liệu ngay trước khi đổi scene
+        DataManager.Instance.SaveData(); 
+
+        // Chuyển sang scene chơi
+        SceneManager.LoadScene(sceneName);
+        HideAll();
+
+        Debug.Log($"✅ New Game Started with Player Name: {playerName}");
+
     }
     public void LoadGame() //khi nhấn nút LoadGame sẽ load dữ liệu từ PlayerPrefs và áp dụng vào nhân vật rồi load scene đã lưu
     {
-        DataManager.Instance.HasLoad();
-        //player.ApplyDataToPlayer();
+
+        DataManager.Instance.LoadData();
+        SceneManager.LoadScene(DataManager.Instance.player.currentScene);
+
         HideAll();
-        //PlayerControllerTest pc = FindObjectOfType<PlayerControllerTest>();
-        //SceneManager.LoadScene(DataManager.Instance.player.currentScene);
 
     }
     public void QuitGame() //khi nhấn nút QuitGame sẽ thoát game
@@ -84,10 +88,8 @@ public class UIMenu : MonoBehaviour
     }
     public void SaveGame() //khi nhấn nút SaveGame sẽ lưu dữ liệu hiện tại của nhân vật vào PlayerPrefs
     {
-        //var pc = FindObjectOfType<PlayerControllerTest>();
-        //DataManager.Instance.SyncPlayerData(pc);
-        //DataManager.Instance.HasSave();
-        player.Save();
-
+        DataManager.Instance.SaveData();
     }
+
+
 }

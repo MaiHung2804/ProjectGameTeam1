@@ -1,33 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System; 
 
 public class HealthCompentTest : MonoBehaviour
 {
-    public float maxHealth = 100f;
-    public float currentHealth;
-    public float MaxHealth { get => maxHealth; set => maxHealth = value; }
-    public float CurrentHealth => currentHealth;
-    public void SetCurrentHealth(float value)
-    {
-        currentHealth = Mathf.Clamp(value, 0f, maxHealth);
-    }
+    [Header("Health Info")]
+    public int maxHealth;
+    public int currentHealth;
+    public PlayerData playerData;
+    
 
-    public void Initialize(float max, float current)
+    public event Action<int, int> OnHealthChanged; // Sự kiện để thông báo khi máu thay đổi
+
+    
+
+    public void SetHealth() 
     {
-        MaxHealth = max;
-        SetCurrentHealth(current);
-    }
-    public void AllyData()
-    {
-        if (DataManager.Instance.player != null)
+        playerData = DataManager.Instance.player;
+        if (playerData != null)
         {
-            maxHealth = DataManager.Instance.player.maxHp;
-            currentHealth = DataManager.Instance.player.currentHp;
+                maxHealth = playerData.maxHp;
+                currentHealth = playerData.currentHp;
         }
+        else
+        {
+                Debug.LogWarning(" No player data found in HealthCompentTest.");
+        }
+     } 
+
+    public void TakeDamage(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+
     }
-
-    public void TakeDamage(float amount) => SetCurrentHealth(currentHealth - amount);
-    public void Heal(float amount) => SetCurrentHealth(currentHealth + amount);
-
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);;
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+    }
 }

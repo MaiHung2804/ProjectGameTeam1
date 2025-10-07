@@ -1,120 +1,146 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class DataManager
 {
     private static DataManager instance;
     public static DataManager Instance => instance ??= new DataManager();
-    public PlayerData player { get; private set; }
-    private DataManager(){}
 
-    //public void SyncPlayerData(PlayerControllerTest pc) // Đồng bộ dữ liệu từ PlayerControllerTest vào PlayerData
-    //{
-    //    if (pc == null) return;
-    //    player.userLevel = pc.level;
-    //    player.maxHp = pc.maxHp;   
-    //    player.currentHp = pc.currentHp;
-    //    player.maxMana = pc.maxMana;
-    //    player.currentMana = pc.currentMana;
-    //    player.userGold = pc.gold;
-    //    player.userDamage = pc.damage;
-    //    player.userDefense = pc.defense;
-    //    player.userPosition = pc.transform.position;
-    //    player.currentExperience = pc.currentExperience;
-    //    player.highScore = pc.highScore; 
-    //}
-    //public void SyncPlayerDataHp(HealthCompentTest hp)
-    //{
-    //    if (player == null || hp == null) return;
-    //    player.maxHp = (int)hp.MaxHealth;
-    //    player.currentHp = (int)hp.CurrentHealth;
-    //}
-    public static void SaveData(PlayerData player) // Lưu dữ liệu
+    public PlayerData player { get; private set; }
+    private const string PlayerSlotSavekey1 = "Slot1";
+    private const string PlayerSlotSavekey2 = "Slot2";
+    private const string PlayerSlotSavekey3 = "Slot3";
+    private DataManager() {  }
+
+    // ✅ Tạo dữ liệu mới khi bắt đầu New Game
+    public void NewPlayerData()
     {
-        PlayerPrefs.SetString("UserName", player.userName);
-        PlayerPrefs.SetInt("Level", player.userLevel);
+        player = new PlayerData();
+        Debug.Log($"New Player: {player.userName} | HP {player.currentHp}/{player.maxHp} | " +
+           $"MP {player.currentMana}/{player.maxMana} | " +
+           $"EXP {player.currentExperience}/{player.maxExp} | " +
+           $"Level {player.currentLevel} | " +
+           $"Gold {player.userGold} | " +
+           $"Scene {player.currentScene} | " +
+           $"Position {player.userPosition}");
+    }
+
+    // ✅ Lưu dữ liệu người chơi hiện tại
+    public void SaveData()
+    {
+
+
+        if (player == null)
+        {
+            Debug.LogWarning("❌ No player data to save!");
+            return;
+        }
+
+        PlayerPrefs.SetString("Player", player.userName);
         PlayerPrefs.SetInt("Health", player.maxHp);
         PlayerPrefs.SetInt("CurrentHealth", player.currentHp);
         PlayerPrefs.SetInt("Gold", player.userGold);
         PlayerPrefs.SetInt("HighScore", player.highScore);
+        PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
+
+
+        PlayerPrefs.SetFloat("PosX", player.userPosition.x);
+        PlayerPrefs.SetFloat("PosY", player.userPosition.y);
+        PlayerPrefs.SetFloat("PosZ", player.userPosition.z);
+
+
         PlayerPrefs.SetInt("Experience", player.currentExperience);
+        PlayerPrefs.SetInt("MaxExp", player.maxExp);
+        PlayerPrefs.SetInt("Level", player.currentLevel);
         PlayerPrefs.SetInt("Damage", player.userDamage);
         PlayerPrefs.SetInt("Defense", player.userDefense);
         PlayerPrefs.SetInt("Mana", player.maxMana);
         PlayerPrefs.SetInt("CurrentMana", player.currentMana);
-        PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
-        PlayerPrefs.SetFloat("PosX", player.userPosition.x);
-        PlayerPrefs.SetFloat("PosY", player.userPosition.y);
-        PlayerPrefs.SetFloat("PosZ", player.userPosition.z);
+        //string json = JsonUtility.ToJson(player);
+        //PlayerPrefs.SetString(PlayerSlotSavekey1, json);
+
         PlayerPrefs.Save();
-        Debug.Log("Data Saved");       
-        Debug.Log($"[SaveData] name={player.userName}, level={player.userLevel}, hp={player.currentHp}/{player.maxHp}, mp= {player.currentMana}/{player.maxMana}, pos={player.userPosition}, scene={SceneManager.GetActiveScene().name}");
+
+        Debug.Log($"💾 Saved: {player.userName} | HP {player.currentHp}/{player.maxHp} | " +
+            $"MP {player.currentMana}/{player.maxMana} | " +
+            $"EXP {player.currentExperience}/{player.maxExp } | " +
+            $"Level {player.currentLevel} | " +
+            $"Gold {player.userGold} | " +
+            $"Scene {player.currentScene} | " +
+            $"Position {player.userPosition}");
+
     }
-    public static PlayerData LoadData() // Load dữ liệu
+
+
+    // ✅ Load dữ liệu đã lưu
+    public bool LoadData()
     {
-        PlayerData player;
-        string name = PlayerPrefs.GetString("UserName");
-        int lv = PlayerPrefs.GetInt("Level");
-        int hp = PlayerPrefs.GetInt("Health");
-        int currentHp = PlayerPrefs.GetInt("CurrentHealth");
-        int gold = PlayerPrefs.GetInt("Gold");
-        int score = PlayerPrefs.GetInt("HighScore");
-        string sceneName = PlayerPrefs.GetString("SceneName");
-        float posX = PlayerPrefs.GetFloat("PosX");
-        float posY = PlayerPrefs.GetFloat("PosY");
-        float posZ = PlayerPrefs.GetFloat("PosZ");
-        int exp = PlayerPrefs.GetInt("Experience");
-        int dmg = PlayerPrefs.GetInt("Damage");
-        int def = PlayerPrefs.GetInt("Defense");
-        int mp = PlayerPrefs.GetInt("Mana");
-        int currentMp = PlayerPrefs.GetInt("CurrentMana");
-        Vector3 position = new Vector3(posX, posY, posZ);
-        player = new PlayerData(name, score, dmg, def, hp, mp, lv, gold, position, exp, sceneName);
-        Debug.Log($"[LoadData] name={name}, level={lv}, hp={hp}/{currentHp}, pos={position}, scene={sceneName}, mp= {mp}/{currentMp}");
-        return player;
-    }
-    public void CreateDefaultPlayer(string name, string sceneName, Vector3 startPos) // Tạo dữ liệu mặc định
-    {
-       player = new PlayerData(name, 0, 10, 5, 100, 50, 1, 0, startPos, 0, sceneName);
-        Debug.Log($"Default Player Created: name={name}, scene={sceneName}, pos={startPos}");
-    }
-    public bool HasSave() // Kiểm tra dữ liệu đã lưu
-    {
-        if (player == null)
+        if (PlayerPrefs.HasKey("Player"))
         {
-            Debug.LogWarning("SaveData failed: PlayerData is null");
-            return false;
-        }
-        else
-        {           
-            SaveData(player);
+
+            //string json = PlayerPrefs.GetString(PlayerSlotSavekey1);
+            //player = JsonUtility.FromJson<PlayerData>(json);
+            //Debug.Log($"✅ Loaded: {player.userName} | HP {player.currentHp}/{player.maxHp} | " +
+            //    $"MP {player.currentMana}/{player.maxMana} | " +
+            //    $"EXP {player.currentExperience}/{player.experienceToNextLevel} | " +
+            //    $"Level {player.currentLevel} | " +
+            //    $"Gold {player.userGold} | " +
+            //    $"Scene {player.currentScene} | " +
+            //    $"Position {player.userPosition}");
+
+            string name = PlayerPrefs.GetString("Player");
+            int lv = PlayerPrefs.GetInt("Level");
+            int hp = PlayerPrefs.GetInt("Health");
+            int currentHp = PlayerPrefs.GetInt("CurrentHealth");
+            int gold = PlayerPrefs.GetInt("Gold");
+            int score = PlayerPrefs.GetInt("HighScore");
+            string sceneName = PlayerPrefs.GetString("SceneName");
+            float posX = PlayerPrefs.GetFloat("PosX");
+            float posY = PlayerPrefs.GetFloat("PosY");
+            float posZ = PlayerPrefs.GetFloat("PosZ");
+            int currentExp = PlayerPrefs.GetInt("Experience");
+            int exp = PlayerPrefs.GetInt("MaxExp");
+            int dmg = PlayerPrefs.GetInt("Damage");
+            int def = PlayerPrefs.GetInt("Defense");
+            int mp = PlayerPrefs.GetInt("Mana");
+            int currentMp = PlayerPrefs.GetInt("CurrentMana");
+            Vector3 position = new Vector3(posX, posY, posZ);
+
+            player = new PlayerData(name, score, dmg, def, hp, mp, lv, gold, position, exp, sceneName, currentHp, currentMp, currentExp);
+
+            Debug.Log($"✅ [LoadData] {name}, Level {lv}, HP {currentHp}/{hp}, MP {currentMp}/{mp}, Scene {sceneName}, Position {position}, Exp {currentExp}/{exp}");
             return true;
         }
-    }
-    public bool HasLoad() // Kiểm tra dữ liệu đã load
-    {
-        if (!PlayerPrefs.HasKey("PlayerData"))
+        else
         {
-            CreateDefaultPlayer("Player", "MainMenu", new Vector3(-3,4,0));
+            player = new PlayerData();
+            Debug.LogWarning("⚠️ No saved data found. Created default player.");
             return false;
         }
-        else
+
+
+     }
+
+    public bool HasSave()
+    {
+        return PlayerPrefs.HasKey("Player");
+    }
+
+    public bool HasLoad()
+    {
+        if (HasSave())
         {
             LoadData();
             return true;
         }
-    }
-    public static void DeleteData() // Xóa dữ liệu
-    {
-        PlayerPrefs.DeleteKey("");
-        PlayerPrefs.Save();
-        Debug.Log("Data Deleted");
+        return false;
     }
 
+    public static void DeleteData()
+    {
+        PlayerPrefs.DeleteAll();
+        
+        Debug.Log("🗑️ All data deleted successfully.");
+    }
 }
