@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a5be4ffc3f7654e90bdd2fb0d4a4bc, type: 3}
   m_Name: Magic Wand
   m_EditorClassIdentifier: 
-  Type: 0
-  id: 
   itemName: MagicWand
-  description: 
-  sprite: {fileID: 0}
+  icon: {fileID: 0}
+  itemType: 0
+  Prefab: {fileID: 0}
   attackRange: 100
   fireRate: 1
+  damage: 50

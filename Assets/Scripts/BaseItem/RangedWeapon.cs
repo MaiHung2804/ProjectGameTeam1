@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public abstract class RangedWeapon : ItemConfig
+public abstract class RangedWeapon : BaseItem
 {
     public float attackRange;
     public float fireRate;

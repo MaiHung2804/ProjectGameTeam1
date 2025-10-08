@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class healthHandle : MonoBehaviour
 {
-
+    public Health healthSO;
     public Consumable consumable;
 
     private void Update()

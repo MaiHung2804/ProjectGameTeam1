@@ -20,6 +20,6 @@ public abstract class BaseItem : ScriptableObject
     public ItemType itemType;
     public GameObject Prefab;
 
-    public abstract void Use(UnitBase target);
+   
 }
 
