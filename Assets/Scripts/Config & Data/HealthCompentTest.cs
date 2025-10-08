@@ -1,33 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System; 
 
 public class HealthCompentTest : MonoBehaviour
 {
-    public float maxHealth = 100f;
-    public float currentHealth;
-    public float MaxHealth { get => maxHealth; set => maxHealth = value; }
-    public float CurrentHealth => currentHealth;
-    public void SetCurrentHealth(float value)
+    [Header("Health Info")]
+    public int maxHealth;
+    public int currentHealth;
+    public PlayerData playerData;
+    
+
+
+
+
+    void Awake()
     {
-        currentHealth = Mathf.Clamp(value, 0f, maxHealth);
+        playerData = DataManager.Instance.player;
+        
+    }
+    private void Start()
+    {
+        SetHealth();
     }
 
-    public void Initialize(float max, float current)
+    public void SetHealth() 
     {
-        MaxHealth = max;
-        SetCurrentHealth(current);
-    }
-    public void AllyData()
-    {
-        if (DataManager.Instance.player != null)
+        if (playerData != null)
         {
-            maxHealth = DataManager.Instance.player.maxHp;
-            currentHealth = DataManager.Instance.player.currentHp;
+            maxHealth = playerData.maxHp;
+            currentHealth = playerData.currentHp;
+
+        }
+        else
+        {
+            Debug.LogWarning("No player data found in HealthComponentTest.");
+        }
+    } 
+
+    public void TakeDamage(int amount)
+    {
+
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
+        if (playerData != null)
+        {
+            playerData.currentHp = currentHealth;
+        }
+
+
+    }
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);;
+        if (playerData != null)
+        {
+            playerData.currentHp = currentHealth;
         }
     }
-
-    public void TakeDamage(float amount) => SetCurrentHealth(currentHealth - amount);
-    public void Heal(float amount) => SetCurrentHealth(currentHealth + amount);
-
 }

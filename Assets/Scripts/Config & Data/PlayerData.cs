@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerData 
+public class PlayerData
 {
     public string userName;
     public int highScore;
@@ -13,16 +13,16 @@ public class PlayerData
     public int currentHp;
     public int maxMana;
     public int currentMana;
-    public int userLevel;
     public int currentLevel;
     public int userGold;
     public int currentExperience;
-    public int experienceToNextLevel; 
+    public int maxExp;
     public string currentScene;
     public Vector3 userPosition;
 
     // Constructor để khởi tạo dữ liệu người chơi (thiếu gì nhắn em để thêm)
-    public PlayerData(string name, int score, int dmg, int def, int hp, int mp, int lv, int gold, Vector3 position, int exp, string scene)
+    public PlayerData(string name, int score, int dmg, int def, int hp, int mp, int lv,
+        int gold, Vector3 position, int exp, string scene, int currentHp, int currentMp, int currentExp)
     {
         this.userName = name;
         this.highScore = score;
@@ -32,16 +32,34 @@ public class PlayerData
         this.currentHp = hp;
         this.maxMana = mp;
         this.currentMana = mp;
-        this.userLevel = lv;
         this.userGold = gold;
         this.userPosition = position;
-        this.currentExperience = exp;
-        this.experienceToNextLevel = lv * 100;
+        this.currentExperience = currentExp;
         this.currentLevel = lv;
+        this.maxExp = lv * 100;
         this.currentScene = scene;
 
+        this.currentHp = (currentHp > 0) ? currentHp : hp;
+        this.currentMana = (currentMp > 0) ? currentMp : mp;
+        this.currentExperience = (currentExp > 0) ? currentExp : 0;
     }
-
+    public PlayerData() // Constructor mặc định
+    {
+        this.userName = "Player";
+        this.highScore = 0;
+        this.userDamage = 10;
+        this.userDefense = 5;
+        this.maxHp = 100;
+        this.currentHp = maxHp;
+        this.maxMana = 50;
+        this.currentMana = maxMana;
+        this.userGold = 0;
+        this.userPosition = new Vector3(-3, 5, 2);
+        this.currentExperience = 0;
+        this.currentLevel = 1;
+        this.maxExp = currentLevel * 100;
+        this.currentScene = "StartScene";
+    }
     public Vector3 GetPosition() // Lấy vị trí
     {
         return userPosition;
@@ -52,12 +70,13 @@ public class PlayerData
     }
     public void LevelUp() // Lên cấp
     {
-        userLevel++;
-        currentLevel = userLevel;
-        DamageUpg(userLevel); // Nâng cấp sát thương
-        HealthUp(userLevel); // Nâng cấp máu
-        DefenseUpg(userLevel); // Nâng cấp phòng thủ
-        Debug.Log("Level Up! New Level: " + userLevel + ", New HP: " + maxHp);
+        currentLevel++;
+        DamageUpg(1);
+        HealthUp(1);
+        DefenseUpg(1);
+        ManaUp(1);
+        maxExp = currentLevel * 3;
+        Debug.Log("Level Up! New Level: " + currentLevel + ", New HP: " + maxHp);
     }
     public void AddGold(int amount) // Thêm vàng
     {
@@ -67,37 +86,36 @@ public class PlayerData
     public void TakeDamage(int damage) // Nhận sát thương
     {
         int damageTaken = damage - userDefense;
-        if (damageTaken < 0)
-        {
-            damageTaken = 0;
-        }
+        if (damageTaken < 0) damageTaken = 0;
+
         currentHp -= damageTaken;
-        Debug.Log("Took " + damageTaken + " damage. Current HP: " + currentHp);
+        if (currentHp < 0) currentHp = 0;
+
+        Debug.Log($"{userName} took {damageTaken} damage. Current HP: {currentHp}");
+
+
         if (currentHp <= 0)
-        {
-            currentHp = 0;
             Die();
-        }
     }
     public void Die() // Chết
     {
-        
+
         Debug.Log(userName + " has died.");
-             
+
     }
-    public void TakeExperience(int experience) // Nhận kinh nghiệm
+    public void TakeExperience(int experience)
     {
         currentExperience += experience;
-        Debug.Log("Gained " + experience + " XP. Total XP: " + currentExperience);
-        // Giả sử mỗi cấp cần 100 XP để lên cấp tiếp theo
-        experienceToNextLevel = currentLevel * 100;
-        if (currentExperience >= experienceToNextLevel)
+        maxExp = currentLevel * 100;
+
+        if (currentExperience >= maxExp)
         {
             LevelUp();
-            
-            currentExperience -= experienceToNextLevel; // Giữ lại XP thừa
+            currentExperience -= maxExp;
         }
+
     }
+
     public void DamageUpg(int upgradeAmount) // Nâng cấp sát thương
     {
         upgradeAmount = upgradeAmount * 5; // Mỗi lần nâng cấp tăng thêm 5 sát thương
@@ -152,4 +170,4 @@ public class PlayerData
     }
 
 }
- 
+
