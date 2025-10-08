@@ -20,9 +20,9 @@ public class basicSwordColliderHandle : MonoBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
-        //Debug.Log("hit somethings");
+        Debug.Log("hit somethings");
         // Lấy UnitBase của kẻ địch
-        
+
         UnitBase target = other.gameObject.GetComponent<UnitBase>();
         if (target == null) return;
 
