@@ -7,9 +7,9 @@ public class TestEnemyUnit : UnitBase
     [Header("Test Settings")]
     [SerializeField] private float damageOnCollision = 20f;
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
+        //base.Awake();
 
         // Kiểm tra nếu chưa có HealthComponent thì gắn vào
         if (healthComponent == null)

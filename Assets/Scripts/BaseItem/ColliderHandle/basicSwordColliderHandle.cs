@@ -27,7 +27,7 @@ public class basicSwordColliderHandle : MonoBehaviour
         if (target == null) return;
 
         // Kiểm tra TeamID 
-        if (target.TeamID != 2)
+        if ((int)target.TeamID != 2)
         {
             Debug.Log("target  có ID khác 2 (phải = 2 thì mới trừ máu)");
             return;

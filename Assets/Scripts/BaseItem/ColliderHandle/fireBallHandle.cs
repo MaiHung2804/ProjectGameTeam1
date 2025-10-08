@@ -32,7 +32,7 @@ public class fireBallHandle : MonoBehaviour
         if (collision != null) 
         {
             UnitBase target = collision.gameObject.GetComponent<UnitBase>();
-            if (target.TeamID != 2 && target.TeamID != 3) 
+            if ((int)target.TeamID != 2 && (int)target.TeamID != 3) 
             {
                 //Debug.Log("TeamID != 2 or 3 ");
                 return; 

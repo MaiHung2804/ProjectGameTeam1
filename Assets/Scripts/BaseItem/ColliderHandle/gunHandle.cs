@@ -43,7 +43,7 @@ public class gunHandle : MonoBehaviour
 
             if (target.CompareTag("Enemy"))
             {
-                weaponData?.Use(target); // Gọi xử lý từ ScriptableObject
+                //weaponData?.Use(target); // Gọi xử lý từ ScriptableObject //to do
             }
             // Optional: debug line
             Debug.DrawLine(firePoint.position, hit.point, Color.red, 0.2f);

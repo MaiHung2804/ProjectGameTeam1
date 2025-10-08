@@ -24,7 +24,7 @@ public class ItemContext
     
     public void UseItem() // Sử dụng vật phẩm
     {
-        if (config.Type == ItemType.WEAPON)
+        if (config.Type == ItemType.MeleeWeapon || config.Type == ItemType.RangedWeapon)
         {
             durability--;
             if (durability < 0)
@@ -33,7 +33,7 @@ public class ItemContext
                 Debug.Log(config.itemName + " is broken.");
             }
         }
-        else if (config.Type == ItemType.CONSUMABLE)
+        else if (config.Type == ItemType.Consumable)
         {
             Debug.Log("Used " + config.itemName + ", recovered " + hpRecovery + " HP.");
             // Xử lý hồi máu cho người chơi ở đây

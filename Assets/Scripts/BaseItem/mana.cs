@@ -12,9 +12,9 @@ public class mana : Consumable
    
 
    
-}
-    public override void Use(UnitBase target)
-    {
-        throw new System.NotImplementedException();
-    }
+//}
+//    public override void Use(UnitBase target)
+//    {
+//        throw new System.NotImplementedException();
+//    }
 }

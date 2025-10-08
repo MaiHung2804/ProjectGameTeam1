@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
-public enum ItemType
-{
-    WEAPON,
-    CONSUMABLE
-}
+//public enum ItemType
+//{
+//    WEAPON,
+//    CONSUMABLE
+//}
 
 [CreateAssetMenu(fileName = "ItemConfig", menuName = "ScriptableObjects/ItemConfig")]
 public class ItemConfig : ScriptableObject
