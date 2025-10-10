@@ -7,14 +7,10 @@ using UnityEngine;
 
 
 
-public class mana : Consumable
+public class Mana : Consumable
 {
    
 
    
-//}
-//    public override void Use(UnitBase target)
-//    {
-//        throw new System.NotImplementedException();
-//    }
+
 }

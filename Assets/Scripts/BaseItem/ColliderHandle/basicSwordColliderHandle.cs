@@ -5,7 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class basicSwordColliderHandle : MonoBehaviour
 {
-
+    public BasicSword basicSword;
     public BaseItem equippedWeapon;   // Tham chiếu script BasicSword / Melee
     public UnitBase wielder;          // Ai đang cầm kiếm
 
@@ -20,9 +20,9 @@ public class basicSwordColliderHandle : MonoBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
-        //Debug.Log("hit somethings");
+        Debug.Log("hit somethings" + basicSword.damage);
         // Lấy UnitBase của kẻ địch
-        
+
         UnitBase target = other.gameObject.GetComponent<UnitBase>();
         if (target == null) return;
 
@@ -36,7 +36,7 @@ public class basicSwordColliderHandle : MonoBehaviour
         // Gọi Use() của vũ khí, truyền target
         if (equippedWeapon != null && target !=null)
         {
-            equippedWeapon.Use(target);
+            target.OnTakeDamage(basicSword.damage);
             Debug.Log("đã gọi Hàm Use để truyền");
 
         }

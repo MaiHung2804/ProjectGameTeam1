@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class fireBallHandle : MonoBehaviour
 {
+    public MagicWand magicWandSO;
     float lifeTime;
     Rigidbody rb;
     // Start is called before the first frame update

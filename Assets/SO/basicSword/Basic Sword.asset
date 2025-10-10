@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07c7f7737a6196544b2fbd90cd56a656, type: 3}
-  m_Name: basicSword
+  m_Script: {fileID: 11500000, guid: fb4ebdb778dfb7947847670b4017c2ac, type: 3}
+  m_Name: Basic Sword
   m_EditorClassIdentifier: 
-  itemName: basicSword
+  itemName: 
   icon: {fileID: 0}
   itemType: 0
-  Prefab: {fileID: 1147526442672054317, guid: 57d586d631db79a40a0282b148dc9b12, type: 3}
+  Prefab: {fileID: 0}
   damage: 100
-  attackRate: 20
+  attackRate: 0
