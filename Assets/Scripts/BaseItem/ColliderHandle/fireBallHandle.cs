@@ -15,7 +15,10 @@ public class fireBallHandle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKey(KeyCode.K))
+        {
+            Debug.Log(magicWandSO.damage);
+        }
     }
     public void Init(float distance, float Speed, Vector3 direction)
     {
@@ -24,13 +27,15 @@ public class fireBallHandle : MonoBehaviour
         Destroy(gameObject, lifeTime+2f); // trừ hao thêm 2 giây cho chắc nếu ko va chạm
         Debug.Log(direction);
         Debug.Log(Speed);
-        //Debug.Log();
        
     }
     private void OnCollisionEnter(Collision collision)
     {
+        
         if (collision != null) 
         {
+            
+
             UnitBase target = collision.gameObject.GetComponent<UnitBase>();
             if ((int)target.TeamID != 2 && (int)target.TeamID != 3) 
             {
