@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Rendering;
+using UnityEngine;
 
 public class PlayerControllerTest : MonoBehaviour
 {
     private PlayerData playerData;
     public HealthCompentTest healthCompentTest;
     private Rigidbody rb;
+    public int speed = 5;
 
-    public float speed = 5;
 
     void Awake()
     {
