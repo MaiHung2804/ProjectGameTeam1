@@ -24955,7 +24955,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5051710745780978653, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.2800522
+      value: -3.11
       objectReference: {fileID: 0}
     - target: {fileID: 5051710745780978653, guid: 2fa42c9739d45284e9d54ba53b193f66, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25029,7 +25029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthCompentTest: {fileID: 1889839205}
-  moveComponent: {fileID: 1889839206}
+  speed: 5
 --- !u!114 &1889839205
 MonoBehaviour:
   m_ObjectHideFlags: 0
