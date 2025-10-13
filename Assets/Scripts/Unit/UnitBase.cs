@@ -21,6 +21,10 @@ public abstract class UnitBase : MonoBehaviour
         Idle, Moving, Attack, Dead
     }
 
+    protected UnitData unitData;
+    public UnitData GetUnitData() => unitData;
+    public void SetUnitData(UnitData data) => unitData = data;
+
     public UnitState CurrentState { get; protected set; } = UnitState.Idle;
 
     protected HealthComponent healthComponent;
@@ -38,23 +42,31 @@ public abstract class UnitBase : MonoBehaviour
 
     
 
-    protected virtual void Start()
-    {
-        InitComponent(); 
-    }
-
-
-    protected virtual void Update()
-    {
-        UpdateActions();
-    }
-
-    private void InitComponent()
+    public virtual void Init()
     {
         healthComponent = GetComponent<HealthComponent>();
         attackComponent = GetComponent<AttackComponent>();
         moveComponent = GetComponent<MoveComponent>();
         animationComponent = GetComponent<AnimationComponent>();
+
+
+        if (healthComponent == null)
+        {
+            Debug.LogError("HealthComponent is missing on " + gameObject.name);
+        }
+        if (attackComponent == null)
+        {
+            Debug.LogError("AttackComponent is missing on " + gameObject.name);
+        }
+        if (moveComponent == null)
+        {
+            Debug.LogError("MoveComponent is missing on " + gameObject.name);
+        }
+        if (animationComponent == null)
+        {
+            Debug.LogError("AnimationComponent is missing on " + gameObject.name);
+        }
+
 
         healthComponent.InitComponent();
         animationComponent.InitComponent();
@@ -63,18 +75,23 @@ public abstract class UnitBase : MonoBehaviour
     }
 
 
+    protected virtual void Update()
+    {
+        UpdateActions();
+    }
+
     protected virtual void UpdateActions() { }
 
     /// <param name="damage">  ghi chu luong sat thuong </param>
-    public virtual void OnTakeDamage(float damage)
+    public virtual void OnTakeDamage(int  damage)
     {
         if (healthComponent != null)
         {
             healthComponent.TakeDamage(damage);
-            if (healthComponent.IsDead)
-            {
-                OnDeath();
-            }
+            //if (healthComponent.IsDead)
+            //{
+            //    OnDeath();
+            //}
         }
     }
 

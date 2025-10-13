@@ -33,17 +33,17 @@ public class UIDataPlayer : MonoBehaviour
     {
         if (player == null) return;
 
-        playerNameText.text = player.userName;
-        playerLevelText.text = player.currentLevel.ToString();
+        playerNameText.text = player.Name;
+        playerLevelText.text = player.Level.ToString();
         
-        uiHealthBar.maxValue = player.maxHp;
-        uiHealthBar.value = player.currentHp;
+        uiHealthBar.maxValue = player.MaxHp;
+        uiHealthBar.value = player.Hp;
+
+        uiManaBar.maxValue = player.MaxMana;
+        uiManaBar.value = player.Mana;
         
-        uiManaBar.maxValue = player.maxMana;
-        uiManaBar.value = player.currentMana;
-        
-        uiExpBar.maxValue = player.maxExp;
-        uiExpBar.value = player.currentExperience;
+        uiExpBar.maxValue = player.MaxExp;
+        uiExpBar.value = player.CurrentExp;
 
     }
 }

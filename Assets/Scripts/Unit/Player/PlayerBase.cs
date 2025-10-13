@@ -22,6 +22,12 @@ public class PlayerBase : UnitBase
         jumpInput = InputManager.Instance.GetJumpInput();
         attackInput = InputManager.Instance.GetAttackInput();
 
+        // TEST TAKE DAMAGE
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            healthComponent.TakeDamage(20);
+        }
+
         if (attackInput == Skill.MeleeAttack)
         {
             lastMeleeAttackTime = Time.time;
@@ -95,7 +101,20 @@ public class PlayerBase : UnitBase
                 attackComponent.Stop();
             }
             CurrentState = newState;
+            if (CurrentState == UnitState.Dead)
+            {
+                OnDeath();
+            }
         }
+    }
+
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+        moveComponent.Stop();
+        attackComponent.Stop();
+        animationComponent.Die(true);
+
     }
 
     //private void ExitState(UnitState state)

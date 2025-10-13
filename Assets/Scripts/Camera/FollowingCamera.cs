@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FollowingCamera : MonoBehaviour
 {
-    [SerializeField] Transform target;
+    private Transform target;
     private Vector3 cameraOffset = new Vector3(1, 2.5f, -8);
     private float mouseSensitivity = 3.0f;
     private float zoomSpeed = 2f;
@@ -27,26 +27,16 @@ public class FollowingCamera : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
+    public void Init()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        target = PlayerManager.Instance.Player.transform;
+        Vector3 angles = transform.eulerAngles;
+        yaw = angles.y;
+        pitch = angles.x;
+        if (target != null)
         {
-            target = player.transform;
             lastTargetPostion = target.position;
         }
-        else
-        {
-            Debug.LogError("Player not found. Please make sure the player has the 'Player' tag.");
-        }
-        // em comment lai doan nay de test
-        //Vector3 angles = transform.eulerAngles;
-        //yaw = angles.y;
-        //pitch = angles.x;
-        //if (target != null)
-        //{
-        //    lastTargetPostion = target.position;
-        //}
 
 
     }

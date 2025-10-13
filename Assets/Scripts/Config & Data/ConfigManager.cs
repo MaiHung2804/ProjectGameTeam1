@@ -39,13 +39,13 @@ public class ConfigManager
         unitDict = new Dictionary<string, UnitConfig>();
         foreach (var config in unitConfig)
         {
-            if (!unitDict.ContainsKey(config.id))
+            if (!unitDict.ContainsKey(config.Id))
             {
-                unitDict.Add(config.id, config);
+                unitDict.Add(config.Id, config);
             }
             else
             {
-                Debug.LogWarning($"Duplicate UnitConfig ID detected: {config.id}");
+                Debug.LogWarning($"Duplicate UnitConfig ID detected: {config.Id}");
             }
         }
     }

@@ -5,47 +5,46 @@ using UnityEngine;
 /// </summary>
 public class HealthComponent : MonoBehaviour
 {
-    [Header("Health Settings")]
-    [SerializeField] private float maxHealth = 100f;    // Se lay trong UnitData sau
-    [SerializeField] private float currentHealth;
+    private UnitData unitData;
 
     public void InitComponent()
     {
-        
+        UnitBase unitBase = GetComponent<UnitBase>();
+        if (unitBase == null)
+        {
+            Debug.LogError("HealthComponent: UnitBase component is missing on " + gameObject.name);
+            return;
+        }
+        unitData = unitBase.GetUnitData();
     }
 
     public bool IsDead
     {
-        get { return currentHealth <= 0f; }
-    }
-    public float MaxHealth => maxHealth;
-
-    public float CurrentHealth => currentHealth;
-
-    private void Awake()
-    {
-        currentHealth = maxHealth;
+        get { return unitData.Hp <= 0f; }
     }
 
     /// <param name="damage"> nhan sat thuong damage va giam.</param>
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         if (IsDead) return;
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        unitData.Hp -= damage - unitData.Defense;
+        if (unitData.Hp < 0)
+        {
+            unitData.Hp = 0;
+        }
+
     }
-
-  
-
-    //  Hoi mau cho don vi.
-    public void Cure(float amount)
+    public void Cure(int amount)
     {
         if (IsDead)
         {
             return;
         }
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        unitData.Hp += amount;
+        if (unitData.Hp > unitData.MaxHp)
+        {
+            unitData.Hp = unitData.MaxHp;
+        }
     }
 
 

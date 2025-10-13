@@ -35,10 +35,23 @@ public class PlayerMoveComponent : MoveComponent
         UnitBase unit = GetComponent<UnitBase>();
         animationComponent = unit.GetAnimationComponent();
 
-        // Dat nhan vat luc dau o tren cao
-        moveState = MoveState.Falling;
-        canOutComponentState = false;
+        SetInitialState();
     }
+
+    private void SetInitialState()
+    {
+        if (characterController.isGrounded)
+        {
+            moveState = MoveState.Idle;
+            canOutComponentState = true;
+        }
+        else
+        {
+            moveState = MoveState.Falling;
+            canOutComponentState = false;
+        }
+    }
+
 
     public override void HandleComponentActs(Vector2 moveInput, bool isJump)
     {

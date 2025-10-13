@@ -28,7 +28,7 @@ public class UnitStat
         this.attackSpeed = 1; // Mặc định tốc độ đánh là 1
         this.defenseBase = 5; // Mặc định phòng thủ cơ bản là 5
         this.moveSpeed = 5; // Mặc định tốc độ di chuyển là 5
-        this.attackRange = config.type == EnemyType.Melee ? 1 : 5; // Tầm đánh dựa trên loại kẻ địch
+        //this.attackRange = config.type == EnemyType.Melee ? 1 : 5; // Tầm đánh dựa trên loại kẻ địch
     }
 
     public void GainExperience(int amount) // Nhận kinh nghiệm
@@ -63,7 +63,7 @@ public class UnitStat
     public void Die() // Chết
     {
         
-        Debug.Log(config.enemyName + " has died.");
+        Debug.Log(config.Name + " has died.");
     } 
     public void Heal(int amount) // Hồi máu
     {

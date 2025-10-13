@@ -13,14 +13,14 @@ public class DataManager
     // ✅ Tạo dữ liệu mới khi bắt đầu New Game
     public void NewPlayerData()
     {
-        player = new PlayerData();
-        Debug.Log($"New Player: {player.userName} | HP {player.currentHp}/{player.maxHp} | " +
-           $"MP {player.currentMana}/{player.maxMana} | " +
-           $"EXP {player.currentExperience}/{player.maxExp} | " +
-           $"Level {player.currentLevel} | " +
-           $"Gold {player.userGold} | " +
-           $"Scene {player.currentScene} | " +
-           $"Position {player.userPosition}");
+        player = new PlayerData(ConfigManager.Instance.GetUnitConfig("1"));
+        //Debug.Log($"New Player: {player.userName} | HP {player.currentHp}/{player.maxHp} | " +
+        //   $"MP {player.currentMana}/{player.maxMana} | " +
+        //   $"EXP {player.current}/{player.maxExp} | " +
+        //   $"Level {player.level} | " +
+        //   $"Gold {player.userGold} | " +
+        //   $"Scene {player.currentScene} | " +
+        //   $"Position {player.userPosition}");
     }
 
     // ✅ Lưu dữ liệu người chơi hiện tại
@@ -34,38 +34,38 @@ public class DataManager
             return;
         }
 
-        PlayerPrefs.SetString("Player", player.userName);
-        PlayerPrefs.SetInt("Health", player.maxHp);
-        PlayerPrefs.SetInt("CurrentHealth", player.currentHp);
-        PlayerPrefs.SetInt("Gold", player.userGold);
-        PlayerPrefs.SetInt("HighScore", player.highScore);
+        PlayerPrefs.SetString("Player", player.Name);
+        PlayerPrefs.SetInt("Health", player.MaxHp);
+        PlayerPrefs.SetInt("CurrentHealth", player.Hp);
+        PlayerPrefs.SetInt("Gold", player.Gold);
+        PlayerPrefs.SetInt("HighScore", player.HighScore);
         PlayerPrefs.SetString("SceneName", SceneManager.GetActiveScene().name);
 
 
-        PlayerPrefs.SetFloat("PosX", player.userPosition.x);
-        PlayerPrefs.SetFloat("PosY", player.userPosition.y);
-        PlayerPrefs.SetFloat("PosZ", player.userPosition.z);
+        PlayerPrefs.SetFloat("PosX", player.UserLastPosition.x);
+        PlayerPrefs.SetFloat("PosY", player.UserLastPosition.y);
+        PlayerPrefs.SetFloat("PosZ", player.UserLastPosition.z);
 
 
-        PlayerPrefs.SetInt("Experience", player.currentExperience);
-        PlayerPrefs.SetInt("MaxExp", player.maxExp);
-        PlayerPrefs.SetInt("Level", player.currentLevel);
-        PlayerPrefs.SetInt("Damage", player.userDamage);
-        PlayerPrefs.SetInt("Defense", player.userDefense);
-        PlayerPrefs.SetInt("Mana", player.maxMana);
-        PlayerPrefs.SetInt("CurrentMana", player.currentMana);
+        PlayerPrefs.SetInt("Experience", player.CurrentExp);
+        PlayerPrefs.SetInt("MaxExp", player.MaxExp);
+        PlayerPrefs.SetInt("Level", player.Level);
+        PlayerPrefs.SetInt("Damage", player.Damage);
+        PlayerPrefs.SetInt("Defense", player.Defense);
+        PlayerPrefs.SetInt("Mana", player.MaxMana);
+        PlayerPrefs.SetInt("CurrentMana", player.Mana);
         //string json = JsonUtility.ToJson(player);
         //PlayerPrefs.SetString(PlayerSlotSavekey1, json);
 
         PlayerPrefs.Save();
 
-        Debug.Log($"💾 Saved: {player.userName} | HP {player.currentHp}/{player.maxHp} | " +
-            $"MP {player.currentMana}/{player.maxMana} | " +
-            $"EXP {player.currentExperience}/{player.maxExp } | " +
-            $"Level {player.currentLevel} | " +
-            $"Gold {player.userGold} | " +
-            $"Scene {player.currentScene} | " +
-            $"Position {player.userPosition}");
+        //Debug.Log($"💾 Saved: {player.userName} | HP {player.currentHp}/{player.maxHp} | " +
+        //    $"MP {player.currentMana}/{player.maxMana} | " +
+        //    $"EXP {player.current}/{player.maxExp } | " +
+        //    $"Level {player.level} | " +
+        //    $"Gold {player.userGold} | " +
+        //    $"Scene {player.currentScene} | " +
+        //    $"Position {player.userPosition}");
 
     }
 
@@ -104,14 +104,32 @@ public class DataManager
             int currentMp = PlayerPrefs.GetInt("CurrentMana");
             Vector3 position = new Vector3(posX, posY, posZ);
 
-            player = new PlayerData(name, score, dmg, def, hp, mp, lv, gold, position, exp, sceneName, currentHp, currentMp, currentExp);
+            //player = new PlayerData(name, score, dmg, def, hp, mp, lv, gold, position, exp, sceneName, currentHp, currentMp, currentExp);
+            NewPlayerData();
+            player.Name = name;
+            player.Level = lv;
+            player.MaxHp = hp;
+            player.Hp = currentHp;
+            player.MaxMana = mp;
+            player.Mana = currentMp;
+            player.CurrentExp = currentExp;
+            player.MaxExp = exp;
+            player.Damage = dmg;
+            player.Defense = def;
+            player.UserLastPosition = position;
+            player.CurrentScene = sceneName;
+            player.Gold = gold;
+            player.HighScore = score;
+            player.UserLastPosition = position;
+            player.CurrentScene = sceneName;
 
             Debug.Log($"✅ [LoadData] {name}, Level {lv}, HP {currentHp}/{hp}, MP {currentMp}/{mp}, Scene {sceneName}, Position {position}, Exp {currentExp}/{exp}");
             return true;
         }
         else
         {
-            player = new PlayerData();
+            //player = new PlayerData();
+            NewPlayerData();
             Debug.LogWarning("⚠️ No saved data found. Created default player.");
             return false;
         }

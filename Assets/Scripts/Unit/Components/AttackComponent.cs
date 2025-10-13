@@ -6,12 +6,11 @@ using UnityEngine;
 /// </summary>
 public abstract class AttackComponent : MonoBehaviour
 {
-   
-    [Header("Attack Settings")]
-    private float attackDamage = 20f;
-    private float attackRange = 2f;
-    private float attackCooldown = 1f;
+    private UnitData unitData;
 
+    private int attackDamage;   
+    private float attackRange;
+    private float attackCooldown; 
     private float lastAttackTime = -Mathf.Infinity;
 
     // Phat su kien khi tan cong thanh cong
@@ -27,7 +26,20 @@ public abstract class AttackComponent : MonoBehaviour
     // Kiem tra xem don vi co the tan cong hay khong
     public bool CanAttack => (Time.time >= lastAttackTime + attackCooldown);
 
-    public virtual void InitComponent() { }
+    public virtual void InitComponent() 
+    {
+        UnitBase unitBase = GetComponent<UnitBase>();
+        if (unitBase == null)
+        {
+            Debug.LogError("AttackComponent: UnitBase component is missing on " + gameObject.name);
+            return;
+        }
+        unitData = unitBase.GetUnitData();
+        // Lay thong tin tan cong tu UnitData
+        attackDamage = unitData.Damage;
+        attackRange = unitData.AttackRange;
+        attackCooldown = 1f;
+    }
 
     ///<summary>
     ///Kiem tra muc tieu hop le de tan cong

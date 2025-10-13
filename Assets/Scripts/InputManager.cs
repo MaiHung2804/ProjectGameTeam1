@@ -31,6 +31,14 @@ public class InputManager : MonoBehaviour
         DontDestroyOnLoad(gameObject); // Giu doi tuong nay khong bi huy khi load scene moi
     }
 
+    public void Init()
+    {
+        if (joystick == null)
+        {
+            Debug.LogWarning("Joystick not assigned in InputManager. Add Joystick cavas");
+        }
+    }
+
     // Tra ve vector di chuyen tu ban phim va joystick
     public Vector2 GetMoveInput()
     {
@@ -88,6 +96,12 @@ public class InputManager : MonoBehaviour
     public bool GetMeleeAttackInput()
     {
         return Input.GetKey(keyMeleeAttack) || isMeleeAttackOnUI;
+
+        // Neu khong dung MeleeAttackUIUp thi co the dung cach nhu sau
+        // Chi goi 1 lan trong 1 Frame khi bam nut UI
+        //bool result = Input.GetKey(keyMeleeAttack) || isMeleeAttackOnUI;
+        //isMeleeAttackOnUI = false; // chi kich hoat 1 lan: RAT QUAN TRONG, GOI TRONG 1 FRAME
+        //return result;
     }
     public bool GetRangedAttackInput()
     {
@@ -115,9 +129,11 @@ public class InputManager : MonoBehaviour
     {
         isMeleeAttackOnUI = true;
         EventOnMeleeAttack?.Invoke();
+        Debug.Log("MeleeAttackUIDown");
     }
     public void MeleeAttackUIUp()
     {
+        Debug.Log("MeleeAttackUIUp");
         isMeleeAttackOnUI = false;
     }
 
