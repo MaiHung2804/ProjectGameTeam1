@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 /// </summary>
 public abstract class MoveComponent : MonoBehaviour
 {
+    private UnitData unitData;
     public enum MoveState
     {
         Idle,
@@ -14,20 +15,31 @@ public abstract class MoveComponent : MonoBehaviour
         Falling,
         Jumping,
         Landing,
-        
-
     }
 
-    [Header("Move Settings")]
-    protected float maxSpeed = 5f;  // Luu gia tri MaxSpeed
-    protected float currentSpeed = 0f; // Luu gia tri hien tai cua toc do
+    protected float maxSpeed; // = 5f; // Luu gia tri MaxSpeed
+    protected float currentSpeed; // = 0f; // Luu gia tri hien tai cua toc do
     protected Vector3 currentDir;
     protected Vector3 lastDir;
-    protected float stopDistance = 0.1f;
+    protected float stopDistance;
     protected Vector3? targetPosition = null; // Them ? de cho phep null
     protected MoveState moveState = MoveState.Idle;
 
-    public virtual void InitComponent() { }
+    public virtual void InitComponent() 
+    {
+        UnitBase unitBase = GetComponent<UnitBase>();
+        if (unitBase == null)
+        {
+            Debug.LogError("MoveComponent: UnitBase component is missing on " + gameObject.name);
+            return;
+        }
+        unitData = unitBase.GetUnitData();
+        maxSpeed = unitData.MaxSpeed;
+        //Debug.Log("MaxSpeed: " + maxSpeed);
+        currentSpeed = 0f;
+        stopDistance = unitData.AttackRange; // Tam thoi dat stopDistance bang AttackRange
+
+    }
 
     public float MaxSpeed
     {

@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+﻿
+
+
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+
 
 public class PlayerMoveComponent : MoveComponent
 {
@@ -31,6 +31,7 @@ public class PlayerMoveComponent : MoveComponent
 
     public override void InitComponent()
     {
+        base.InitComponent();
         characterController = GetComponent<CharacterController>();
         UnitBase unit = GetComponent<UnitBase>();
         animationComponent = unit.GetAnimationComponent();

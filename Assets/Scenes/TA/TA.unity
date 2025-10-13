@@ -30065,6 +30065,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3244432212507578616, guid: 56963583fd955f1489b09d3d8a6e44af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8119274965822656568, guid: 56963583fd955f1489b09d3d8a6e44af, type: 3}
       propertyPath: m_Controller
       value: 

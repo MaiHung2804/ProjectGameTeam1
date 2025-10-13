@@ -16,6 +16,7 @@ public class PlayerAttackComponent : AttackComponent
 
     public override void InitComponent()
     {
+        //base.InitComponent();
         UnitBase unit = GetComponent<UnitBase>();
         animationComponent = unit.GetAnimationComponent();
     }
