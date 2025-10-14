@@ -1,9 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyBase : UnitBase
 {
-    [Header("Enemy Settings")]
-    [SerializeField] private float detectionRange = 8f;
+
+    private NavMeshAgent agent;
+    public NavMeshAgent Agent => agent;
+
+
+
+
+
+
+
+
+
+    private float detectionRange = 8f;
 
     private Transform targetPlayer;
 
