@@ -30,6 +30,11 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-
+    public Transform SelectedPlayerTarget()
+    {
+        if ( (playerObject == null) || (Player.IsDead) )
+        {  return null; }
+        return playerObject.transform;
+    }    
 
 }

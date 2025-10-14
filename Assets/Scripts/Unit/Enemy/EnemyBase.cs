@@ -1,33 +1,22 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyBase : UnitBase
 {
-
-    private NavMeshAgent agent;
-    public NavMeshAgent Agent => agent;
-
-
-
-
-
-
-
-
 
     private float detectionRange = 8f;
 
     private Transform targetPlayer;
 
+    public override void Init()
+    {
+        base.Init();
+    }
+
     protected override void UpdateActions()
     {
         if (IsDead) return;
+        FindPlayer();
 
-        if (targetPlayer == null)
-        {
-            FindPlayer();
-            return;
-        }
 
         float distance = Vector3.Distance(transform.position, targetPlayer.position);
 
@@ -50,12 +39,12 @@ public class EnemyBase : UnitBase
         }
     }
 
+
+
+
     private void FindPlayer()
     {
-        PlayerBase player = FindObjectOfType<PlayerBase>();
-        if (player != null)
-        {
-            targetPlayer = player.transform;
-        }
+        if (targetPlayer != null) return;
+        targetPlayer = PlayerManager.Instance.SelectedPlayerTarget();
     }
 }
