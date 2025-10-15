@@ -15,7 +15,8 @@ public abstract class MoveComponent : MonoBehaviour
         Falling,
         Jumping,
         Landing,
-        Patrol, 
+        Chasing,
+        Patrol
     }
 
     protected float maxSpeed; // = 5f; // Luu gia tri MaxSpeed
