@@ -11,7 +11,6 @@ public class EnemyBase : UnitBase
     public new EnemyData GetUnitData() => (EnemyData)unitData; // unitData nay la cua base bi ep kieu
     public void SetUnitData(EnemyData data) => unitData = data;
 
-
     public override void Init()
     {
         base.Init();

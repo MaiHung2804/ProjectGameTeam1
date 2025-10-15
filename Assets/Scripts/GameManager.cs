@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         InputManager.Instance.Init();
         PlayerManager.Instance.Init();
         FollowingCamera.Instance.Init();
+        EnemyManager.Instance.Init();
 
     }
 

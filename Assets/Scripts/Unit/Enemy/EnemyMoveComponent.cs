@@ -23,6 +23,7 @@ public class EnemyMoveComponent : MoveComponent
         UnitBase unit = GetComponent<UnitBase>();
         animationComponent = unit.GetAnimationComponent();
         target = null;
+        lastTarget = null;
         sqrDetectionRange = ((EnemyData)unitData).DetectionRange * ((EnemyData)unitData).DetectionRange;
         sqrAttackRange = ((EnemyData)unitData).AttackRange * ((EnemyData)unitData).AttackRange;
         patrolA = ((EnemyData)unitData).PatrolPointA;
@@ -93,7 +94,11 @@ public class EnemyMoveComponent : MoveComponent
             animationComponent.MoveSpeed(MaxSpeed);
             agent.speed = MaxSpeed;
         }
-        MoveTo((Vector3)target);
+        if (IsTargetChanged((Vector3)lastTarget, (Vector3)target))
+        {
+            lastTarget = target;
+            MoveTo((Vector3)target);
+        }
     }
 
     private void HandlePatrol()
@@ -133,7 +138,9 @@ public class EnemyMoveComponent : MoveComponent
 
     private bool IsTargetChanged(Vector3 oldTarget, Vector3 newTarget)
     {
-        return (oldTarget - newTarget).sqrMagnitude > sqrUpdateThreshold;
+        if (newTarget == null) return false;
+        if (oldTarget == null) return true;
+        return (newTarget - oldTarget).sqrMagnitude > sqrUpdateThreshold;
     }
 
     private bool IsTargetInRange(Vector3 targetPos)

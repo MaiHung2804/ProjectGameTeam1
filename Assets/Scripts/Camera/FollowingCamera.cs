@@ -6,7 +6,7 @@ using UnityEngine;
 public class FollowingCamera : MonoBehaviour
 {
     private Transform target;
-    private Vector3 cameraOffset = new Vector3(1, 2.5f, -8);
+    private Vector3 cameraOffset = new Vector3(1, 2.5f, -8.5f);
     private float mouseSensitivity = 3.0f;
     private float zoomSpeed = 2f;
     private float minZoom = 3f;
