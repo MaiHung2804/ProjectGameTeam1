@@ -115,8 +115,8 @@ public class PlayerBase : UnitBase
     protected override void OnDeath()
     {
         base.OnDeath();
-        moveComponent.Stop();
-        attackComponent.Stop();
+        //moveComponent.Stop();
+        //attackComponent.Stop();
         animationComponent.Die(true);
 
     }

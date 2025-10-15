@@ -29,7 +29,7 @@ public class FollowingCamera : MonoBehaviour
 
     public void Init()
     {
-        target = PlayerManager.Instance.Player.transform;
+        target = PlayerManager.Instance.PlayerBase.transform;
         Vector3 angles = transform.eulerAngles;
         yaw = angles.y;
         pitch = angles.x;

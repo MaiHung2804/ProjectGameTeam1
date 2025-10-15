@@ -27,4 +27,4 @@ MonoBehaviour:
   ExpReward: 20
   MaxGoldReward: 20
   BaseGold: 0
-  BaseAttackRange: 2
+  BaseAttackRange: 1

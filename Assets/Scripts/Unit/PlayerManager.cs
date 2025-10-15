@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance { get; private set; }
-    public UnitBase Player { get; private set; }
+    private UnitBase playerBase;
+    public UnitBase PlayerBase { get { return playerBase; } private set { } }
 
 
     private GameObject playerObject;
@@ -23,18 +24,18 @@ public class PlayerManager : MonoBehaviour
     public void Init()
     {
         playerObject = Instantiate(playerPrefab, playerTransform, Quaternion.identity);
-        Player = playerObject.GetComponent<UnitBase>();
+        playerBase = playerObject.GetComponent<UnitBase>();
         PlayerData playerData = new PlayerData(playerConfig);
-        Player.SetUnitData(playerData);
-        Player.Init();
+        playerBase.SetUnitData(playerData);
+        playerBase.Init();
 
     }
 
-    public Transform SelectedPlayerTarget()
+    public UnitBase SelectedPlayerTarget()
     {
-        if ( (playerObject == null) || (Player.IsDead) )
+        if ( (playerObject == null) || (playerBase.IsDead) )
         {  return null; }
-        return playerObject.transform;
+        return playerBase;
     }    
 
 }

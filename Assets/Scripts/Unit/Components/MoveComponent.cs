@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 /// </summary>
 public abstract class MoveComponent : MonoBehaviour
 {
-    private UnitData unitData;
+    protected UnitData unitData;
     public enum MoveState
     {
         Idle,
@@ -15,13 +15,13 @@ public abstract class MoveComponent : MonoBehaviour
         Falling,
         Jumping,
         Landing,
+        Patrol, 
     }
 
     protected float maxSpeed; // = 5f; // Luu gia tri MaxSpeed
     protected float currentSpeed; // = 0f; // Luu gia tri hien tai cua toc do
     protected Vector3 currentDir;
     protected Vector3 lastDir;
-    protected float stopDistance;
     protected Vector3? targetPosition = null; // Them ? de cho phep null
     protected MoveState moveState = MoveState.Idle;
 
@@ -37,7 +37,6 @@ public abstract class MoveComponent : MonoBehaviour
         maxSpeed = unitData.MaxSpeed;
         //Debug.Log("MaxSpeed: " + maxSpeed);
         currentSpeed = 0f;
-        stopDistance = unitData.AttackRange; // Tam thoi dat stopDistance bang AttackRange
 
     }
 
@@ -72,11 +71,11 @@ public abstract class MoveComponent : MonoBehaviour
 
     public Vector3 LastDir => lastDir;
 
-    public float StopDistance
-    {
-        get => stopDistance;
-        set => stopDistance = Mathf.Max(0f, value);
-    }
+    //public float StopDistance
+    //{
+    //    get => stopDistance;
+    //    set => stopDistance = Mathf.Max(0f, value);
+    //}
   
     /// <summary>
     /// Dat vi tri dich va bat dau di chuyen den do.
@@ -93,6 +92,8 @@ public abstract class MoveComponent : MonoBehaviour
     public virtual void HandleComponentActs() { }
 
     public virtual void HandleComponentActs(Vector2 moveInput, bool isJump) { }
+
+    public virtual void HandleComponentActs(Vector3 targetPosition) {  }
 
 
     public abstract bool CanOutComponentState();
