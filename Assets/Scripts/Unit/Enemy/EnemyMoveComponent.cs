@@ -4,7 +4,6 @@ using UnityEngine.AI;
 public class EnemyMoveComponent : MoveComponent
 {
     private Vector3? target, lastTarget;
-    private AnimationComponent animationComponent;
     private bool isEnteringState = true;
 
     private NavMeshAgent agent;
@@ -12,17 +11,18 @@ public class EnemyMoveComponent : MoveComponent
     private float sqrDetectionRange;
     private float sqrAttackRange;
     private Vector3 patrolA, patrolB, currentPatrol;
+    private const float PATROL_SPEED_FACTOR = 0.3f;
+    private const float CHASE_SPEED_FACTOR = 0.7f;
+    private const float ANIMATION_SPEED_FACTOR = 6f;
 
     private bool thinking = false;
-    private const float thinkDuration = 2f;
+    private const float thinkDuration = 4f;
     private float thinkTimer = 0f;
 
 
     public override void InitComponent()
     {
         base.InitComponent();
-        UnitBase unit = GetComponent<UnitBase>();
-        animationComponent = unit.GetAnimationComponent();
         target = null;
         lastTarget = null;
         sqrDetectionRange = ((EnemyData)unitData).DetectionRange * ((EnemyData)unitData).DetectionRange;
@@ -35,7 +35,7 @@ public class EnemyMoveComponent : MoveComponent
     }
 
 
-    public override void HandleComponentActs(Vector3 targetPosition)
+    public override void HandleComponentActs(Vector3? targetPosition)
     {
         target = targetPosition;
         switch (moveState)
@@ -64,8 +64,8 @@ public class EnemyMoveComponent : MoveComponent
         }
         //Debug.Log(" current state " + moveState);
         
-        //if (target == null) return;
-        
+        if (target == null) return;
+
         if (IsTargetInDetectionRange((Vector3)target))
         {
             moveState = MoveState.Chasing;
@@ -85,16 +85,23 @@ public class EnemyMoveComponent : MoveComponent
         if (isEnteringState)
         {
             isEnteringState = false;
-            animationComponent.MoveSpeed(MaxSpeed);
-            agent.speed = MaxSpeed;
+            currentSpeed = MaxSpeed * CHASE_SPEED_FACTOR;
+            animationComponent.MoveSpeed(currentSpeed * ANIMATION_SPEED_FACTOR);
+            agent.speed = MaxSpeed/3;
             //Debug.Log(" current state entering " + moveState);
         }
 
+        if (target == null)
+        {
+            moveState = MoveState.Idle;
+            isEnteringState = true;
+            return;
+        }
         //Debug.Log(" current state " + moveState);
-        if (IsTargetChanged((Vector3)lastTarget, (Vector3)target))
+        if (IsTargetChanged(lastTarget,target))
         {
             lastTarget = target;
-            MoveTo((Vector3)target);
+            MoveTo(target.Value);
         }
     }
 
@@ -103,37 +110,51 @@ public class EnemyMoveComponent : MoveComponent
         if (isEnteringState)
         {
             isEnteringState = false;
-            float patrolSpeed = MaxSpeed / 4;
-            animationComponent.MoveSpeed(patrolSpeed * 5);
-            agent.speed = patrolSpeed;
+            currentSpeed = MaxSpeed * PATROL_SPEED_FACTOR;
+            animationComponent.MoveSpeed(currentSpeed * ANIMATION_SPEED_FACTOR);
+            agent.speed = currentSpeed;
             MoveTo(currentPatrol);
             //Debug.Log(" current state entering " + moveState);
         }
         //Debug.Log(" current state " + moveState);
+        if (target == null)
+        {
+            moveState = MoveState.Idle;
+            isEnteringState = true;
+            return;
+        }
 
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            //// Den diem Patrol, bat dau nghi
-            //Debug.Log(" current to partrol " + currentPatrol);
+            if (!thinking)
+            {
+                thinking = true;
+                thinkTimer = 0f;
+            }
+            else
+            {
+                if (currentSpeed > 0f)
+                {
+                    currentSpeed -= Time.deltaTime * (MaxSpeed * PATROL_SPEED_FACTOR) / thinkDuration;
+                    if (currentSpeed < 0f) currentSpeed = 0f;
+                    animationComponent.MoveSpeed(currentSpeed * ANIMATION_SPEED_FACTOR);
+                    agent.speed = currentSpeed;
+                }
+                else
+                {
+                    currentSpeed = 0f;
+                    animationComponent.MoveSpeed(0);
+                    agent.speed = 0f;
+                }
 
-            //if (!thinking)
-            //{
-            //    thinking = true;
-            //    thinkTimer = 0f;
-            //    animationComponent.MoveSpeed(0);
-            //}
-            //else
-            //{
-            //    thinkTimer += Time.deltaTime;
-            //    if (thinkTimer >= thinkDuration)
-            //    {
-            //        currentPatrol = SelectPatrol(currentPatrol);
-            //        isEnteringState = true;
-            //        thinking = false;
-            //    }
-            //}
-            currentPatrol = SelectPatrol(currentPatrol);
-            MoveTo(currentPatrol);
+                thinkTimer += Time.deltaTime;
+                if (thinkTimer >= thinkDuration)
+                {
+                    currentPatrol = SelectPatrol(currentPatrol);
+                    isEnteringState = true;
+                    thinking = false;
+                }
+            }
         }
 
         if (target != null && IsTargetInDetectionRange((Vector3)target))
@@ -153,15 +174,16 @@ public class EnemyMoveComponent : MoveComponent
         else return patrolA;
     }    
 
-    private bool IsTargetChanged(Vector3 oldTarget, Vector3 newTarget)
+    private bool IsTargetChanged(Vector3? oldTarget, Vector3? newTarget)
     {
         if (newTarget == null) return false;
         if (oldTarget == null) return true;
-        return (newTarget - oldTarget).sqrMagnitude > sqrUpdateThreshold;
+        return (newTarget.Value - oldTarget.Value).sqrMagnitude > sqrUpdateThreshold;
     }
 
     private bool IsTargetInDetectionRange(Vector3 targetPos)
     {
+        if (targetPos == null) return false;
         float sqrDistance = (transform.position - targetPos).sqrMagnitude;
         return sqrDistance < sqrDetectionRange;
     }

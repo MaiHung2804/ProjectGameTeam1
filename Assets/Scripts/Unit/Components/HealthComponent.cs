@@ -20,14 +20,17 @@ public class HealthComponent : MonoBehaviour
 
     public bool IsDead
     {
-        get { return unitData.Hp <= 0f; }
+        get 
+        { 
+            return (unitData !=null) && (unitData.Hp <= 0f); 
+        }
     }
 
     /// <param name="damage"> nhan sat thuong damage va giam.</param>
     public void TakeDamage(int damage)
     {
-        if (IsDead) return;
-        unitData.Hp -= damage - unitData.Defense;
+        if ((unitData == null) || (IsDead)) return;
+        unitData.Hp = (int)(unitData.Hp - damage / unitData.Defense);
         if (unitData.Hp < 0)
         {
             unitData.Hp = 0;

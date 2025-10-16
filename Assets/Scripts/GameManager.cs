@@ -50,16 +50,15 @@ public class GameManager : MonoBehaviour
         ////Level = 1;
         //PlayTime = 0;
         //ChangeState(GameState.Playing);
-
     }
 
-    private void Update()
-    {
-        //if (CurrentState == GameState.Playing)
-        //{
-        //    PlayTime += Time.deltaTime;
-        //}
-    }
+    //private void Update()
+    //{
+    //    //if (CurrentState == GameState.Playing)
+    //    //{
+    //    //    PlayTime += Time.deltaTime;
+    //    //}
+    //}
 
 
 

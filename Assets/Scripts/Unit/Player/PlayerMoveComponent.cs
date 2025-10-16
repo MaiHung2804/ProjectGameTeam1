@@ -9,9 +9,6 @@ public class PlayerMoveComponent : MoveComponent
     [Header("Player Move Settings")]
     
     private CharacterController characterController;
-    private AnimationComponent animationComponent;
-
-    
     
     private const float INPUT_VECTOR_SQR_MIN = 0.05f; 
     private const float GROUND_SPEED_REDUCTION = 1.2f; // Cang lon thi CurrentSpeed giam ve 0 cang nhanh khi khong co input
@@ -33,9 +30,6 @@ public class PlayerMoveComponent : MoveComponent
     {
         base.InitComponent();
         characterController = GetComponent<CharacterController>();
-        UnitBase unit = GetComponent<UnitBase>();
-        animationComponent = unit.GetAnimationComponent();
-
         SetInitialState();
     }
 

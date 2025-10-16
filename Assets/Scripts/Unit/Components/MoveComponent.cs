@@ -8,6 +8,7 @@ using UnityEngine.Rendering;
 public abstract class MoveComponent : MonoBehaviour
 {
     protected UnitData unitData;
+    protected AnimationComponent animationComponent;
     public enum MoveState
     {
         Idle,
@@ -34,11 +35,11 @@ public abstract class MoveComponent : MonoBehaviour
             Debug.LogError("MoveComponent: UnitBase component is missing on " + gameObject.name);
             return;
         }
+        animationComponent = unitBase.GetAnimationComponent();
         unitData = unitBase.GetUnitData();
         maxSpeed = unitData.MaxSpeed;
         //Debug.Log("MaxSpeed: " + maxSpeed);
         currentSpeed = 0f;
-
     }
 
     public float MaxSpeed
@@ -94,7 +95,7 @@ public abstract class MoveComponent : MonoBehaviour
 
     public virtual void HandleComponentActs(Vector2 moveInput, bool isJump) { }
 
-    public virtual void HandleComponentActs(Vector3 targetPosition) {  }
+    public virtual void HandleComponentActs(Vector3? targetPosition) {  }
 
 
     public abstract bool CanOutComponentState();

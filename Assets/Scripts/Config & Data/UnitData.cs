@@ -9,7 +9,7 @@ public class UnitData
 {
     protected string configId;
     protected int currentHp;
-    protected int attackRange;
+    protected float attackRange;
 
     protected UnitConfig Config => ConfigManager.Instance.GetUnitConfig(configId);
 
@@ -31,14 +31,14 @@ public class UnitData
     public virtual Sprite Photo { get => Config.Photo; set { } } // Hinh anh dai dien don vi
     public virtual int Level { get => Config.BaseLevel; set { } }
     public virtual int Damage { get => Config.BaseDamage; set { } }
-    public virtual int Defense { get => Config.BaseDefense; set { } }
+    public virtual float Defense { get => Config.BaseDefense; set { } }
     public virtual int MaxMana { get => Config.BaseMana; set { } }
     public virtual int Mana { get => Config.BaseMana; set { } }
     public virtual float MaxSpeed { get => Config.BaseMaxSpeed; set { } }
     public virtual int ExpReward { get => Config.ExpReward; set { } }
     public virtual int MaxGoldReward { get => Config.MaxGoldReward; set { } }
     public virtual int Gold { get => Config.BaseGold; set { } }
-    public virtual int AttackRange { get => attackRange; set { } }
+    public virtual float AttackRange { get => attackRange; set { } }
 
     //public virtual void TakeDamage(int damage)
     //{

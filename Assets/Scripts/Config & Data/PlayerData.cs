@@ -8,7 +8,7 @@ public class PlayerData: UnitData
     protected string userName;
     protected int highScore;
     protected int damage;
-    protected int defense;
+    protected float defense;
     protected int maxHp;
     protected int currentMana;
     protected int maxMana;
@@ -85,7 +85,7 @@ public class PlayerData: UnitData
     public override string Name { get => userName; set => userName = value; } // Ten don vi
     public override int Level { get => level; set => level = value; }
     public override int Damage { get => damage; set => damage = value; }
-    public override int Defense { get => defense; set => defense = value; }
+    public override float Defense { get => defense; set => defense = value; }
     public override int MaxMana { get => maxMana; set => maxMana = value; }
     public override int Mana { get => currentMana; set => currentMana = value; }
     public override float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }

@@ -21,7 +21,7 @@ MonoBehaviour:
   BaseLevel: 1
   BaseHp: 100
   BaseDamage: 20
-  BaseDefense: 10
+  BaseDefense: 1
   BaseMana: 100
   BaseMaxSpeed: 5
   ExpReward: 0

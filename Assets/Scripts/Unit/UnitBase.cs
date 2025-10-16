@@ -81,16 +81,14 @@ public abstract class UnitBase : MonoBehaviour
     protected virtual void UpdateActions() { }
 
     /// <param name="damage">  ghi chu luong sat thuong </param>
-    public virtual void OnTakeDamage(int  damage)
+    public virtual void OnTakeDamage(int damage)
     {
-        if (healthComponent != null)
-        {
-            healthComponent.TakeDamage(damage);
-            //if (healthComponent.IsDead)
-            //{
-            //    OnDeath();
-            //}
-        }
+        healthComponent.TakeDamage(damage);
+        Debug.Log($"{gameObject.name} took {damage} damage. Remaining health: {unitData.Hp}");
+        //if (healthComponent.IsDead)
+        //{
+        //    OnDeath();
+        //}
     }
 
     // Logic khi unit chet
@@ -99,6 +97,8 @@ public abstract class UnitBase : MonoBehaviour
         EventOnDeath?.Invoke(this);
         //gameObject.SetActive(false); // Deactive thay vi destroy de co the tai su dung lai
     }
+
+   
 
     public Vector3 Position => transform.position;
 

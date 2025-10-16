@@ -6,21 +6,26 @@ using UnityEngine;
 
 public class PlayerAttackComponent : AttackComponent
 {
-    private AnimationComponent animationComponent;
     private bool canOutComponentState = true;
     private Skill currentSkill = Skill.None;
     private Skill lastSkill = Skill.None;
 
-
-    //[SerializeField] private GameObject rangedWeaponPrefab;
+    // TAM THOI LUU VU KHI MELEE O DAY
+    private SwordCollider swordCollider;
 
     public override void InitComponent()
     {
-        //base.InitComponent();
-        UnitBase unit = GetComponent<UnitBase>();
-        animationComponent = unit.GetAnimationComponent();
+        base.InitComponent();
+        //swordCollider = GetComponentInChildren<SwordCollider>();
+        //if (swordCollider == null)
+        //{
+        //    Debug.LogError("SwordCollider is missing on " + gameObject.name);
+        //}
+        //else
+        //{
+        //    swordCollider.InitWeaponCollider(unitData.Damage);
+        //}
     }
-
 
     public override void HandleComponentActs(Skill skill)
     {
@@ -47,6 +52,13 @@ public class PlayerAttackComponent : AttackComponent
             canOutComponentState = false;
             animationComponent.SkillAttack(currentSkill, true);
             lastSkill = currentSkill;
+
+            //if (currentSkill == Skill.MeleeAttack)
+            //{
+            //    // Enable Sword Collider
+            //    swordCollider.StartAttack();
+            //}
+
         }
     }
 
@@ -84,8 +96,15 @@ public class PlayerAttackComponent : AttackComponent
         
         canOutComponentState = true;
         animationComponent.SkillAttack(currentSkill, false);
+
+        //if (currentSkill == Skill.MeleeAttack)
+        //{
+        //    swordCollider.EndAttack();
+        //}
+
         currentSkill = Skill.None;
         lastSkill = Skill.None;
+
         //Debug.Log("PlayerAttackComponent Stop called." + currentSkill);
     }
 

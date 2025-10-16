@@ -6,25 +6,26 @@ using UnityEngine;
 /// </summary>
 public abstract class AttackComponent : MonoBehaviour
 {
-    private UnitData unitData;
+    protected UnitData unitData;
+    protected AnimationComponent animationComponent;
 
-    private int attackDamage;   
-    private float attackRange;
-    private float attackCooldown; 
-    private float lastAttackTime = -Mathf.Infinity;
+    protected int attackDamage;   
+    protected float attackRange;
+    //protected float attackCooldown; 
+    //protected float lastAttackTime = -Mathf.Infinity;
 
     // Phat su kien khi tan cong thanh cong
-    public event Action <UnitBase> EventOnAttackSuccess;
+    //public event Action <UnitBase> EventOnAttackSuccess;
 
     public float AttackDamage => attackDamage;
 
     public float AttackRange => attackRange;
 
     // Thoi gian hoi chieu giua cac dot tan cong
-    public float AttackCooldown => attackCooldown;
+    //public float AttackCooldown => attackCooldown;
 
     // Kiem tra xem don vi co the tan cong hay khong
-    public bool CanAttack => (Time.time >= lastAttackTime + attackCooldown);
+    //public bool CanAttack => (Time.time >= lastAttackTime + attackCooldown);
 
     public virtual void InitComponent() 
     {
@@ -34,48 +35,49 @@ public abstract class AttackComponent : MonoBehaviour
             Debug.LogError("AttackComponent: UnitBase component is missing on " + gameObject.name);
             return;
         }
+        animationComponent = unitBase.GetAnimationComponent();
         unitData = unitBase.GetUnitData();
         // Lay thong tin tan cong tu UnitData
         attackDamage = unitData.Damage;
         attackRange = unitData.AttackRange;
-        attackCooldown = 1f;
+        //attackCooldown = 1f;
     }
 
     ///<summary>
     ///Kiem tra muc tieu hop le de tan cong
     ///CAI NAY CO THE SUA DOI THEM, VD: KIEM TRA CO DUONG DI, CO NHIN THAY KHONG
     ///</summary>
-    public bool IsValidTarget(UnitBase target)
-    {
-        if (target == null) return false;
-        if (target.IsDead) return false;
-        float distance = Vector3.Distance(transform.position, target.transform.position);
-        return distance <= attackRange;
-    }
+    //public bool IsValidTarget(UnitBase target)
+    //{
+    //    if (target == null) return false;
+    //    if (target.IsDead) return false;
+    //    float distance = Vector3.Distance(transform.position, target.transform.position);
+    //    return distance <= attackRange;
+    //}
 
 
-    // Thuc hien tan cong muc tieu neu hop le
-    public void Attack(UnitBase target)
-    {
-        if (!CanAttack) return;
-        if (!IsValidTarget(target)) return;
+    //// Thuc hien tan cong muc tieu neu hop le
+    //public void Attack(UnitBase target)
+    //{
+    //    if (!CanAttack) return;
+    //    if (!IsValidTarget(target)) return;
         
-        target.OnTakeDamage(attackDamage);
-        lastAttackTime = Time.time;
+    //    target.OnTakeDamage(attackDamage);
+    //    lastAttackTime = Time.time;
 
-        // Phat su kien tan cong thanh cong
-        EventOnAttackSuccess?.Invoke(target);
+    //    // Phat su kien tan cong thanh cong
+    //    EventOnAttackSuccess?.Invoke(target);
 
-        // HIEU UNG TAN CONG O DAY (NEU CAN)
-    }
+    //    // HIEU UNG TAN CONG O DAY (NEU CAN)
+    //}
 
     /// <summary>
     /// Reset thoi gian hoi chieu, cho phep tan cong ngay lap tuc
     /// </summary> 
-    public void ResetCooldown()
-    {
-        lastAttackTime = -Mathf.Infinity;
-    }
+    //public void ResetCooldown()
+    //{
+    //    lastAttackTime = -Mathf.Infinity;
+    //}
 
     public virtual void HandleComponentActs() { }
 

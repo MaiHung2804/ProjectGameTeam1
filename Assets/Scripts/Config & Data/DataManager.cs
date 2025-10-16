@@ -51,7 +51,7 @@ public class DataManager
         PlayerPrefs.SetInt("MaxExp", player.MaxExp);
         PlayerPrefs.SetInt("Level", player.Level);
         PlayerPrefs.SetInt("Damage", player.Damage);
-        PlayerPrefs.SetInt("Defense", player.Defense);
+        PlayerPrefs.SetFloat("Defense", player.Defense);
         PlayerPrefs.SetInt("Mana", player.MaxMana);
         PlayerPrefs.SetInt("CurrentMana", player.Mana);
         //string json = JsonUtility.ToJson(player);

@@ -11489,6 +11489,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6850834783656779603, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -30620,18 +30624,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5646872591438497649, guid: 56963583fd955f1489b09d3d8a6e44af, type: 3}
-      propertyPath: enemyConfig
-      value: 
-      objectReference: {fileID: 11400000, guid: 58daf8881e956874aaa8a8b0196e83d3, type: 2}
-    - target: {fileID: 5646872591438497649, guid: 56963583fd955f1489b09d3d8a6e44af, type: 3}
-      propertyPath: patrolPointA
-      value: 
-      objectReference: {fileID: 203488449}
-    - target: {fileID: 5646872591438497649, guid: 56963583fd955f1489b09d3d8a6e44af, type: 3}
-      propertyPath: patrolPointB
-      value: 
-      objectReference: {fileID: 132662215}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

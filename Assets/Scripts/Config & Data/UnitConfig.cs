@@ -24,12 +24,12 @@ public class UnitConfig : ScriptableObject
     public int BaseLevel;
     public int BaseHp;
     public int BaseDamage;
-    public int BaseDefense;
+    public float BaseDefense;
     public int BaseMana;
     public float BaseMaxSpeed;
     public int ExpReward;
     public int MaxGoldReward;
     public int BaseGold;
-    public int BaseAttackRange;
+    public float BaseAttackRange;
 
 }

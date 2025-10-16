@@ -35,6 +35,7 @@ public class EnemyBase : UnitBase
         }
         if (target.IsDead)
         {
+            //Debug.Log("Enemy target is dead, go to Idle state");
             ChangeState(UnitState.Idle);
             return;
         }
@@ -56,8 +57,10 @@ public class EnemyBase : UnitBase
     {
         switch (CurrentState)
         {
-            case UnitState.Moving:
             case UnitState.Idle:
+                moveComponent.HandleComponentActs(null);
+                break;
+            case UnitState.Moving:
                 moveComponent.HandleComponentActs(target.transform.position);
                 break;
             case UnitState.Attack:
