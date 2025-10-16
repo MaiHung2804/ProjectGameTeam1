@@ -13,7 +13,7 @@ public class DataManager
     // ✅ Tạo dữ liệu mới khi bắt đầu New Game
     public void NewPlayerData()
     {
-        player = new PlayerData(ConfigManager.Instance.GetUnitConfig("1"));
+        //player = new PlayerData(ConfigManager.Instance.GetUnitConfig("1"));
         //Debug.Log($"New Player: {player.userName} | HP {player.currentHp}/{player.maxHp} | " +
         //   $"MP {player.currentMana}/{player.maxMana} | " +
         //   $"EXP {player.current}/{player.maxExp} | " +

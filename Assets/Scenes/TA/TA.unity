@@ -10250,7 +10250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb47165c82c34fe4486a81a440966d17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyConfig: {fileID: 11400000, guid: 58daf8881e956874aaa8a8b0196e83d3, type: 2}
   enemyPrefab: {fileID: 3244432212507578616, guid: 56963583fd955f1489b09d3d8a6e44af, type: 3}
   spawnPoints:
   - {fileID: 203488449}
@@ -15598,6 +15597,7 @@ GameObject:
   - component: {fileID: 1106182739}
   - component: {fileID: 1106182740}
   - component: {fileID: 1106182741}
+  - component: {fileID: 1106182742}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -15659,7 +15659,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 332547309770519870, guid: 788b49811376c8b4693f6a91bb498ba0, type: 3}
-  playerConfig: {fileID: 11400000, guid: 6aa1e59b58a84c34d9b8c5b0b3af35f7, type: 2}
+--- !u!114 &1106182742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106182737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c0be82f1bbd3945af65c5676dbde15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemConfigList: []
+  unitConfigList:
+  - {fileID: 11400000, guid: 6aa1e59b58a84c34d9b8c5b0b3af35f7, type: 2}
+  - {fileID: 11400000, guid: 58daf8881e956874aaa8a8b0196e83d3, type: 2}
 --- !u!1001 &1108393388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30605,6 +30620,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5646872591438497649, guid: 56963583fd955f1489b09d3d8a6e44af, type: 3}
+      propertyPath: enemyConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 58daf8881e956874aaa8a8b0196e83d3, type: 2}
+    - target: {fileID: 5646872591438497649, guid: 56963583fd955f1489b09d3d8a6e44af, type: 3}
+      propertyPath: patrolPointA
+      value: 
+      objectReference: {fileID: 203488449}
+    - target: {fileID: 5646872591438497649, guid: 56963583fd955f1489b09d3d8a6e44af, type: 3}
+      propertyPath: patrolPointB
+      value: 
+      objectReference: {fileID: 132662215}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

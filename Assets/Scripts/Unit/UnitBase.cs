@@ -49,7 +49,6 @@ public abstract class UnitBase : MonoBehaviour
         moveComponent = GetComponent<MoveComponent>();
         animationComponent = GetComponent<AnimationComponent>();
 
-
         if (healthComponent == null)
         {
             Debug.LogError("HealthComponent is missing on " + gameObject.name);
@@ -66,8 +65,6 @@ public abstract class UnitBase : MonoBehaviour
         {
             Debug.LogError("AnimationComponent is missing on " + gameObject.name);
         }
-
-
         healthComponent.InitComponent();
         animationComponent.InitComponent();
         moveComponent.InitComponent();
@@ -77,6 +74,7 @@ public abstract class UnitBase : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (unitData == null) return;
         UpdateActions();
     }
 

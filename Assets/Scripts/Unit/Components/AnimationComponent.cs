@@ -22,6 +22,7 @@ public class AnimationComponent : MonoBehaviour
         // MoveSpeed = 0 -> Idle
         // MoveSpeed = 2 -> Walk
         // MoveSpeed = 5 -> Run
+        Debug.Log("Set MoveSpeed to " + speed +  " Animator " + animator);
         animator.SetFloat("MoveSpeed", speed);
     }
 

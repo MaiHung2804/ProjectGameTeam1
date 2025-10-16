@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fedeacc8eafc9d428f8270c778a07f2, type: 3}
   m_Name: ZombieEnemy
   m_EditorClassIdentifier: 
-  Id: 2
+  Id: e1
   Team: 1
   UnitType: 1
   Name: Zombie
-  Description: 
+  Description: Enemy
   Photo: {fileID: 0}
   BaseLevel: 1
   BaseHp: 60
   BaseDamage: 10
   BaseDefense: 5
   BaseMana: 0
-  BaseMaxSpeed: 4.5
+  BaseMaxSpeed: 2
   ExpReward: 20
   MaxGoldReward: 20
   BaseGold: 0

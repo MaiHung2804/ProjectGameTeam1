@@ -17,7 +17,7 @@ public class EnemyData : UnitData
 
     public EnemyData(UnitConfig config, Vector3 pointA, Vector3 pointB) : base(config)
     {
-        this.detectionRange = config.BaseAttackRange * 5;
+        this.detectionRange = config.BaseAttackRange * 10;
         this.stopDistance = config.BaseAttackRange * 0.9f;
         this.patrolPointA = pointA;
         this.patrolPointB = pointB;

@@ -8,12 +8,9 @@ public class PlayerManager : MonoBehaviour
     private UnitBase playerBase;
     public UnitBase PlayerBase { get { return playerBase; } private set { } }
 
-
     private GameObject playerObject;
     [SerializeField] GameObject playerPrefab;
     private Vector3 playerTransform = new Vector3(-3, 5, 12);
-    [SerializeField] UnitConfig playerConfig;
-
 
     void Awake()
     {
@@ -25,7 +22,8 @@ public class PlayerManager : MonoBehaviour
     {
         playerObject = Instantiate(playerPrefab, playerTransform, Quaternion.identity);
         playerBase = playerObject.GetComponent<UnitBase>();
-        PlayerData playerData = new PlayerData(playerConfig);
+        // LAY DU LIEU TU CONFIG
+        PlayerData playerData = new PlayerData( ConfigManager.Instance.GetUnitConfig("p1"));
         playerBase.SetUnitData(playerData);
         playerBase.Init();
 

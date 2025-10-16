@@ -3,21 +3,20 @@ using UnityEngine;
 
 public class EnemyBase : UnitBase
 {
-
-    private float maxSqrDetectRange;
     private float maxSqrAttackRange;
     private UnitBase target;
 
     public new EnemyData GetUnitData() => (EnemyData)unitData; // unitData nay la cua base bi ep kieu
     public void SetUnitData(EnemyData data) => unitData = data;
+    private const float UPDATE_TARGET_TIME = 1f;
+    private float updateTargetTime = 0f;
+    private float sqrDistanceTargetToEnemy;
 
     public override void Init()
     {
         base.Init();
-        // Lay Tam
-        EnemyData unitData = GetUnitData();
-        maxSqrDetectRange = unitData.DetectionRange * unitData.DetectionRange;
         maxSqrAttackRange = unitData.AttackRange * unitData.AttackRange;
+        FindPlayer();
     }   
 
     protected override void UpdateActions()
@@ -34,11 +33,13 @@ public class EnemyBase : UnitBase
             ChangeState(UnitState.Dead);
             return;
         }
-        FindPlayer();
-
-        float sqrDistance = (transform.position - target.transform.position).sqrMagnitude;
-
-        if (sqrDistance < maxSqrAttackRange)
+        if (target.IsDead)
+        {
+            ChangeState(UnitState.Idle);
+            return;
+        }
+        UpdateDistanceToTarget();
+        if (sqrDistanceTargetToEnemy < maxSqrAttackRange)
         {
             ChangeState(UnitState.Attack);
             return;
@@ -47,24 +48,8 @@ public class EnemyBase : UnitBase
         {
             ChangeState(UnitState.Moving);
         }
-        //// Nếu trong detectionRange thì di chuyển hoặc tấn công
-        //if (sqrDistance <= attackComponent.AttackRange)
-        //{
-        //    moveComponent?.Stop();
-        //    (attackComponent as EnemyAttackComponent)?.SetTarget(targetPlayer.GetComponent<UnitBase>());
-        //    attackComponent?.HandleComponentActs();
-        //}
-        
-        //else if (sqrDistance <= detectionRange)
-        //{
-        //    (moveComponent as EnemyMoveComponent)?.SetTarget(targetPlayer);
-        //    moveComponent?.MoveTo(targetPlayer.position);
-        //}
-        //else
-        //{
-        //    moveComponent?.Stop();
-        //    (attackComponent as EnemyAttackComponent)?.Stop();
-        //}
+
+
     }
 
     private void ActionByState()
@@ -107,6 +92,18 @@ public class EnemyBase : UnitBase
     {
         if (target != null) return;
         target = PlayerManager.Instance.SelectedPlayerTarget();
+        Debug.Log("Enemy found player target: " + target);
+    }
+
+    private void UpdateDistanceToTarget()
+    {
+        if (updateTargetTime > 0)
+        {
+            updateTargetTime -= Time.deltaTime;
+            return;
+        }
+        sqrDistanceTargetToEnemy = (target.transform.position - transform.position).sqrMagnitude;
+        updateTargetTime = UPDATE_TARGET_TIME;
     }
 
     protected override void OnDeath()

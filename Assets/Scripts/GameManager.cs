@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager StartGame");
 
         InputManager.Instance.Init();
+        ConfigManager.Instance.Init();
         PlayerManager.Instance.Init();
         FollowingCamera.Instance.Init();
         EnemyManager.Instance.Init();

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fedeacc8eafc9d428f8270c778a07f2, type: 3}
   m_Name: MariaPlayer
   m_EditorClassIdentifier: 
-  Id: 1
+  Id: p1
   Team: 0
   UnitType: 6
   Name: Maria
-  Description: 
+  Description: Player
   Photo: {fileID: 0}
   BaseLevel: 1
   BaseHp: 100
