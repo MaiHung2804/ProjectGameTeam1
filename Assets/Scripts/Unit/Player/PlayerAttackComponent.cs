@@ -16,15 +16,15 @@ public class PlayerAttackComponent : AttackComponent
     public override void InitComponent()
     {
         base.InitComponent();
-        //swordCollider = GetComponentInChildren<SwordCollider>();
-        //if (swordCollider == null)
-        //{
-        //    Debug.LogError("SwordCollider is missing on " + gameObject.name);
-        //}
-        //else
-        //{
-        //    swordCollider.InitWeaponCollider(unitData.Damage);
-        //}
+        swordCollider = GetComponentInChildren<SwordCollider>();
+        if (swordCollider == null)
+        {
+            Debug.LogError("SwordCollider is missing on " + gameObject.name);
+        }
+        else
+        {
+            swordCollider.InitWeaponCollider(unitData.Damage);
+        }
     }
 
     public override void HandleComponentActs(Skill skill)
@@ -53,11 +53,11 @@ public class PlayerAttackComponent : AttackComponent
             animationComponent.SkillAttack(currentSkill, true);
             lastSkill = currentSkill;
 
-            //if (currentSkill == Skill.MeleeAttack)
-            //{
-            //    // Enable Sword Collider
-            //    swordCollider.StartAttack();
-            //}
+            if (currentSkill == Skill.MeleeAttack)
+            {
+                // Enable Sword Collider
+                swordCollider.StartAttack();
+            }
 
         }
     }
@@ -97,10 +97,10 @@ public class PlayerAttackComponent : AttackComponent
         canOutComponentState = true;
         animationComponent.SkillAttack(currentSkill, false);
 
-        //if (currentSkill == Skill.MeleeAttack)
-        //{
-        //    swordCollider.EndAttack();
-        //}
+        if (currentSkill == Skill.MeleeAttack)
+        {
+            swordCollider.EndAttack();
+        }
 
         currentSkill = Skill.None;
         lastSkill = Skill.None;

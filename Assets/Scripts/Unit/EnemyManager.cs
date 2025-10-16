@@ -2,13 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+class PatrolPoint
+{
+    public Transform pointA;
+    public Transform pointB;
+}
+
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance { get; private set; }
     [SerializeField] GameObject enemyPrefab;
     private int enemyCount = 0;
 
-    [SerializeField] Transform[] spawnPoints;
+    [SerializeField] PatrolPoint[] spawnPoints;
 
     private List<UnitBase> enemyList;
     public List<UnitBase> EnemyList { get { return enemyList; } private set { } }
@@ -20,9 +28,11 @@ public class EnemyManager : MonoBehaviour
     public void Init()
     {
         enemyList = new List<UnitBase>();
-        enemyCount++;
-        enemyList.Add(SpawnEnemy(enemyPrefab, spawnPoints[0].position, spawnPoints[1].position));
-
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            enemyCount++;
+            enemyList.Add(SpawnEnemy(enemyPrefab, spawnPoints[i].pointA.position, spawnPoints[i].pointB.position));
+        }
     }
 
     private UnitBase SpawnEnemy(GameObject enemyPrefab, Vector3 patrolA, Vector3 patrolB)
