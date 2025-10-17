@@ -3,7 +3,10 @@ guid: 4c642a5fd7ad6dc40ab36b9faaa61860
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ItemSO: {fileID: 11400000, guid: c18b6ffd0f05ddd439d26f2d349bf299, type: 2}
+  - fireBallPrefab: {instanceID: 0}
+  - shottingPoint: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

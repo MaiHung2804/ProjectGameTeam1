@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MagicWandHandle : MonoBehaviour
 {
+    public MagicWand magicWand;
     public BaseItem ItemSO;
     public GameObject fireBallPrefab;
     public Transform shottingPoint;
@@ -17,10 +18,12 @@ public class MagicWandHandle : MonoBehaviour
         {
             ShootFireball();
             //maxDistance = ItemSO.attackRange
+            
         }
     }
     void ShootFireball()
     {
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -40,7 +43,10 @@ public class MagicWandHandle : MonoBehaviour
         float distance = Vector3.Distance(shottingPoint.position, targetPoint);
 
         GameObject fireball = Instantiate(fireBallPrefab, shottingPoint.position, Quaternion.identity);
-        fireball.GetComponent<fireBallHandle>().Init(distance,fireBallSpeed,direction);
-        
+        fireBallHandle fbHandle = fireball.GetComponent<fireBallHandle>();
+
+        fbHandle.magicWandSO = magicWand; // Gán ScriptableObject vào đây
+        fbHandle.Init(distance, fireBallSpeed, direction);
+
     }
 }

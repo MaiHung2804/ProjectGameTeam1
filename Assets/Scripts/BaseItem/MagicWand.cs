@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class MagicWand : RangedWeapon
 {
+    public float damage;
 
-    //public override void Use(UnitBase target)
-    //{
-    //    throw new System.NotImplementedException(); 
-    //}
 }

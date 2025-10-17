@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public static event Action<int> OnScoreChanged;
     public static event Action<int> OnGoldChanged;
     public static event Action<GameState> OnGameStateChanged;
-
+	///
     private void Awake()
     {
         // Đảm bảo chỉ có 1 GameManager tồn tại

@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 3a066447244e8524e86e32941c88ac11
+guid: f4b4cc085f4e47e4bbc6a9614688bf66
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - magicWandSO: {fileID: 11400000, guid: c18b6ffd0f05ddd439d26f2d349bf299, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

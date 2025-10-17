@@ -15,6 +15,7 @@ MonoBehaviour:
   itemName: MagicWand
   icon: {fileID: 0}
   itemType: 0
-  Prefab: {fileID: 8597984717404046718, guid: d8c6632b8140bfe4382972d9aa50e775, type: 3}
-  attackRange: 80
+  Prefab: {fileID: 0}
+  attackRange: 100
   fireRate: 1
+  damage: 50
