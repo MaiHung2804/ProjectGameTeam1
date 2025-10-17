@@ -30,17 +30,17 @@ public class SwordCollider : MonoBehaviour
         weaponCollider = GetComponent<Collider>();
         weaponCollider.isTrigger = true;
 
-        weaponCollider.enabled = false;
-    }
-   
-    public void StartAttack()
-    {
         weaponCollider.enabled = true;
     }
-    public void EndAttack()
-    {
-        weaponCollider.enabled = false; 
-    }
+
+    //public void StartAttack()
+    //{
+    //    weaponCollider.enabled = true;
+    //}
+    //public void EndAttack()
+    //{
+    //    weaponCollider.enabled = false;
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -49,7 +49,9 @@ public class SwordCollider : MonoBehaviour
             // LUC DAU DUNG TRUC TIEP GAMEOBJECT HOAC UNIT BASE THI BI DOI INSTANCE LIEN TUC NEN PHAI 
             // DUNG REALTIME ID DE LUU TRONG DICTIONARY
             // CO VE NHU LISTED ENEMY BI THAY DOI LIEN TUC
-            EnemyBase enemyBase = other.GetComponent<EnemyBase>();
+            EnemyBase enemyBase = other.GetComponentInParent<EnemyBase>();
+            
+            Debug.Log("hit Enemy" + other.gameObject.GetInstanceID());
             EnemyData enemyData = enemyBase.GetUnitData();
             int enemyId = enemyData.RunTimeId;
 

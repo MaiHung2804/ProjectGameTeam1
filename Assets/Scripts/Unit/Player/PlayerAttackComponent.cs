@@ -11,20 +11,19 @@ public class PlayerAttackComponent : AttackComponent
     private Skill lastSkill = Skill.None;
 
     // TAM THOI LUU VU KHI MELEE O DAY
-    private SwordCollider swordCollider;
+    public SwordCollider swordCollider;
 
     public override void InitComponent()
     {
         base.InitComponent();
-        swordCollider = GetComponentInChildren<SwordCollider>();
+        
         if (swordCollider == null)
         {
-            Debug.LogError("SwordCollider is missing on " + gameObject.name);
+            swordCollider = GetComponentInChildren<SwordCollider>();
+  
         }
-        else
-        {
-            swordCollider.InitWeaponCollider(unitData.Damage);
-        }
+        swordCollider.InitWeaponCollider(unitData.Damage);
+        
     }
 
     public override void HandleComponentActs(Skill skill)
@@ -53,11 +52,12 @@ public class PlayerAttackComponent : AttackComponent
             animationComponent.SkillAttack(currentSkill, true);
             lastSkill = currentSkill;
 
-            if (currentSkill == Skill.MeleeAttack)
-            {
-                // Enable Sword Collider
-                swordCollider.StartAttack();
-            }
+            // TAM THOI LUU VU KHI MELEE O DAY
+            //if (currentSkill == Skill.MeleeAttack)
+            //{
+            //    // Enable Sword Collider
+            //    swordCollider.StartAttack();
+            //}
 
         }
     }
@@ -97,10 +97,11 @@ public class PlayerAttackComponent : AttackComponent
         canOutComponentState = true;
         animationComponent.SkillAttack(currentSkill, false);
 
-        if (currentSkill == Skill.MeleeAttack)
-        {
-            swordCollider.EndAttack();
-        }
+        // BO CAI NAY KEO DANH LIEN TUC
+        //if (currentSkill == Skill.MeleeAttack)
+        //{
+        //    swordCollider.EndAttack();
+        //}
 
         currentSkill = Skill.None;
         lastSkill = Skill.None;
