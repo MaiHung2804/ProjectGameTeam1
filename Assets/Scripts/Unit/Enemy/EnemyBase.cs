@@ -95,7 +95,7 @@ public class EnemyBase : UnitBase
     {
         if (target != null) return;
         target = PlayerManager.Instance.SelectedPlayerTarget();
-        Debug.Log("Enemy found player target: " + target);
+        //Debug.Log("Enemy found player target: " + target);
     }
 
     private void UpdateDistanceToTarget()
@@ -117,5 +117,29 @@ public class EnemyBase : UnitBase
         //attackComponent.Stop();
         animationComponent.Die(true);
 
+        StartCoroutine(RemoveHealthBarAfterDelay());
+
+        StartCoroutine(RemoveEnemyAfterDelay());
     }
+
+    private System.Collections.IEnumerator RemoveHealthBarAfterDelay()
+    {
+        yield return new WaitForSeconds(3f);
+
+        int realTimeId = ((EnemyData)unitData).RunTimeId;
+        UIHealthBarManager.Instance.RemoveHealthBarEnemy(realTimeId);
+    }
+
+    private System.Collections.IEnumerator RemoveEnemyAfterDelay()
+    {
+        yield return new WaitForSeconds(10f);
+
+        if (IsDead)
+        {
+            int realTimeId = ((EnemyData)unitData).RunTimeId;
+            EnemyManager.Instance.EnemyDict.Remove(realTimeId);
+            Destroy(gameObject);
+        }
+    }
+
 }

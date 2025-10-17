@@ -89,6 +89,7 @@ public class EnemyMoveComponent : MoveComponent
             animationComponent.MoveSpeed(currentSpeed * ANIMATION_SPEED_FACTOR);
             agent.speed = MaxSpeed/3;
             //Debug.Log(" current state entering " + moveState);
+            UIHealthBarManager.Instance.CreateHealthBarEnemy(((EnemyData)unitData).RunTimeId);
         }
 
         if (target == null)

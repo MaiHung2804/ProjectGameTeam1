@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.Init();
         FollowingCamera.Instance.Init();
         EnemyManager.Instance.Init();
+        UIHealthBarManager.Instance.Init();
 
     }
 

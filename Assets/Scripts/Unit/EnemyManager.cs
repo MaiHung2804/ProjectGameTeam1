@@ -18,8 +18,8 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] PatrolPoint[] spawnPoints;
 
-    private List<UnitBase> enemyList;
-    public List<UnitBase> EnemyList { get { return enemyList; } private set { } }
+    private Dictionary<int, UnitBase> enemyDict;
+    public Dictionary<int, UnitBase> EnemyDict { get { return enemyDict; } private set { } }
 
     void Awake()
     {
@@ -27,26 +27,39 @@ public class EnemyManager : MonoBehaviour
     }
     public void Init()
     {
-        enemyList = new List<UnitBase>();
+        enemyDict = new Dictionary<int, UnitBase>();
         for (int i = 0; i < spawnPoints.Length; i++)
         {
             enemyCount++;
-            enemyList.Add(SpawnEnemy(enemyPrefab, spawnPoints[i].pointA.position, spawnPoints[i].pointB.position));
+            enemyDict.Add(i,SpawnEnemy(enemyPrefab, spawnPoints[i].pointA.position, spawnPoints[i].pointB.position,i));
         }
+        //Debug.Log("EnemyManager Init with " + enemyDict.Count + " enemies.");
     }
 
-    private UnitBase SpawnEnemy(GameObject enemyPrefab, Vector3 patrolA, Vector3 patrolB)
+    private UnitBase SpawnEnemy(GameObject enemyPrefab, Vector3 patrolA, Vector3 patrolB, int runTimeId)
     {
-        Debug.Log("Spawn Enemy at: " + patrolA);
+        //Debug.Log("Spawn Enemy at: " + patrolA);
 
         GameObject enemyObject = Instantiate(enemyPrefab, patrolA, Quaternion.identity);
         UnitBase enemyBase = enemyObject.GetComponent<EnemyBase>();
-        EnemyData enemyData = new EnemyData(ConfigManager.Instance.GetUnitConfig("e1"), patrolA, patrolB);
+        EnemyData enemyData = new EnemyData(ConfigManager.Instance.GetUnitConfig("e1"), patrolA, patrolB, runTimeId);
         enemyBase.SetUnitData(enemyData);
         enemyBase.Init();
         return enemyBase;
     }
    
+    public EnemyData GetEnemyData(int runTimeId)
+    {
+        return (EnemyData)enemyDict[runTimeId].GetUnitData();
+    }
 
+    public void RemoveEnemy(int runTimeId)
+    {
+        if (enemyDict.ContainsKey(runTimeId))
+        {
+            enemyDict.Remove(runTimeId);
+            //Debug.Log("Enemy with ID " + runTimeId + " removed from EnemyManager.");
+        }
+    }
 
 }

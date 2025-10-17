@@ -31,6 +31,9 @@ public class HealthComponent : MonoBehaviour
     {
         if ((unitData == null) || (IsDead)) return;
         unitData.Hp = (int)(unitData.Hp - damage / unitData.Defense);
+
+        //Debug.Log($"{gameObject.name} took {damage} damage. Remaining health: {unitData.Hp}");
+
         if (unitData.Hp < 0)
         {
             unitData.Hp = 0;

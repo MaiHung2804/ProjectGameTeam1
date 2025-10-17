@@ -6,6 +6,7 @@ using static MoveComponent;
 public class InputManager : MonoBehaviour
 {
     [SerializeField] private Joystick joystick;
+    [SerializeField] private Joystick rotateJoystick;
     public static InputManager Instance { get; private set; }
     private float inputVectorSqrMin = 0.05f;
 
@@ -23,7 +24,9 @@ public class InputManager : MonoBehaviour
     private bool isMeleeAttackOnUI = false;
     private bool isRangedAttackOnUI = false;
     private bool isMagicAttackOnUI = false;
-   
+    private float lastPinchDistance = 0f;
+
+
 
     private void Awake()
     {
@@ -36,6 +39,10 @@ public class InputManager : MonoBehaviour
         if (joystick == null)
         {
             Debug.LogWarning("Joystick not assigned in InputManager. Add Joystick cavas");
+        }
+        if (rotateJoystick == null)
+        {
+            Debug.LogWarning("Rotate Joystick not assigned in InputManager. Add Rotate Joystick canvas");
         }
     }
 
@@ -53,16 +60,67 @@ public class InputManager : MonoBehaviour
     }
 
     // Tra ve vector di chuyen tu Chuot
-    public Vector2 GetRotateFromMouseInput()
+    public Vector2 GetRotateInput()
     {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
-        return new Vector2(mouseX, mouseY);
+        if (GetControlInput())
+        {
+            float mouseX = Input.GetAxis("Mouse X");
+            float mouseY = Input.GetAxis("Mouse Y");
+            return new Vector2(mouseX, mouseY);
+        }
+
+        if (rotateJoystick != null)
+        {
+            Vector2 input = new Vector2(rotateJoystick.Horizontal, rotateJoystick.Vertical);
+            if (input.sqrMagnitude < inputVectorSqrMin)
+            {
+                return Vector2.zero;
+            }
+            return input;
+        }
+
+        if (Input.touchCount == 1)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (touch.phase == TouchPhase.Moved)
+            {
+                return touch.deltaPosition * 0.02f;
+            }
+        }
+      
+        return Vector2.zero;
+
     }
 
-    public float GetZoomFromMouseInput()
+    public float GetZoomInput()
     {
-        return Input.GetAxis("Mouse ScrollWheel");
+
+        if (Input.touchCount == 2)
+        {
+            Touch touch0 = Input.GetTouch(0);
+            Touch touch1 = Input.GetTouch(1);
+
+            float currentDistance = Vector2.Distance(touch0.position, touch1.position);
+
+            if (touch0.phase == TouchPhase.Moved || touch1.phase == TouchPhase.Moved)
+            {
+                float delta = currentDistance - lastPinchDistance;
+                lastPinchDistance = currentDistance;
+                return delta * 0.01f; //he so dieu chinh toc do zoom
+            }
+            lastPinchDistance = currentDistance;
+        }
+        else
+        {
+            lastPinchDistance = 0f; // reset khi khong con 2 ngon tay
+        }
+
+        if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor)
+        {
+            return Input.GetAxis("Mouse ScrollWheel");
+        }
+
+        return 0f;
     }
 
     public bool GetControlInput()

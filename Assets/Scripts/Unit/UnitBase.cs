@@ -84,7 +84,20 @@ public abstract class UnitBase : MonoBehaviour
     public virtual void OnTakeDamage(int damage)
     {
         healthComponent.TakeDamage(damage);
-        //Debug.Log($"{gameObject.name} took {damage} damage. Remaining health: {unitData.Hp}");
+        
+        if (unitData is PlayerData)
+        {
+            UIHealthBarManager.Instance.UpdatePlayerData();
+        }
+
+        if (unitData is EnemyData)
+        {
+            EnemyData enemyData = (EnemyData)unitData;
+
+            UIHealthBarManager.Instance.UpdateHealthBar(enemyData.RunTimeId);
+            //Debug.Log($"{gameObject.name} took {damage} damage. Remaining health: {unitData.Hp}");
+        }
+
         //if (healthComponent.IsDead)
         //{
         //    OnDeath();

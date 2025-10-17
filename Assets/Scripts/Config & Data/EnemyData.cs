@@ -8,6 +8,7 @@ public class EnemyData : UnitData
     protected float stopDistance;
     protected Vector3 patrolPointA;
     protected Vector3 patrolPointB;
+    protected int runTimeId;
 
     public EnemyData(UnitConfig config) : base(config)
     {
@@ -15,12 +16,13 @@ public class EnemyData : UnitData
         this.stopDistance = config.BaseAttackRange*0.9f;
     }
 
-    public EnemyData(UnitConfig config, Vector3 pointA, Vector3 pointB) : base(config)
+    public EnemyData(UnitConfig config, Vector3 pointA, Vector3 pointB, int runTimeId) : base(config)
     {
         this.detectionRange = config.BaseAttackRange * 10;
         this.stopDistance = config.BaseAttackRange*0.9f;
         this.patrolPointA = pointA;
         this.patrolPointB = pointB;
+        this.runTimeId = runTimeId;
     }
 
     public float DetectionRange { get => detectionRange; set { detectionRange = value; } }
@@ -28,4 +30,5 @@ public class EnemyData : UnitData
     public Vector3 PatrolPointA { get => patrolPointA; set { patrolPointA = value; } }
     public Vector3 PatrolPointB { get => patrolPointB; set { patrolPointB = value; } }
 
+    public int RunTimeId { get => runTimeId; set { runTimeId = value; } }
 }

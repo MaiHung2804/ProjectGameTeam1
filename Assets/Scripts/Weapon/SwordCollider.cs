@@ -17,16 +17,19 @@ public class SwordCollider : MonoBehaviour
     //    public float lasHitTime = 0f;
     //}
 
-    private Dictionary<GameObject, float> enemiesHit = new();
-    private const int DAMAGE_TICK_COUNT = 5;
-    private const float DAMAGE_TICK_INTERVAL = 4f; // seconds
+    private Dictionary<int, float> hittedEnemyList;
+    private const float DAMAGE_DIVISOR = 1.5f;
+    private const float DAMAGE_TIMER = 1f; // seconds
 
 
     public void InitWeaponCollider(int damage)
     {
-        weaponDamage = damage / DAMAGE_TICK_COUNT;
+        hittedEnemyList = new Dictionary<int, float>();
+        
+        weaponDamage = (int) (damage / DAMAGE_DIVISOR);
         weaponCollider = GetComponent<Collider>();
         weaponCollider.isTrigger = true;
+
         weaponCollider.enabled = false;
     }
    
@@ -36,30 +39,39 @@ public class SwordCollider : MonoBehaviour
     }
     public void EndAttack()
     {
-        weaponCollider.enabled = false;
-        enemiesHit.Clear();
+        weaponCollider.enabled = false; 
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
-            // LUC DAU DUNG UNITBASE BI DOI KEY LIEN TUC
-            var enemyObject = other.gameObject;
-            var enemyBase = other.GetComponent<UnitBase>();
-            if (!enemiesHit.ContainsKey(enemyObject))
+            // LUC DAU DUNG TRUC TIEP GAMEOBJECT HOAC UNIT BASE THI BI DOI INSTANCE LIEN TUC NEN PHAI 
+            // DUNG REALTIME ID DE LUU TRONG DICTIONARY
+            // CO VE NHU LISTED ENEMY BI THAY DOI LIEN TUC
+            EnemyBase enemyBase = other.GetComponent<EnemyBase>();
+            EnemyData enemyData = enemyBase.GetUnitData();
+            int enemyId = enemyData.RunTimeId;
+
+            //PrintListedEne(" At OnTriggerEnter");
+
+            if (!hittedEnemyList.ContainsKey(enemyId))
             {
                 enemyBase.OnTakeDamage(weaponDamage);
-                Debug.Log("Sword damage: " + other.name + " dame " + weaponDamage);
-                enemiesHit[enemyObject] = Time.time;
-                Debug.Log(enemyBase.name + " time hit: " + enemiesHit[enemyObject]);
+                hittedEnemyList[enemyId] = Time.time;
+                Debug.Log("Enemy Id: " + enemyId + " take dame " + weaponDamage + " at " + hittedEnemyList[enemyId]);
+
+                //PrintListedEne(" At OnTriggerEnter Checked");
+
+
             }
-            //else if (Time.time - enemiesHit[enemyBase] >= DAMAGE_TICK_INTERVAL)
-            //{
-            //    enemyBase.OnTakeDamage(weaponDamage);
-            //    Debug.Log("Sword damage: " + other.name + " dame " + weaponDamage);
-            //    enemiesHit[enemyBase] = Time.time;
-            //}
+            else if (Time.time - hittedEnemyList[enemyId] >= DAMAGE_TIMER)
+            {
+                enemyBase.OnTakeDamage(weaponDamage);
+                hittedEnemyList[enemyId] = Time.time;
+                Debug.Log("Enemy Id: " + enemyId + " take dame after " + weaponDamage + " at " + hittedEnemyList[enemyId]);
+
+            }
 
         }
     }
@@ -68,15 +80,18 @@ public class SwordCollider : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            var enemyObject = other.gameObject;
-            Debug.Log("Sword end: " + other.name);
-            var enemyBase = other.GetComponent<UnitBase>();
-            if (enemiesHit.ContainsKey(enemyObject) && (enemyBase.IsDead))
+            EnemyBase enemyBase = other.GetComponent<EnemyBase>();
+            //PrintListedEne(" At OnTriggerExit");
+
+            if (enemyBase.IsDead)
             {
-                enemiesHit.Remove(enemyObject);
+                Debug.Log("Enemy Id: " + enemyBase.GetUnitData().RunTimeId + " is dead, remove from hitted list.");
+                EnemyData enemyData = enemyBase.GetUnitData();
+                int enemyId = enemyData.RunTimeId;
+                hittedEnemyList.Remove(enemyId);
+
             }
         }
     }
-
 
 }

@@ -51,7 +51,7 @@ public class FollowingCamera : MonoBehaviour
     private void GetZoomInfor()
     {
         // Zoom bang chuot giua
-        float scroll = InputManager.Instance.GetZoomFromMouseInput();
+        float scroll = InputManager.Instance.GetZoomInput();
         if (Mathf.Abs(scroll) > 0.01f)
         {
             cameraOffset.z += scroll * zoomSpeed;
@@ -61,14 +61,13 @@ public class FollowingCamera : MonoBehaviour
 
     private void GetRotateInfor()
     {
-        // Chi xoay khi nhan Ctrl
-        if (InputManager.Instance.GetControlInput())
-        {
-            Vector2 input = InputManager.Instance.GetRotateFromMouseInput();
-            yaw += input.x * mouseSensitivity;
-            pitch -= input.y * mouseSensitivity;
-            pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-        }
+        Vector2 input = InputManager.Instance.GetRotateInput();
+        if ( (input == Vector2.zero) || (input.sqrMagnitude < 0.01f) )
+            return;
+        yaw += input.x * mouseSensitivity;
+        pitch -= input.y * mouseSensitivity;
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+        
     }
 
     private void FollowTarget()
