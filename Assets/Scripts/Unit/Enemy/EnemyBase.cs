@@ -115,6 +115,9 @@ public class EnemyBase : UnitBase
         //// Co ve hoi thua Stop();
         //moveComponent.Stop();
         //attackComponent.Stop();
+        int realTimeId = ((EnemyData)unitData).RunTimeId;
+        PlayerManager.Instance.HandleKilledEnemy(realTimeId);
+
         animationComponent.Die(true);
 
         StartCoroutine(RemoveHealthBarAfterDelay());

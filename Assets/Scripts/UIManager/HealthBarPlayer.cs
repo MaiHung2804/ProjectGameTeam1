@@ -19,7 +19,7 @@ public class HealthBarPlayer : MonoBehaviour
     void Awake()
     {
        instance = this;
-       DontDestroyOnLoad(gameObject);
+       //DontDestroyOnLoad(gameObject);
     }
 
     public void Init()

@@ -26,5 +26,5 @@ MonoBehaviour:
   BaseMaxSpeed: 5
   ExpReward: 0
   MaxGoldReward: 0
-  BaseGold: 100
+  BaseGold: 0
   BaseAttackRange: 1

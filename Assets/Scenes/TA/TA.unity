@@ -21206,6 +21206,7 @@ GameObject:
   - component: {fileID: 1462759239}
   - component: {fileID: 1462759238}
   - component: {fileID: 1462759237}
+  - component: {fileID: 1462759241}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -21297,6 +21298,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1462759241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462759236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fded94589e3fa6644973bf8d9b4f162d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healBarCanvas: {fileID: 1462759240}
+  healthBarEnemyPrefab: {fileID: 8012988389611078447, guid: 2aa9b8010f60ae44ab321e76e281d036, type: 3}
 --- !u!4 &1465165285 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 436916, guid: 287711fb95cdc004b814e53a055b4b1e, type: 3}
@@ -21397,7 +21412,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1487559801}
-  - component: {fileID: 1487559802}
   m_Layer: 5
   m_Name: HeathBar
   m_TagString: Untagged
@@ -21425,20 +21439,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1487559802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487559800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fded94589e3fa6644973bf8d9b4f162d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healBarCanvas: {fileID: 1462759240}
-  healthBarEnemyPrefab: {fileID: 8012988389611078447, guid: 2aa9b8010f60ae44ab321e76e281d036, type: 3}
 --- !u!1 &1492179490
 GameObject:
   m_ObjectHideFlags: 0

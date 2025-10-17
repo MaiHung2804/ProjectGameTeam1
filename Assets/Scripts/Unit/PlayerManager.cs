@@ -34,6 +34,18 @@ public class PlayerManager : MonoBehaviour
         if ( (playerObject == null) || (playerBase.IsDead) )
         {  return null; }
         return playerBase;
-    }    
+    }
+
+    public void HandleKilledEnemy(int realTimeId)
+    {
+        // Cap nhat tien cho player
+        EnemyData enemyData = EnemyManager.Instance.GetEnemyData(realTimeId);
+        int goldReward = enemyData.MaxGoldReward;
+        int expReward = enemyData.ExpReward;
+        PlayerData playerData = (PlayerData) playerBase.GetUnitData();
+        playerData.Gold += goldReward;
+        playerData.TakeExperience(expReward);
+        UIHealthBarManager.Instance.UpdatePlayerData();
+    }
 
 }

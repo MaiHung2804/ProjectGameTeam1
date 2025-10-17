@@ -59,17 +59,15 @@ public class SwordCollider : MonoBehaviour
             {
                 enemyBase.OnTakeDamage(weaponDamage);
                 hittedEnemyList[enemyId] = Time.time;
-                Debug.Log("Enemy Id: " + enemyId + " take dame " + weaponDamage + " at " + hittedEnemyList[enemyId]);
+                //Debug.Log("Enemy Id: " + enemyId + " take dame " + weaponDamage + " at " + hittedEnemyList[enemyId]);
 
                 //PrintListedEne(" At OnTriggerEnter Checked");
-
-
             }
             else if (Time.time - hittedEnemyList[enemyId] >= DAMAGE_TIMER)
             {
                 enemyBase.OnTakeDamage(weaponDamage);
                 hittedEnemyList[enemyId] = Time.time;
-                Debug.Log("Enemy Id: " + enemyId + " take dame after " + weaponDamage + " at " + hittedEnemyList[enemyId]);
+                //Debug.Log("Enemy Id: " + enemyId + " take dame after " + weaponDamage + " at " + hittedEnemyList[enemyId]);
 
             }
 
