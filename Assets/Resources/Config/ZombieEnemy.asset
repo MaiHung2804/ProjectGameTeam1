@@ -23,8 +23,8 @@ MonoBehaviour:
   BaseDamage: 10
   BaseDefense: 1
   BaseMana: 0
-  BaseMaxSpeed: 2
+  BaseMaxSpeed: 2.5
   ExpReward: 20
   MaxGoldReward: 20
   BaseGold: 0
-  BaseAttackRange: 1.1
+  BaseAttackRange: 1.2

@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class HealthBarPlayer : MonoBehaviour
 {
-    [SerializeField] private UnityEngine.UI.Image emptyBar;
+    [SerializeField] private UnityEngine.UI.Image fillHbBar;
+    [SerializeField] private UnityEngine.UI.Image fillManaBar;
+    [SerializeField] private UnityEngine.UI.Image fillExpBar;
     [SerializeField] private TextMeshProUGUI level;
-    [SerializeField] private TextMeshProUGUI aboveText;
-    [SerializeField] private TextMeshProUGUI belowText;
+    [SerializeField] private TextMeshProUGUI hbText;
+    [SerializeField] private TextMeshProUGUI manaText;
 
     private static HealthBarPlayer instance;
     public static HealthBarPlayer Instance => instance;
@@ -32,7 +35,7 @@ public class HealthBarPlayer : MonoBehaviour
     public void UpdateInformation()
     {
         UpdateHealthInformation();
-        UpdateNameAndGold();
+        UpdateOtherInformation();
         UpdateLevelAndExp();
     }
 
@@ -40,24 +43,33 @@ public class HealthBarPlayer : MonoBehaviour
     {
         if (playerData.Hp <= 0)
         {
-            emptyBar.fillAmount = 1;
+            fillHbBar.fillAmount = 0;
             return;
         }
-        emptyBar.fillAmount = 1 - (float)playerData.Hp / playerData.MaxHp;
+        fillHbBar.fillAmount = (float)playerData.Hp / playerData.MaxHp;
+        hbText.text = playerData.Hp.ToString() + "/" + playerData.MaxHp.ToString();
     }
 
-    private void UpdateNameAndGold()
+    private void UpdateOtherInformation()
     {
-        string infor = playerData.Name.ToString() + " " + playerData.Gold.ToString() + "$";
-        aboveText.text = infor;
+        if (playerData.Mana <= 0)
+        {
+            fillManaBar.fillAmount = 0;
+            return;
+        }
+        fillExpBar.fillAmount = (float)playerData.Mana / playerData.MaxMana;
+        // Display Name and Gold : Temporaire
+        manaText.text = "Maria Gold: " + playerData.Gold.ToString();
     }
 
     private void UpdateLevelAndExp()
     {
-        //string infor = playerData.CurrentExp.ToString() + "/" + playerData.MaxExp.ToString();
-        string infor = playerData.Hp.ToString () + "/" + playerData.MaxHp.ToString();
-
-        belowText.text = infor;
+        if (playerData.CurrentExp <= 0)
+        {
+            fillExpBar.fillAmount = 0;
+            return;
+        }
+        fillExpBar.fillAmount = (float)playerData.CurrentExp / playerData.MaxExp;
         level.text = playerData.Level.ToString();
     }
 
