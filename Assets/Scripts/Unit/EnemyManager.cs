@@ -115,8 +115,9 @@ public class EnemyManager : MonoBehaviour
             {
                 ranPointB = hitB.position;
             }
+            
             NavMeshPath path = new NavMeshPath();
-            if ( (NavMesh.CalculatePath(ranPointA,ranPointB,NavMesh.AllAreas,path)
+            if ( (NavMesh.CalculatePath(ranPointA,ranPointB,NavMesh.AllAreas,path)  // frame has to wait calculate path
                 && path.status == NavMeshPathStatus.PathComplete))
             {
                 found = true;
