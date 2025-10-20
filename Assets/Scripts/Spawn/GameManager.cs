@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManagerTest : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManagerTest Instance;
 
     void Awake()
     {
