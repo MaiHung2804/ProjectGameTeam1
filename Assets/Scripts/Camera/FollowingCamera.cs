@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class FollowingCamera : MonoBehaviour
 {
-    [SerializeField] Transform target;
-    private Vector3 cameraOffset = new Vector3(1, 2.5f, -8);
+    private Transform target;
+    private Vector3 cameraOffset = new Vector3(1, 2.5f, -8.5f);
     private float mouseSensitivity = 3.0f;
     private float zoomSpeed = 2f;
     private float minZoom = 3f;
@@ -27,26 +27,16 @@ public class FollowingCamera : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
+    public void Init()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
+        target = PlayerManager.Instance.PlayerBase.transform;
+        Vector3 angles = transform.eulerAngles;
+        yaw = angles.y;
+        pitch = angles.x;
+        if (target != null)
         {
-            target = player.transform;
             lastTargetPostion = target.position;
         }
-        else
-        {
-            Debug.LogError("Player not found. Please make sure the player has the 'Player' tag.");
-        }
-        // em comment lai doan nay de test
-        //Vector3 angles = transform.eulerAngles;
-        //yaw = angles.y;
-        //pitch = angles.x;
-        //if (target != null)
-        //{
-        //    lastTargetPostion = target.position;
-        //}
 
 
     }
@@ -61,7 +51,7 @@ public class FollowingCamera : MonoBehaviour
     private void GetZoomInfor()
     {
         // Zoom bang chuot giua
-        float scroll = InputManager.Instance.GetZoomFromMouseInput();
+        float scroll = InputManager.Instance.GetZoomInput();
         if (Mathf.Abs(scroll) > 0.01f)
         {
             cameraOffset.z += scroll * zoomSpeed;
@@ -71,14 +61,13 @@ public class FollowingCamera : MonoBehaviour
 
     private void GetRotateInfor()
     {
-        // Chi xoay khi nhan Ctrl
-        if (InputManager.Instance.GetControlInput())
-        {
-            Vector2 input = InputManager.Instance.GetRotateFromMouseInput();
-            yaw += input.x * mouseSensitivity;
-            pitch -= input.y * mouseSensitivity;
-            pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
-        }
+        Vector2 input = InputManager.Instance.GetRotateInput();
+        if ( (input == Vector2.zero) || (input.sqrMagnitude < 0.01f) )
+            return;
+        yaw += input.x * mouseSensitivity;
+        pitch -= input.y * mouseSensitivity;
+        pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+        
     }
 
     private void FollowTarget()

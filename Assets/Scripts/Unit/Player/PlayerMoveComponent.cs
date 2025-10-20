@@ -1,17 +1,14 @@
-﻿using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+﻿
+
+
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+
 
 public class PlayerMoveComponent : MoveComponent
 {
     [Header("Player Move Settings")]
     
     private CharacterController characterController;
-    private AnimationComponent animationComponent;
-
-    
     
     private const float INPUT_VECTOR_SQR_MIN = 0.05f; 
     private const float GROUND_SPEED_REDUCTION = 1.2f; // Cang lon thi CurrentSpeed giam ve 0 cang nhanh khi khong co input
@@ -31,14 +28,25 @@ public class PlayerMoveComponent : MoveComponent
 
     public override void InitComponent()
     {
+        base.InitComponent();
         characterController = GetComponent<CharacterController>();
-        UnitBase unit = GetComponent<UnitBase>();
-        animationComponent = unit.GetAnimationComponent();
-
-        // Dat nhan vat luc dau o tren cao
-        moveState = MoveState.Falling;
-        canOutComponentState = false;
+        SetInitialState();
     }
+
+    private void SetInitialState()
+    {
+        if (characterController.isGrounded)
+        {
+            moveState = MoveState.Idle;
+            canOutComponentState = true;
+        }
+        else
+        {
+            moveState = MoveState.Falling;
+            canOutComponentState = false;
+        }
+    }
+
 
     public override void HandleComponentActs(Vector2 moveInput, bool isJump)
     {

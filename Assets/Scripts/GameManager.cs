@@ -3,10 +3,8 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    // Singleton
     public static GameManager Instance { get; private set; }
 
-    // Trạng thái game
     public enum GameState { Menu, Playing, Paused, GameOver }
     public GameState CurrentState { get; private set; }
 
@@ -23,32 +21,47 @@ public class GameManager : MonoBehaviour
 	///
     private void Awake()
     {
-        // Đảm bảo chỉ có 1 GameManager tồn tại
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject); // giữ lại khi load scene khác
+        DontDestroyOnLoad(gameObject); 
     }
 
-    private void Update()
+    void Start()
     {
-        if (CurrentState == GameState.Playing)
-        {
-            PlayTime += Time.deltaTime;
-        }
+        InitGame();
+        Debug.Log("GameManager StartGame");
+
+        InputManager.Instance.Init();
+        ConfigManager.Instance.Init();
+        PlayerManager.Instance.Init();
+        FollowingCamera.Instance.Init();
+        EnemyManager.Instance.Init();
+        UIHealthBarManager.Instance.Init();
+
     }
 
-    public void StartGame()
+    private void InitGame()
     {
-        Score = 0;
-        Gold = 0;
-        PlayTime = 0;
-        Level = 1;
-        ChangeState(GameState.Playing);
+        ////Score = 0;
+        ////Gold = 0;
+        ////Level = 1;
+        //PlayTime = 0;
+        //ChangeState(GameState.Playing);
     }
+
+    //private void Update()
+    //{
+    //    //if (CurrentState == GameState.Playing)
+    //    //{
+    //    //    PlayTime += Time.deltaTime;
+    //    //}
+    //}
+
+
 
     public void EndGame()
     {

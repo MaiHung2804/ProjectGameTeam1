@@ -9,6 +9,10 @@ public class PlayerBase : UnitBase
     private float minMeleeAttackTime = 1f;
     private float lastMeleeAttackTime = -Mathf.Infinity;
 
+    // Dung new de tra ve kieu du lieu khac voi Base, ko dung Override
+    public new PlayerData GetUnitData() => (PlayerData) unitData; // unitData nay la cua base bi ep kieu
+    public void SetUnitData(PlayerData data) => unitData = data;
+
     protected override void UpdateActions()
     {
         GetInput();
@@ -21,6 +25,12 @@ public class PlayerBase : UnitBase
         moveInput = InputManager.Instance.GetMoveInput();
         jumpInput = InputManager.Instance.GetJumpInput();
         attackInput = InputManager.Instance.GetAttackInput();
+
+        // TEST TAKE DAMAGE
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            healthComponent.TakeDamage(20);
+        }
 
         if (attackInput == Skill.MeleeAttack)
         {
@@ -95,7 +105,20 @@ public class PlayerBase : UnitBase
                 attackComponent.Stop();
             }
             CurrentState = newState;
+            if (CurrentState == UnitState.Dead)
+            {
+                OnDeath();
+            }
         }
+    }
+
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+        //moveComponent.Stop();
+        //attackComponent.Stop();
+        animationComponent.Die(true);
+
     }
 
     //private void ExitState(UnitState state)

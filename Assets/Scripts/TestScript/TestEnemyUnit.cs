@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class TestEnemyUnit : UnitBase
 {
-    [Header("Test Settings")]
-    [SerializeField] private float damageOnCollision = 20f;
-
     protected void Awake()
     {
         //base.Awake();
@@ -22,10 +19,10 @@ public class TestEnemyUnit : UnitBase
         }
                
     }
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Escape)) {
+    //private void Update()
+    //{
+    //    if (Input.GetKeyUp(KeyCode.Escape)) {
         
-        }
-    }
+    //    }
+    //}
 }

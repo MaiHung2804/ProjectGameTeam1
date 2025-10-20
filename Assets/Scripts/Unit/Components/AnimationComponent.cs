@@ -9,6 +9,7 @@ public class AnimationComponent : MonoBehaviour
     private bool isLandingEnd = false;
     private bool isRangedAttackingEnd = false;
     private bool isMagicAttackingEnd = false;
+    private bool isDyingEnd = false;
 
     public void InitComponent()
     {
@@ -22,6 +23,8 @@ public class AnimationComponent : MonoBehaviour
         // MoveSpeed = 2 -> Walk
         // MoveSpeed = 5 -> Run
         animator.SetFloat("MoveSpeed", speed);
+        //Debug.Log("Set MoveSpeed to " + speed +  " Animator " + animator);
+
     }
 
     public void Jumping(bool jumping)
@@ -50,6 +53,11 @@ public class AnimationComponent : MonoBehaviour
 
     }
 
+    public void Die(bool dying)
+    {
+        animator.SetBool("Dying", dying);
+    }
+
     public bool IsLandingEnd
     { get => isLandingEnd;
       set => isLandingEnd = value;
@@ -63,6 +71,11 @@ public class AnimationComponent : MonoBehaviour
     public bool IsMagicAttackingEnd
     {   get => isMagicAttackingEnd;
         set => isMagicAttackingEnd = value;
+    }
+
+    public bool IsDyingEnd
+    {   get => isDyingEnd;
+        set => isDyingEnd = value;
     }
 
     public void SkillAttack(Skill skill,bool isAttacking)
@@ -106,6 +119,11 @@ public class AnimationComponent : MonoBehaviour
         //Debug.Log("Magic Attacking End Animation Event");
     }
 
+    public void TurnOnDyingEnd()
+    {
+        isDyingEnd = true;
+        //Debug.Log("Dying End Animation Event");
+    }
 
     public void Speed(float speed)
     {

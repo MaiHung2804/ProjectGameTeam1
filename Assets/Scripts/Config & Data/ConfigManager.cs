@@ -2,56 +2,69 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConfigManager 
+public class ConfigManager : MonoBehaviour
 {
-    private static ConfigManager instance;
-    public static ConfigManager Instance => instance ??= new ConfigManager();
-    private ConfigManager()
+    public static ConfigManager Instance {  get; private set; }
+    [SerializeField] private List<ItemConfig> itemConfigList;
+    [SerializeField] private List<UnitConfig> unitConfigList;
+    private Dictionary<string, ItemConfig> itemDict;
+    private Dictionary<string, UnitConfig> unitDict;
+
+    void Awake()
+    {
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+    public void Init()
     {
         InitItemDictionary();
         InitUnitDictionary();
     }
-    [SerializeField] private List<ItemConfig> itemConfig;
-    [SerializeField] private List<UnitConfig> unitConfig;
 
-    private Dictionary<string, ItemConfig> configDict;
-    private Dictionary<string, UnitConfig> unitDict;
-  
     public void InitItemDictionary()
     {
-        configDict = new Dictionary<string, ItemConfig>();
-        foreach (var config in itemConfig)
+        if  ( (itemConfigList == null) || (itemConfigList.Count == 0))
         {
-            if (!configDict.ContainsKey(config.id))
+            itemDict = null;
+            return;
+        }
+        itemDict = new Dictionary<string, ItemConfig>();
+        foreach (ItemConfig config in itemConfigList)
+        {
+            if (!itemDict.ContainsKey(config.id))
             {
-                configDict.Add(config.id, config);
+                itemDict.Add(config.id, config);
             }
             else
             {
                 Debug.LogWarning($"Duplicate ItemConfig ID detected: {config.id}");
             }
         }
-    
     }
 
     public void InitUnitDictionary()
     {
-        unitDict = new Dictionary<string, UnitConfig>();
-        foreach (var config in unitConfig)
+        if ( (unitConfigList == null) || (unitConfigList.Count == 0))
         {
-            if (!unitDict.ContainsKey(config.id))
+            unitDict = null;
+            return;
+        }
+        unitDict = new Dictionary<string, UnitConfig>();
+        foreach (var config in unitConfigList)
+        {
+            if (!unitDict.ContainsKey(config.Id))
             {
-                unitDict.Add(config.id, config);
+                unitDict.Add(config.Id, config);
             }
             else
             {
-                Debug.LogWarning($"Duplicate UnitConfig ID detected: {config.id}");
+                Debug.LogWarning($"Duplicate UnitConfig ID detected: {config.Id}");
             }
         }
     }
-    public ItemConfig GetConfig(string itemId)
+    public ItemConfig GetItemConfig(string itemId)
     {
-        if (configDict.TryGetValue(itemId, out ItemConfig config))
+        if (itemDict.TryGetValue(itemId, out ItemConfig config))
         {
             return config;
         }

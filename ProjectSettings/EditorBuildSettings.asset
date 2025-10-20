@@ -11,16 +11,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SceneToLoad.unity
     guid: bb76c011cbdab2343a1435c2ffb6beb3
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TA/TA.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: df5d1057a9429c14bb5f3acd3ffd3fa3
   - enabled: 0
     path: Assets/Scenes/Level1.unity
     guid: 4cd34e466e0e0f1468c0ba81499c96b8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Menu.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Vy/Level1 - VY.unity
     guid: ab38d2cb42982834ab5b01e2fd294810
   m_configObjects: {}

@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using TMPro;
-using UnityEngine.EventSystems;
 public class UIMenu : MonoBehaviour
 {
     public GameObject mainMenuPanel;
     public GameObject inputPanel;
     public GameObject settingPanel;
     public TMP_InputField inputField;
-    private PlayerControllerTest playerControllerTest;
-
+    //private PlayerControllerTest playerControllerTest;
+    //private PlayerData playerData;
 
 
     private void Awake()
@@ -22,7 +23,9 @@ public class UIMenu : MonoBehaviour
     }
     private void Start()
     {
-        playerControllerTest = FindObjectOfType<PlayerControllerTest>();
+        //playerControllerTest = FindObjectOfType<PlayerControllerTest>();
+        //playerData = PlayerManager.Instance.Player.GetComponent<PlayerData>();
+
     }
     public void ShowMainMenu() //tắt hết các panel khác và chỉ hiện main menu
     {
@@ -58,9 +61,9 @@ public class UIMenu : MonoBehaviour
 
         string playerName = inputField.text;
         if (!string.IsNullOrEmpty(playerName))
-            DataManager.Instance.player.userName = playerName;
+            DataManager.Instance.player.Name = playerName;
         else
-            DataManager.Instance.player.userName = "Player";
+            DataManager.Instance.player.Name = "Player";
 
         // Lưu dữ liệu ngay trước khi đổi scene
         DataManager.Instance.SaveData(); 
@@ -76,8 +79,8 @@ public class UIMenu : MonoBehaviour
     {
 
         DataManager.Instance.LoadData();
-        playerControllerTest.GetTransform();
-        SceneManager.LoadScene(DataManager.Instance.player.currentScene);
+        //playerControllerTest.GetTransform();
+        SceneManager.LoadScene(DataManager.Instance.player.CurrentScene);
         //playerControllerTest.GetTransform();
 
         HideAll();

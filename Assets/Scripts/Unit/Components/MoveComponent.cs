@@ -7,6 +7,8 @@ using UnityEngine.Rendering;
 /// </summary>
 public abstract class MoveComponent : MonoBehaviour
 {
+    protected UnitData unitData;
+    protected AnimationComponent animationComponent;
     public enum MoveState
     {
         Idle,
@@ -14,20 +16,31 @@ public abstract class MoveComponent : MonoBehaviour
         Falling,
         Jumping,
         Landing,
-        
-
+        Chasing,
+        Patrol
     }
 
-    [Header("Move Settings")]
-    protected float maxSpeed = 5f;  // Luu gia tri MaxSpeed
-    protected float currentSpeed = 0f; // Luu gia tri hien tai cua toc do
+    protected float maxSpeed; // = 5f; // Luu gia tri MaxSpeed
+    protected float currentSpeed; // = 0f; // Luu gia tri hien tai cua toc do
     protected Vector3 currentDir;
     protected Vector3 lastDir;
-    protected float stopDistance = 0.1f;
     protected Vector3? targetPosition = null; // Them ? de cho phep null
     protected MoveState moveState = MoveState.Idle;
 
-    public virtual void InitComponent() { }
+    public virtual void InitComponent() 
+    {
+        UnitBase unitBase = GetComponent<UnitBase>();
+        if (unitBase == null)
+        {
+            Debug.LogError("MoveComponent: UnitBase component is missing on " + gameObject.name);
+            return;
+        }
+        animationComponent = unitBase.GetAnimationComponent();
+        unitData = unitBase.GetUnitData();
+        maxSpeed = unitData.MaxSpeed;
+        //Debug.Log("MaxSpeed: " + maxSpeed);
+        currentSpeed = 0f;
+    }
 
     public float MaxSpeed
     {
@@ -60,11 +73,11 @@ public abstract class MoveComponent : MonoBehaviour
 
     public Vector3 LastDir => lastDir;
 
-    public float StopDistance
-    {
-        get => stopDistance;
-        set => stopDistance = Mathf.Max(0f, value);
-    }
+    //public float StopDistance
+    //{
+    //    get => stopDistance;
+    //    set => stopDistance = Mathf.Max(0f, value);
+    //}
   
     /// <summary>
     /// Dat vi tri dich va bat dau di chuyen den do.
@@ -81,6 +94,8 @@ public abstract class MoveComponent : MonoBehaviour
     public virtual void HandleComponentActs() { }
 
     public virtual void HandleComponentActs(Vector2 moveInput, bool isJump) { }
+
+    public virtual void HandleComponentActs(Vector3? targetPosition) {  }
 
 
     public abstract bool CanOutComponentState();

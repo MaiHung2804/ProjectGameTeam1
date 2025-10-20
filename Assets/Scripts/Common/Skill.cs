@@ -11,5 +11,6 @@ using UnityEngine;
         MagicAttack,
         Heal,
         Buff,
+        MultiAttack
     }
 
